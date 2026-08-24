@@ -449,6 +449,28 @@ summary:focus-visible {
   font-size: 1.15rem;
 }
 
+.sound-button.needs-unlock {
+  animation: sound-invite 1.15s ease-in-out infinite alternate;
+}
+
+.sound-button.needs-unlock::after {
+  content: 'Starta musik';
+  position: absolute;
+  top: 50%;
+  right: calc(100% + .65rem);
+  width: max-content;
+  transform: translateY(-50%);
+  padding: .42rem .65rem .35rem;
+  border: 2px solid white;
+  border-radius: 999px;
+  background: linear-gradient(#ef2d4d, #9f0924);
+  color: white;
+  box-shadow: 0 4px 0 #4b070e, 0 0 18px rgb(255 53 90 / .5);
+  font: 850 .65rem/1 system-ui, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
 .game-screen {
   min-height: 100svh;
   padding-bottom: 3rem;
@@ -533,6 +555,174 @@ summary:focus-visible {
   gap: .85rem;
   padding: .55rem 1.35rem;
   font-size: clamp(.85rem, 1.5vw, 1.25rem);
+}
+
+.header-center {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  gap: .7rem;
+}
+
+.timer-console {
+  --fuse: 100%;
+  --timer-scale: 1;
+  position: relative;
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr);
+  align-items: center;
+  gap: .45rem;
+  width: 178px;
+  min-height: 58px;
+  padding: .25rem .65rem .25rem .35rem;
+  border: 4px solid #ffc83d;
+  border-radius: 18px 7px 18px 7px;
+  background:
+    radial-gradient(circle at 21% 50%, rgb(40 147 255 / .28), transparent 33%),
+    linear-gradient(145deg, #0a4fa5, #03163f 72%);
+  box-shadow:
+    0 5px 0 #6b3600,
+    inset 0 2px 5px rgb(255 255 255 / .35),
+    0 0 16px rgb(20 141 255 / .25);
+  transition: border-color .2s ease, filter .2s ease, background .2s ease;
+}
+
+.timer-console::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 1px solid rgb(255 255 255 / .24);
+  border-radius: 11px 3px 11px 3px;
+  pointer-events: none;
+}
+
+.timer-number {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-content: center;
+  border: 2px solid rgb(255 255 255 / .5);
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 27%, #effaff, #21a8ff 35%, #073c8e 72%);
+  box-shadow: inset 0 2px 7px white, 0 0 11px rgb(53 191 255 / .6);
+  line-height: .75;
+  transition: background .2s ease;
+}
+
+.timer-number strong {
+  display: block;
+  min-width: 2ch;
+  transform: scale(var(--timer-scale));
+  transform-origin: center;
+  color: white;
+  font-size: 1.72rem;
+  text-align: center;
+  text-shadow: 0 3px 0 #04204c;
+  transition: transform .28s cubic-bezier(.2, 1.45, .4, 1), font-size .2s ease;
+}
+
+.timer-number strong i {
+  display: block;
+  font-style: normal;
+  animation: timer-digit-pop .26s cubic-bezier(.2, 1.7, .35, 1) both;
+}
+
+.timer-number small {
+  display: block;
+  margin-top: .15rem;
+  color: #d9efff;
+  font: 850 .42rem/1 system-ui, sans-serif;
+  letter-spacing: .12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.timer-fuse {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: .32rem;
+  min-width: 0;
+}
+
+.timer-fuse b {
+  color: #dcecff;
+  font: 900 .52rem/1 system-ui, sans-serif;
+  letter-spacing: .13em;
+  text-align: center;
+}
+
+.fuse-track {
+  position: relative;
+  display: block;
+  height: 11px;
+  border: 2px solid #512800;
+  border-radius: 999px;
+  background: repeating-linear-gradient(135deg, #250b05 0 5px, #57190c 5px 10px);
+  box-shadow: inset 0 1px 4px #000, 0 0 0 1px rgb(255 255 255 / .18);
+}
+
+.fuse-remaining {
+  position: absolute;
+  inset: 0 auto 0 0;
+  display: block;
+  width: var(--fuse);
+  min-width: 0;
+  border-radius: inherit;
+  background: repeating-linear-gradient(135deg, #ffe96a 0 5px, #e88a08 5px 10px);
+  box-shadow: 0 0 7px #ffb51c;
+  transition: width .82s linear;
+}
+
+.fuse-flame {
+  position: absolute;
+  top: 50%;
+  right: -8px;
+  width: 16px;
+  height: 21px;
+  transform: translateY(-50%) rotate(42deg);
+  border-radius: 70% 15% 65% 35%;
+  background: radial-gradient(circle at 63% 67%, white 0 13%, #ffed57 17% 34%, #ff7b16 39% 61%, #e51a33 66% 77%, transparent 80%);
+  filter: drop-shadow(0 0 5px #ff9c18) drop-shadow(0 0 9px #ff4324);
+  animation: fuse-flicker .16s steps(2, end) infinite alternate;
+}
+
+.timer-console.is-warning {
+  border-color: #ff9138;
+  background:
+    radial-gradient(circle at 21% 50%, rgb(255 94 34 / .38), transparent 38%),
+    linear-gradient(145deg, #a82c17, #350814 72%);
+  box-shadow: 0 5px 0 #601400, inset 0 2px 5px rgb(255 255 255 / .25), 0 0 20px rgb(255 74 31 / .52);
+}
+
+.timer-console.is-warning .timer-number {
+  background: radial-gradient(circle at 40% 27%, #fff7c8, #ff8f22 37%, #a90c22 76%);
+  box-shadow: inset 0 2px 7px white, 0 0 16px rgb(255 83 25 / .75);
+}
+
+.timer-console.is-danger:not(.is-stopped) {
+  animation: timer-danger .36s steps(2, end) infinite;
+}
+
+.timer-console.is-danger .timer-number strong {
+  color: #fff8c4;
+  font-size: 1.92rem;
+}
+
+.timer-console.is-stopped .fuse-flame {
+  display: none;
+}
+
+.timer-console.is-stopped .fuse-remaining {
+  transition: none;
+}
+
+.timer-console.is-timeout {
+  border-color: #ff3659;
+  filter: saturate(1.35) brightness(.92);
 }
 
 .score-inline {
@@ -1862,6 +2052,26 @@ summary:focus-visible {
   to { opacity: 1; transform: scale(1) rotate(0); }
 }
 
+@keyframes sound-invite {
+  from { filter: brightness(1); box-shadow: 0 5px 0 #4b2600, inset 0 2px 5px rgb(255 255 255 / .35), 0 0 5px transparent; }
+  to { filter: brightness(1.3); box-shadow: 0 5px 0 #4b2600, inset 0 2px 5px rgb(255 255 255 / .35), 0 0 24px #43cfff; }
+}
+
+@keyframes timer-digit-pop {
+  from { opacity: .55; transform: scale(1.2); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fuse-flicker {
+  from { opacity: .78; transform: translateY(-50%) rotate(39deg) scale(.8, 1.08); }
+  to { opacity: 1; transform: translateY(-50%) rotate(45deg) scale(1.18, .88); }
+}
+
+@keyframes timer-danger {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.35) saturate(1.35); }
+}
+
 @media (max-width: 900px) {
   .intro-image {
     background-size: auto 100%;
@@ -1873,6 +2083,28 @@ summary:focus-visible {
 
   .start-button {
     width: min(560px, 68vw);
+  }
+
+  .game-header {
+    padding-inline: 1rem;
+  }
+
+  .mini-brand {
+    font-size: 1rem;
+  }
+
+  .header-center {
+    gap: .45rem;
+  }
+
+  .progress-pill {
+    padding-inline: .9rem;
+  }
+
+  .timer-console {
+    grid-template-columns: 46px minmax(0, 1fr);
+    width: 157px;
+    padding-right: .5rem;
   }
 
   .party-grid {
@@ -1989,6 +2221,7 @@ summary:focus-visible {
 
   .game-header {
     grid-template-columns: 1fr auto;
+    column-gap: .45rem;
     padding: .8rem .75rem;
   }
 
@@ -1998,8 +2231,65 @@ summary:focus-visible {
 
   .progress-pill {
     justify-self: start;
-    padding: .48rem .85rem;
-    font-size: .75rem;
+    gap: .4rem;
+    padding: .48rem .6rem;
+    font-size: .67rem;
+    white-space: nowrap;
+  }
+
+  .score-inline {
+    padding-left: .42rem;
+  }
+
+  .header-center {
+    justify-self: start;
+    gap: .35rem;
+  }
+
+  .timer-console {
+    grid-template-columns: 37px minmax(0, 1fr);
+    gap: .28rem;
+    width: 121px;
+    min-height: 47px;
+    padding: .2rem .4rem .2rem .25rem;
+    border-width: 3px;
+    border-radius: 14px 5px 14px 5px;
+    box-shadow: 0 4px 0 #6b3600, inset 0 2px 4px rgb(255 255 255 / .3), 0 0 12px rgb(20 141 255 / .25);
+  }
+
+  .timer-number {
+    width: 35px;
+    height: 35px;
+  }
+
+  .timer-number strong {
+    font-size: 1.28rem;
+  }
+
+  .timer-console.is-danger .timer-number strong {
+    font-size: 1.45rem;
+  }
+
+  .timer-number small {
+    font-size: .34rem;
+  }
+
+  .timer-fuse {
+    gap: .2rem;
+  }
+
+  .timer-fuse b {
+    font-size: .4rem;
+  }
+
+  .fuse-track {
+    height: 9px;
+  }
+
+  .fuse-flame {
+    right: -6px;
+    width: 13px;
+    height: 17px;
   }
 
   .game-content {
@@ -2140,6 +2430,38 @@ summary:focus-visible {
 
   .result-actions {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 420px) {
+  .game-header {
+    padding-inline: .5rem;
+  }
+
+  .header-center {
+    gap: .25rem;
+  }
+
+  .progress-pill {
+    padding: .43rem .45rem;
+    font-size: .62rem;
+  }
+
+  .score-inline {
+    display: none;
+  }
+
+  .timer-console {
+    grid-template-columns: 35px minmax(0, 1fr);
+    width: 116px;
+  }
+
+  .sound-button.in-game {
+    width: 40px;
+  }
+
+  .game-screen .sound-button.needs-unlock::after {
+    display: none;
   }
 }
 

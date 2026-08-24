@@ -28,15 +28,16 @@ type Party = {
 type Answer = {
   quoteId: string;
   party: PartyId;
-  chosen: PartyId;
+  chosen: PartyId | null;
   correct: boolean;
 };
 
 type Point = { x: number; y: number };
 type Screen = 'intro' | 'question' | 'results';
 type Phase = 'choosing' | 'reveal';
-type Cue = 'start' | 'grab' | 'connect' | 'correct' | 'wrong';
-type CrowdCue = 'cheer' | 'boo';
+type Cue = 'start' | 'grab' | 'connect' | 'tick' | 'timeout' | 'correct' | 'wrong';
+type CrowdCue = 'cheer' | 'boo' | 'laugh';
+type MusicCue = 'intro' | 'game';
 type CableHum = {
   gain: GainNode;
   sources: AudioScheduledSourceNode[];
@@ -129,6 +130,9 @@ const confetti = Array.from({ length: 72 }, (_, index) => ({
   color: ['#ffd136', '#f7254c', '#13a8ff', '#67d449', '#ffffff'][index % 5],
 }));
 
+const QUESTION_SECONDS = 20;
+const MUSIC_VOLUMES: Record<MusicCue, number> = { intro: .15, game: .12 };
+
 function shuffle<T>(items: T[]) {
   const copy = [...items];
   for (let index = copy.length - 1; index > 0; index -= 1) {
@@ -171,21 +175,39 @@ export default function Home() {
   const [pointer, setPointer] = useState<Point | null>(null);
   const [selected, setSelected] = useState<PartyId | null>(null);
   const [soundOn, setSoundOn] = useState(true);
+  const [musicReady, setMusicReady] = useState(false);
+  const [musicAttempted, setMusicAttempted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(QUESTION_SECONDS);
+  const [timedOut, setTimedOut] = useState(false);
+  const [autoLocked, setAutoLocked] = useState(false);
   const [geometry, setGeometry] = useState<{
     start: Point;
     targets: Partial<Record<PartyId, Point>>;
   } | null>(null);
   const jackRef = useRef<HTMLSpanElement>(null);
   const audioRef = useRef<AudioContext | null>(null);
+  const sfxMasterRef = useRef<GainNode | null>(null);
   const crowdAudioRef = useRef<Partial<Record<CrowdCue, HTMLAudioElement>>>({});
+  const activeCrowdRef = useRef<HTMLAudioElement | null>(null);
+  const musicAudioRef = useRef<Partial<Record<MusicCue, HTMLAudioElement>>>({});
+  const musicReadyRef = useRef(false);
+  const musicAttemptedRef = useRef(false);
+  const musicRequestRef = useRef(0);
   const cableHumRef = useRef<CableHum | null>(null);
+  const selectedRef = useRef<PartyId | null>(null);
+  const resolvedRef = useRef(false);
+  const timeoutActionRef = useRef<() => void>(() => undefined);
+  const tickActionRef = useRef<(secondsRemaining: number) => void>(() => undefined);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   const current = roundQuotes[currentIndex] ?? quotes[0];
   const correctParty = partyById(current.party);
   const selectedParty = selected ? partyById(selected) : null;
-  const wasCorrect = selected === current.party;
+  const wasCorrect = !timedOut && selected === current.party;
   const score = answers.filter((answer) => answer.correct).length;
+  const timerRatio = Math.max(0, Math.min(1, timeLeft / QUESTION_SECONDS));
+  const timerScale = 1 + Math.max(0, 7 - timeLeft) * .045;
+  const needsMusicUnlock = soundOn && !musicReady && !musicAttempted;
 
   useEffect(() => {
     if (screen !== 'question') return;
@@ -227,14 +249,26 @@ export default function Home() {
   useEffect(() => {
     const cheer = new Audio('/sounds/crowd-cheer.mp3');
     const boo = new Audio('/sounds/crowd-boo.mp3');
+    const laugh = new Audio('/sounds/crowd-laugh.mp3');
+    const introMusic = new Audio('/music/intro-show.mp3');
+    const gameMusic = new Audio('/music/question-tension.mp3');
     cheer.preload = 'auto';
     boo.preload = 'auto';
+    laugh.preload = 'auto';
     cheer.volume = .88;
     boo.volume = .92;
-    crowdAudioRef.current = { cheer, boo };
+    laugh.volume = .92;
+    introMusic.preload = 'auto';
+    gameMusic.preload = 'auto';
+    introMusic.loop = true;
+    gameMusic.loop = true;
+    introMusic.volume = MUSIC_VOLUMES.intro;
+    gameMusic.volume = MUSIC_VOLUMES.game;
+    crowdAudioRef.current = { cheer, boo, laugh };
+    musicAudioRef.current = { intro: introMusic, game: gameMusic };
 
     return () => {
-      [cheer, boo].forEach((track) => {
+      [cheer, boo, laugh, introMusic, gameMusic].forEach((track) => {
         track.pause();
         track.currentTime = 0;
       });
@@ -247,8 +281,44 @@ export default function Home() {
       });
       cableHumRef.current = null;
       crowdAudioRef.current = {};
+      activeCrowdRef.current = null;
+      musicAudioRef.current = {};
+      musicReadyRef.current = false;
+      musicAttemptedRef.current = false;
+      musicRequestRef.current += 1;
+      const context = audioRef.current;
+      audioRef.current = null;
+      sfxMasterRef.current = null;
+      if (context && context.state !== 'closed') void context.close();
     };
   }, []);
+
+  useEffect(() => {
+    timeoutActionRef.current = handleQuestionExpired;
+    tickActionRef.current = (secondsRemaining) => playCue('tick', false, secondsRemaining);
+  });
+
+  useEffect(() => {
+    if (screen !== 'question' || phase !== 'choosing') return;
+    const deadline = performance.now() + QUESTION_SECONDS * 1000;
+    let lastSecond = QUESTION_SECONDS;
+    const timer = window.setInterval(() => {
+      if (resolvedRef.current) {
+        window.clearInterval(timer);
+        return;
+      }
+      const next = Math.max(0, Math.ceil((deadline - performance.now()) / 1000));
+      if (next === lastSecond) return;
+      lastSecond = next;
+      setTimeLeft(next);
+      if (next > 0 && next <= 7) tickActionRef.current(next);
+      if (next === 0) {
+        window.clearInterval(timer);
+        timeoutActionRef.current();
+      }
+    }, 100);
+    return () => window.clearInterval(timer);
+  }, [screen, phase, currentIndex]);
 
   const cable = useMemo(() => {
     if (screen !== 'question' || !geometry) return null;
@@ -270,16 +340,39 @@ export default function Home() {
 
   function ensureAudio() {
     if (typeof window === 'undefined') return null;
-    if (!audioRef.current) audioRef.current = new AudioContext();
-    if (audioRef.current.state === 'suspended') void audioRef.current.resume();
+    if (!audioRef.current) {
+      audioRef.current = new AudioContext();
+      const master = audioRef.current.createGain();
+      master.gain.value = soundOn ? 1 : .0001;
+      master.connect(audioRef.current.destination);
+      sfxMasterRef.current = master;
+    }
+    if (audioRef.current.state === 'suspended') {
+      void audioRef.current.resume().catch(() => {
+        musicReadyRef.current = false;
+        musicAttemptedRef.current = false;
+        setMusicReady(false);
+        setMusicAttempted(false);
+      });
+    }
     return audioRef.current;
   }
 
-  function playCue(cue: Cue, force = false) {
+  function setSynthSound(enabled: boolean) {
+    const audio = enabled ? ensureAudio() : audioRef.current;
+    const master = sfxMasterRef.current;
+    if (!audio || !master) return;
+    const now = audio.currentTime;
+    master.gain.cancelScheduledValues(now);
+    master.gain.setTargetAtTime(enabled ? 1 : .0001, now, .018);
+  }
+
+  function playCue(cue: Cue, force = false, secondsRemaining = timeLeft) {
     if (!soundOn && !force) return;
     const audio = ensureAudio();
     if (!audio) return;
     const now = audio.currentTime;
+    const destination = sfxMasterRef.current ?? audio.destination;
 
     const note = (
       frequency: number,
@@ -296,7 +389,7 @@ export default function Home() {
       gain.gain.exponentialRampToValueAtTime(volume, now + offset + 0.018);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + duration);
       oscillator.connect(gain);
-      gain.connect(audio.destination);
+      gain.connect(destination);
       oscillator.start(now + offset);
       oscillator.stop(now + offset + duration + 0.03);
     };
@@ -321,7 +414,7 @@ export default function Home() {
       gain.gain.exponentialRampToValueAtTime(.0001, now + offset + duration);
       source.connect(filter);
       filter.connect(gain);
-      gain.connect(audio.destination);
+      gain.connect(destination);
       source.start(now + offset);
       source.stop(now + offset + duration);
     };
@@ -350,6 +443,17 @@ export default function Home() {
       note(784, 0.29, 0.42, 'triangle', 0.1);
     }
 
+    if (cue === 'tick') {
+      const urgent = secondsRemaining <= 4;
+      note(urgent ? 1180 : 880, 0, urgent ? .14 : .1, 'square', urgent ? .045 : .026);
+      note(urgent ? 720 : 560, .045, urgent ? .12 : .09, 'triangle', urgent ? .032 : .018);
+    }
+
+    if (cue === 'timeout') {
+      [196, 147, 110].forEach((frequency, index) => note(frequency, index * .17, .34, 'sawtooth', .075));
+      crackle(.02, .48, .045);
+    }
+
     if (cue === 'correct') {
       [523, 659, 784, 1047].forEach((frequency, index) => note(frequency, index * 0.1, 0.38, 'triangle', 0.095));
       [523, 659, 784].forEach((frequency) => note(frequency, 0.46, 0.58, 'sine', 0.045));
@@ -364,17 +468,45 @@ export default function Home() {
       gain.gain.setValueAtTime(0.11, now);
       gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.62);
       oscillator.connect(gain);
-      gain.connect(audio.destination);
+      gain.connect(destination);
       oscillator.start(now);
       oscillator.stop(now + 0.64);
     }
   }
 
+  function restoreMusicVolume() {
+    Object.entries(musicAudioRef.current).forEach(([key, track]) => {
+      if (track) track.volume = MUSIC_VOLUMES[key as MusicCue];
+    });
+  }
+
+  function primeCrowdAudio() {
+    Object.values(crowdAudioRef.current).forEach((track) => {
+      if (!track) return;
+      const wasMuted = track.muted;
+      track.muted = true;
+      track.currentTime = 0;
+      void track.play().then(() => {
+        if (activeCrowdRef.current === track) return;
+        track.pause();
+        track.currentTime = 0;
+        track.muted = wasMuted;
+      }).catch(() => {
+        if (activeCrowdRef.current !== track) track.muted = wasMuted;
+      });
+    });
+  }
+
   function stopCrowd() {
     Object.values(crowdAudioRef.current).forEach((track) => {
       track?.pause();
-      if (track) track.currentTime = 0;
+      if (track) {
+        track.currentTime = 0;
+        track.onended = null;
+      }
     });
+    activeCrowdRef.current = null;
+    restoreMusicVolume();
   }
 
   function stopCableHum() {
@@ -440,7 +572,7 @@ export default function Home() {
     noise.connect(noiseFilter);
     noiseFilter.connect(noiseGain);
     noiseGain.connect(master);
-    master.connect(audio.destination);
+    master.connect(sfxMasterRef.current ?? audio.destination);
 
     hum.start(now);
     overtone.start(now);
@@ -453,26 +585,89 @@ export default function Home() {
     stopCrowd();
     const track = crowdAudioRef.current[cue];
     if (!track) return;
+    activeCrowdRef.current = track;
+    track.muted = false;
+    Object.values(musicAudioRef.current).forEach((music) => {
+      if (music && !music.paused) music.volume = cue === 'laugh' ? .035 : .05;
+    });
     track.currentTime = 0;
+    track.onended = () => {
+      if (activeCrowdRef.current === track) activeCrowdRef.current = null;
+      restoreMusicVolume();
+      track.onended = null;
+    };
     void track.play().catch(() => {
-      // A browser may still block media if the page has not received a user gesture.
+      if (activeCrowdRef.current === track) activeCrowdRef.current = null;
+      restoreMusicVolume();
+      track.onended = null;
+    });
+  }
+
+  function pauseMusic(reset = false) {
+    musicRequestRef.current += 1;
+    Object.values(musicAudioRef.current).forEach((track) => {
+      track?.pause();
+      if (track && reset) track.currentTime = 0;
+    });
+  }
+
+  function switchMusic(cue: MusicCue, force = false) {
+    if (!soundOn && !force) return;
+    const desired = musicAudioRef.current[cue];
+    if (!desired) return;
+    const request = ++musicRequestRef.current;
+    musicAttemptedRef.current = true;
+    setMusicAttempted(true);
+
+    Object.entries(musicAudioRef.current).forEach(([key, track]) => {
+      if (key === cue || !track) return;
+      track.pause();
+      track.currentTime = 0;
+    });
+    desired.volume = MUSIC_VOLUMES[cue];
+
+    void desired.play().then(() => {
+      if (request !== musicRequestRef.current) return;
+      musicReadyRef.current = true;
+      setMusicReady(true);
+    }).catch(() => {
+      if (request !== musicRequestRef.current) return;
+      musicReadyRef.current = false;
+      setMusicReady(false);
     });
   }
 
   function toggleSound() {
+    if (soundOn && !musicReadyRef.current && !musicAttemptedRef.current) {
+      primeCrowdAudio();
+      setSynthSound(true);
+      switchMusic(screen === 'question' ? 'game' : 'intro', true);
+      playCue('connect', true);
+      return;
+    }
+
     if (soundOn) {
       stopCrowd();
       stopCableHum();
+      setSynthSound(false);
+      pauseMusic();
       setSoundOn(false);
       return;
     }
+
     setSoundOn(true);
+    primeCrowdAudio();
+    setSynthSound(true);
     playCue('connect', true);
+    switchMusic(screen === 'question' ? 'game' : 'intro', true);
   }
 
   function startGame() {
     stopCrowd();
     stopCableHum();
+    primeCrowdAudio();
+    resolvedRef.current = false;
+    selectedRef.current = null;
     setRoundQuotes(buildRound(quotes));
     setAnswers([]);
     setCurrentIndex(0);
@@ -480,36 +675,76 @@ export default function Home() {
     setPointer(null);
     setDragging(false);
     setPhase('choosing');
+    setTimedOut(false);
+    setAutoLocked(false);
+    setTimeLeft(QUESTION_SECONDS);
     setScreen('question');
     playCue('start');
+    switchMusic('game');
   }
 
   function connectParty(party: PartyId) {
-    if (phase !== 'choosing') return;
+    if (phase !== 'choosing' || resolvedRef.current) return;
+    selectedRef.current = party;
     setSelected(party);
     setPointer(null);
     setDragging(false);
     playCue('connect');
   }
 
-  function submitAnswer() {
-    if (phase !== 'choosing' || !selected) return;
+  function revealChoice(choice: PartyId, lockedByTimer = false) {
+    if (phase !== 'choosing' || resolvedRef.current) return;
+    resolvedRef.current = true;
     stopCableHum();
-    const correct = selected === current.party;
+    const correct = choice === current.party;
     setAnswers((previous) => [
       ...previous,
-      { quoteId: current.id, party: current.party, chosen: selected, correct },
+      { quoteId: current.id, party: current.party, chosen: choice, correct },
     ]);
+    setSelected(choice);
+    setTimedOut(false);
+    setAutoLocked(lockedByTimer);
     setPhase('reveal');
     playCue(correct ? 'correct' : 'wrong');
     playCrowd(correct ? 'cheer' : 'boo');
   }
 
+  function submitAnswer() {
+    const choice = selectedRef.current;
+    if (!choice) return;
+    revealChoice(choice);
+  }
+
+  function handleQuestionExpired() {
+    if (phase !== 'choosing' || resolvedRef.current) return;
+    stopCableHum();
+    setDragging(false);
+    setPointer(null);
+
+    const choice = selectedRef.current;
+    if (choice) {
+      revealChoice(choice, true);
+      return;
+    }
+
+    resolvedRef.current = true;
+    setAnswers((previous) => [
+      ...previous,
+      { quoteId: current.id, party: current.party, chosen: null, correct: false },
+    ]);
+    setTimedOut(true);
+    setAutoLocked(false);
+    setPhase('reveal');
+    playCue('timeout');
+    playCrowd('laugh');
+  }
+
   function startCable(event: PointerEvent<HTMLSpanElement>) {
-    if (phase !== 'choosing') return;
+    if (phase !== 'choosing' || resolvedRef.current) return;
     event.currentTarget.setPointerCapture(event.pointerId);
     playCue('grab');
     startCableHum();
+    selectedRef.current = null;
     setSelected(null);
     setDragging(true);
     setPointer({ x: event.clientX, y: event.clientY });
@@ -542,13 +777,19 @@ export default function Home() {
     stopCableHum();
     if (currentIndex === roundQuotes.length - 1) {
       setScreen('results');
+      switchMusic('intro');
       return;
     }
+    resolvedRef.current = false;
+    selectedRef.current = null;
     setCurrentIndex((index) => index + 1);
     setSelected(null);
     setPointer(null);
     setDragging(false);
     setPhase('choosing');
+    setTimedOut(false);
+    setAutoLocked(false);
+    setTimeLeft(QUESTION_SECONDS);
     playCue('connect');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -556,22 +797,32 @@ export default function Home() {
   function returnHome() {
     stopCrowd();
     stopCableHum();
+    resolvedRef.current = false;
+    selectedRef.current = null;
     setScreen('intro');
     setPhase('choosing');
     setSelected(null);
     setPointer(null);
     setDragging(false);
+    setTimedOut(false);
+    setAutoLocked(false);
+    setTimeLeft(QUESTION_SECONDS);
+    switchMusic('intro');
   }
 
   const soundButton = (
     <button
-      className={`sound-button ${screen === 'question' ? 'in-game' : ''}`}
-      aria-label={soundOn ? 'Stäng av ljud' : 'Slå på ljud'}
-      aria-pressed={soundOn}
-      title={soundOn ? 'Stäng av ljud' : 'Slå på ljud'}
+      className={[
+        'sound-button',
+        screen === 'question' ? 'in-game' : '',
+        screen === 'results' ? 'results-sound' : '',
+        needsMusicUnlock ? 'needs-unlock' : '',
+      ].filter(Boolean).join(' ')}
+      aria-label={needsMusicUnlock ? 'Starta musik och ljud' : soundOn ? 'Stäng av ljud' : 'Slå på ljud'}
+      title={needsMusicUnlock ? 'Starta musik och ljud' : soundOn ? 'Stäng av ljud' : 'Slå på ljud'}
       onClick={toggleSound}
     >
-      <span aria-hidden="true">{soundOn ? '🔊' : '🔇'}</span>
+      <span aria-hidden="true">{needsMusicUnlock ? '♫' : soundOn ? '🔊' : '🔇'}</span>
     </button>
   );
 
@@ -642,9 +893,7 @@ export default function Home() {
       <main className="results-screen">
         <div className="results-rays" aria-hidden="true" />
         {score === answers.length && <Confetti />}
-        <button className="sound-button results-sound" onClick={toggleSound} aria-label={soundOn ? 'Stäng av ljud' : 'Slå på ljud'}>
-          <span aria-hidden="true">{soundOn ? '🔊' : '🔇'}</span>
-        </button>
+        {soundButton}
         <section className="results-card" aria-labelledby="result-title">
           <p className="results-kicker">Slutresultat</p>
           <div className="score-burst" aria-label={`${score} rätt av ${answers.length}`}>
@@ -707,19 +956,52 @@ export default function Home() {
       {phase === 'reveal' && wasCorrect && <Confetti />}
       <p className="sr-only" role="status" aria-live="assertive" aria-atomic="true">
         {phase === 'reveal'
-          ? `${wasCorrect ? 'Rätt svar.' : `Fel svar. Du valde ${selectedParty?.name}.`} Rätt parti är ${correctParty.name}. Citatet sades av ${current.speaker} år ${current.date.slice(0, 4)}.`
+          ? `${timedOut ? 'Tiden är ute utan något val.' : autoLocked ? `Tiden är ute och valet ${selectedParty?.name} låstes automatiskt. ${wasCorrect ? 'Rätt svar.' : 'Fel svar.'}` : wasCorrect ? 'Rätt svar.' : `Fel svar. Du valde ${selectedParty?.name}.`} Rätt parti är ${correctParty.name}. Citatet sades av ${current.speaker} år ${current.date.slice(0, 4)}.`
           : selectedParty
             ? `${selectedParty.name} är inkopplat. Tryck på Svara när du är redo.`
             : ''}
+      </p>
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        {phase === 'choosing' && (timeLeft === 7 || timeLeft === 3) ? `${timeLeft} sekunder kvar.` : ''}
       </p>
 
       <header className="game-header">
         <button className="mini-brand" onClick={returnHome}>
           Vem sa vad?
         </button>
-        <div className="progress-pill">
-          Fråga {currentIndex + 1} av {roundQuotes.length}
-          <span className="score-inline">{score} rätt</span>
+        <div className="header-center">
+          <div className="progress-pill">
+            Fråga {currentIndex + 1} av {roundQuotes.length}
+            <span className="score-inline">{score} rätt</span>
+          </div>
+          <div
+            className={[
+              'timer-console',
+              timeLeft <= 7 ? 'is-warning' : '',
+              timeLeft <= 4 ? 'is-danger' : '',
+              phase === 'reveal' ? 'is-stopped' : '',
+              timedOut ? 'is-timeout' : '',
+            ].filter(Boolean).join(' ')}
+            style={{
+              '--fuse': `${timerRatio * 100}%`,
+              '--timer-scale': timerScale,
+            } as CSSProperties}
+            role="timer"
+            aria-label={phase === 'reveal' ? `Tiden stannade på ${timeLeft} sekunder` : `${timeLeft} sekunder kvar`}
+          >
+            <span className="timer-number" aria-hidden="true">
+              <strong><i key={timeLeft}>{timeLeft}</i></strong>
+              <small>sek</small>
+            </span>
+            <span className="timer-fuse" aria-hidden="true">
+              <span className="fuse-track">
+                <span className="fuse-remaining">
+                  <i className="fuse-flame" />
+                </span>
+              </span>
+              <b>{phase === 'reveal' ? 'STOPP' : 'TID KVAR'}</b>
+            </span>
+          </div>
         </div>
         {soundButton}
       </header>
@@ -732,7 +1014,7 @@ export default function Home() {
         <article className="quote-card">
           {phase === 'reveal' && (
             <div className={`reveal-ribbon ${wasCorrect ? 'is-right' : 'is-wrong'}`} aria-hidden="true">
-              {wasCorrect ? 'Rätt svar!' : 'Inte riktigt!'}
+              {timedOut ? 'Tiden är ute!' : autoLocked ? 'Tiden låste valet!' : wasCorrect ? 'Rätt svar!' : 'Inte riktigt!'}
             </div>
           )}
           <span className="quote-mark opening" aria-hidden="true">“</span>
@@ -820,7 +1102,7 @@ export default function Home() {
         ) : (
           <aside className={`reveal-panel ${wasCorrect ? 'panel-correct' : 'panel-wrong'}`}>
             <div className="reveal-verdict">
-              <span>{wasCorrect ? 'Du satte den!' : `Du valde ${selectedParty?.name}`}</span>
+              <span>{timedOut ? 'Publiken hann före dig!' : autoLocked ? (wasCorrect ? 'Precis på håret!' : 'Valet låstes på noll!') : wasCorrect ? 'Du satte den!' : `Du valde ${selectedParty?.name}`}</span>
               <strong>Rätt parti: {correctParty.name}</strong>
             </div>
             <div className="source-story">

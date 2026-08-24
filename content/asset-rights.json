@@ -112,5 +112,35 @@
     "licensePage": "https://mixkit.co/license/#sfxFree",
     "retrieved": "2026-08-24",
     "note": "Mixkit Sound Effects Free License tillåter användning och modifiering i webspel utan krav på attribution. Klippt till 4 sekunder, nedtonad och volymanpassad; får inte återdistribueras fristående."
+  },
+  {
+    "asset": "/sounds/crowd-laugh.mp3",
+    "party": null,
+    "sourcePage": "https://mixkit.co/free-sound-effects/crowd/",
+    "downloadPage": "https://mixkit.co/free-sound-effects/download/424/",
+    "sourceFile": "https://assets.mixkit.co/active_storage/sfx/424/424-preview.mp3",
+    "licensePage": "https://mixkit.co/license/#sfxFree",
+    "retrieved": "2026-08-24",
+    "note": "Mixkit-ljudet Crowd laugh (SFX 424). Sound Effects Free License tillåter användning i webspel utan krav på attribution. Omkodat till 128 kbit/s MP3; får inte återdistribueras fristående."
+  },
+  {
+    "asset": "/music/intro-show.mp3",
+    "party": null,
+    "sourcePage": "https://mixkit.co/free-sound-effects/game-show/",
+    "downloadPage": "https://mixkit.co/free-sound-effects/download/944/",
+    "sourceFile": "https://assets.mixkit.co/active_storage/sfx/944/944-preview.mp3",
+    "licensePage": "https://mixkit.co/license/#sfxFree",
+    "retrieved": "2026-08-24",
+    "note": "Mixkit-ljudet Game show uplifting (SFX 944), använt som loopande start- och resultatmusik. Sound Effects Free License tillåter användning i webspel utan krav på attribution. Omkodat till 128 kbit/s MP3; 2,8 sekunders avslutande tystnad har klippts bort och slutet har korsfadats mot början för en jämnare loop. Får inte återdistribueras fristående."
+  },
+  {
+    "asset": "/music/question-tension.mp3",
+    "party": null,
+    "sourcePage": "https://mixkit.co/free-sound-effects/game-show/",
+    "downloadPage": "https://mixkit.co/free-sound-effects/download/942/",
+    "sourceFile": "https://assets.mixkit.co/active_storage/sfx/942/942-preview.mp3",
+    "licensePage": "https://mixkit.co/license/#sfxFree",
+    "retrieved": "2026-08-24",
+    "note": "Mixkit-ljudet Game show fun suspense (SFX 942), använt som loopande frågemusik. Sound Effects Free License tillåter användning i webspel utan krav på attribution. Omkodat till 128 kbit/s MP3; 2 sekunders avslutande tystnad har klippts bort och slutet har korsfadats mot början för en jämnare loop. Får inte återdistribueras fristående."
   }
 ]
