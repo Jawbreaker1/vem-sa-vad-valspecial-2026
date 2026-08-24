@@ -21,6 +21,7 @@ type Party = {
     name: string;
     image: string;
   }>;
+  victoryImage: string;
   color: string;
   ink: string;
 };
@@ -72,6 +73,7 @@ const parties: Party[] = [
     shortName: 'S',
     logo: '/party-logos/s.svg',
     leaders: [{ name: 'Magdalena Andersson', image: '/leaders/magdalena-andersson.webp' }],
+    victoryImage: '/victory/s.webp',
     color: '#e52532',
     ink: '#fff',
   },
@@ -81,6 +83,7 @@ const parties: Party[] = [
     shortName: 'M',
     logo: '/party-logos/m.webp',
     leaders: [{ name: 'Ulf Kristersson', image: '/leaders/ulf-kristersson.webp' }],
+    victoryImage: '/victory/m.webp',
     color: '#1598d3',
     ink: '#fff',
   },
@@ -90,6 +93,7 @@ const parties: Party[] = [
     shortName: 'SD',
     logo: '/party-logos/sd.png',
     leaders: [{ name: 'Jimmie Åkesson', image: '/leaders/jimmie-akesson.webp' }],
+    victoryImage: '/victory/sd.webp',
     color: '#f5ca26',
     ink: '#102a56',
   },
@@ -99,6 +103,7 @@ const parties: Party[] = [
     shortName: 'V',
     logo: '/party-logos/v.svg',
     leaders: [{ name: 'Nooshi Dadgostar', image: '/leaders/nooshi-dadgostar.webp' }],
+    victoryImage: '/victory/v.webp',
     color: '#d71933',
     ink: '#fff',
   },
@@ -108,6 +113,7 @@ const parties: Party[] = [
     shortName: 'C',
     logo: '/party-logos/c.png',
     leaders: [{ name: 'Elisabeth Thand Ringqvist', image: '/leaders/elisabeth-thand-ringqvist.webp' }],
+    victoryImage: '/victory/c.webp',
     color: '#079447',
     ink: '#fff',
   },
@@ -117,6 +123,7 @@ const parties: Party[] = [
     shortName: 'KD',
     logo: '/party-logos/kd.svg',
     leaders: [{ name: 'Ebba Busch', image: '/leaders/ebba-busch.webp' }],
+    victoryImage: '/victory/kd.webp',
     color: '#203c8d',
     ink: '#fff',
   },
@@ -126,6 +133,7 @@ const parties: Party[] = [
     shortName: 'L',
     logo: '/party-logos/l.svg',
     leaders: [{ name: 'Simona Mohamsson', image: '/leaders/simona-mohamsson.webp' }],
+    victoryImage: '/victory/l.webp',
     color: '#1265b0',
     ink: '#fff',
   },
@@ -138,6 +146,7 @@ const parties: Party[] = [
       { name: 'Amanda Lind', image: '/leaders/amanda-lind.webp' },
       { name: 'Daniel Helldén', image: '/leaders/daniel-hellden.webp' },
     ],
+    victoryImage: '/victory/mp.webp',
     color: '#69a942',
     ink: '#fff',
   },
@@ -493,6 +502,21 @@ export default function Home() {
       switchMusic(cue, true, true);
     };
   });
+
+  useEffect(() => {
+    const victoryPreloads = parties.map((party) => {
+      const image = new Image();
+      image.decoding = 'async';
+      image.src = party.victoryImage;
+      return image;
+    });
+
+    return () => {
+      victoryPreloads.forEach((image) => {
+        image.src = '';
+      });
+    };
+  }, []);
 
   useEffect(() => {
     const cheer = new Audio('/sounds/crowd-cheer.mp3');
@@ -1433,6 +1457,9 @@ export default function Home() {
           milestone={currentMilestone}
         />
       )}
+      {showingAnswer && wasCorrect && (
+        <VictoryShow key={`victory-${current.id}`} party={correctParty} />
+      )}
       {phase === 'reveal' && wasCorrect && (
         <Confetti intensity={streak >= 3 ? 'full' : 'spark'} />
       )}
@@ -1801,6 +1828,34 @@ function PartyLeaders({ party }: { party: Party }) {
         </span>
       ))}
     </span>
+  );
+}
+
+function VictoryShow({ party }: { party: Party }) {
+  return (
+    <div
+      className={`victory-show victory-${party.id.toLowerCase()}`}
+      style={{
+        '--victory-party': party.color,
+        '--victory-ink': party.ink,
+      } as CSSProperties}
+      aria-hidden="true"
+    >
+      <span className="victory-rays" />
+      <span className="victory-starburst">★</span>
+      <strong className="victory-headline">Rätt svar!</strong>
+      <span className="victory-pose">
+        <img src={party.victoryImage} alt="" />
+      </span>
+      <span className="victory-nameplate">
+        <small>Partiledning 2026</small>
+        <strong>{party.name}</strong>
+        <span>{party.leaders.map((leader) => leader.name).join(' & ')}</span>
+      </span>
+      <span className="victory-party-token">
+        <img className={`party-logo logo-${party.id.toLowerCase()}`} src={party.logo} alt="" />
+      </span>
+    </div>
   );
 }
 

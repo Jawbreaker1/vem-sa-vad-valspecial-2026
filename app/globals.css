@@ -670,6 +670,179 @@ summary:focus-visible {
   font-style: normal;
 }
 
+.victory-show {
+  position: fixed;
+  z-index: 34;
+  inset: 0;
+  overflow: hidden;
+  isolation: isolate;
+  pointer-events: none;
+  animation: victory-show-life 2.45s linear both;
+}
+
+.victory-show::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 57%, color-mix(in srgb, var(--victory-party) 54%, transparent), transparent 42%),
+    radial-gradient(circle at 50% 72%, rgb(255 205 48 / .52), transparent 35%),
+    rgb(0 8 27 / .88);
+  animation: victory-backdrop-flash .58s ease-out both;
+}
+
+.victory-rays {
+  position: absolute;
+  z-index: -1;
+  inset: -75%;
+  background: repeating-conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0 5deg,
+    rgb(255 218 73 / .42) 5deg 7deg,
+    transparent 7deg 15deg,
+    rgb(47 165 255 / .28) 15deg 17deg,
+    transparent 17deg 25deg
+  );
+  filter: blur(1px);
+  transform-origin: center;
+  animation: victory-rays-burst 2.35s cubic-bezier(.13, .72, .28, 1) both;
+}
+
+.victory-starburst {
+  position: absolute;
+  z-index: 0;
+  top: 46%;
+  left: 50%;
+  color: #fff4a3;
+  filter: drop-shadow(0 0 22px white) drop-shadow(0 0 56px #ffc725);
+  font-size: min(72vw, 72vh);
+  line-height: .7;
+  opacity: .28;
+  transform: translate(-50%, -50%);
+  animation: victory-star-pop .7s .15s cubic-bezier(.16, .9, .28, 1.35) both;
+}
+
+.victory-headline {
+  position: absolute;
+  z-index: 1;
+  top: clamp(5.7rem, 11vh, 8.5rem);
+  left: 50%;
+  width: max-content;
+  max-width: 94vw;
+  color: #ffd84d;
+  filter: drop-shadow(0 9px 0 #5b2800) drop-shadow(0 0 18px white) drop-shadow(0 0 42px #ffb21b);
+  font-family: 'Avenir Next Condensed', 'Arial Narrow', Impact, sans-serif;
+  font-size: clamp(4.5rem, 13vw, 11.5rem);
+  font-weight: 950;
+  line-height: .78;
+  letter-spacing: -.045em;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-text-stroke: 3px #9b4c00;
+  transform: translateX(-50%);
+  text-wrap: nowrap;
+  animation: victory-headline-hit .52s .5s cubic-bezier(.14, 1.08, .25, 1.42) both;
+}
+
+.victory-pose {
+  position: absolute;
+  z-index: 2;
+  bottom: -7vh;
+  left: 50%;
+  display: block;
+  width: min(930px, 82vw);
+  height: min(82vh, 820px);
+  transform-origin: center bottom;
+  mix-blend-mode: screen;
+  animation: victory-pose-rise .76s .15s cubic-bezier(.13, .91, .27, 1.3) both;
+}
+
+.victory-pose img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center bottom;
+  filter:
+    saturate(1.12)
+    contrast(1.06)
+    drop-shadow(0 0 16px color-mix(in srgb, var(--victory-party) 66%, white))
+    drop-shadow(0 16px 22px rgb(0 0 0 / .72));
+}
+
+.victory-nameplate {
+  position: absolute;
+  z-index: 5;
+  bottom: clamp(4.8rem, 11vh, 8.5rem);
+  left: clamp(1rem, 5vw, 5rem);
+  display: grid;
+  min-width: min(350px, 36vw);
+  overflow: hidden;
+  border: 4px solid #ffe16e;
+  border-radius: 14px 5px 14px 5px;
+  background: #061b4a;
+  box-shadow: 0 7px 0 #472000, 0 0 25px color-mix(in srgb, var(--victory-party) 64%, transparent);
+  color: white;
+  text-align: left;
+  text-transform: uppercase;
+  transform: rotate(-1.2deg);
+  animation: victory-nameplate-in .46s .7s cubic-bezier(.16, .92, .28, 1.27) both;
+}
+
+.victory-nameplate small {
+  padding: .32rem .75rem .25rem;
+  background: white;
+  color: #08204d;
+  font: 950 .58rem/1 'Avenir Next', Avenir, system-ui, sans-serif;
+  letter-spacing: .17em;
+}
+
+.victory-nameplate > strong {
+  padding: .43rem .75rem .3rem;
+  background: var(--victory-party);
+  color: var(--victory-ink);
+  font-family: 'Avenir Next Condensed', 'Arial Narrow', Impact, sans-serif;
+  font-size: clamp(1.25rem, 2.7vw, 2.15rem);
+  font-weight: 950;
+  line-height: .9;
+}
+
+.victory-nameplate > span {
+  padding: .36rem .75rem .32rem;
+  color: #dceaff;
+  font-family: 'Avenir Next Condensed', 'Arial Narrow', Impact, sans-serif;
+  font-size: clamp(.82rem, 1.55vw, 1.15rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.victory-party-token {
+  position: absolute;
+  z-index: 6;
+  right: clamp(1.3rem, 7vw, 7rem);
+  bottom: clamp(3.7rem, 8vh, 6rem);
+  display: grid;
+  width: clamp(92px, 11vw, 142px);
+  aspect-ratio: 1;
+  place-items: center;
+  padding: 13px;
+  border: 7px solid #ffdb4b;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 28%, white, #e8f2ff 72%);
+  box-shadow:
+    0 0 0 5px #743500,
+    0 10px 0 #2f1600,
+    0 0 28px white,
+    0 0 65px #ffc51e;
+  animation: victory-token-pop .48s .63s cubic-bezier(.16, .94, .3, 1.5) both;
+}
+
+.victory-party-token .party-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .game-header {
   position: relative;
   z-index: 12;
@@ -3135,6 +3308,52 @@ summary:focus-visible {
   100% { opacity: 0; visibility: hidden; transform: translate(-50%, -64%) scale(1.04); }
 }
 
+@keyframes victory-show-life {
+  0% { opacity: 0; }
+  4%, 80% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+@keyframes victory-backdrop-flash {
+  0% { opacity: 0; filter: brightness(3); }
+  18% { opacity: 1; filter: brightness(1.8); }
+  100% { opacity: 1; filter: brightness(1); }
+}
+
+@keyframes victory-rays-burst {
+  0% { opacity: 0; transform: rotate(-18deg) scale(.32); }
+  28% { opacity: 1; transform: rotate(2deg) scale(1.08); }
+  100% { opacity: .68; transform: rotate(34deg) scale(1.16); }
+}
+
+@keyframes victory-star-pop {
+  from { opacity: 0; transform: translate(-50%, -50%) rotate(-25deg) scale(.18); }
+  to { opacity: .28; transform: translate(-50%, -50%) rotate(0) scale(1); }
+}
+
+@keyframes victory-headline-hit {
+  0% { opacity: 0; transform: translateX(-50%) scale(2.2) rotate(-7deg); filter: blur(4px) brightness(2); }
+  68% { opacity: 1; transform: translateX(-50%) scale(.93) rotate(1.5deg); filter: blur(0) brightness(1.3); }
+  100% { opacity: 1; transform: translateX(-50%) scale(1) rotate(-1deg); filter: blur(0) brightness(1); }
+}
+
+@keyframes victory-pose-rise {
+  0% { opacity: 0; transform: translate(-50%, 108%) scale(.58) rotate(-4deg); }
+  64% { opacity: 1; transform: translate(-50%, -3%) scale(1.06) rotate(1deg); }
+  82% { transform: translate(-50%, 1%) scale(.98) rotate(-.4deg); }
+  100% { opacity: 1; transform: translate(-50%, 0) scale(1) rotate(0); }
+}
+
+@keyframes victory-nameplate-in {
+  from { opacity: 0; transform: translateX(-115%) rotate(-7deg); }
+  to { opacity: 1; transform: translateX(0) rotate(-1.2deg); }
+}
+
+@keyframes victory-token-pop {
+  from { opacity: 0; transform: scale(.18) rotate(-32deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
 @keyframes progress-strike {
   0% { transform: scale(.35, 3.2); filter: brightness(2.2); }
   100% { transform: scaleY(1.8); filter: brightness(1); }
@@ -3228,6 +3447,27 @@ summary:focus-visible {
 
   .party-name {
     font-size: clamp(.48rem, 1.45vw, .68rem);
+  }
+
+  .victory-pose {
+    bottom: -2vh;
+    width: min(980px, 96vw);
+    height: 76svh;
+  }
+
+  .victory-headline {
+    top: clamp(5.5rem, 12vh, 7rem);
+  }
+
+  .victory-nameplate {
+    bottom: 8vh;
+    left: 1rem;
+    min-width: min(320px, 43vw);
+  }
+
+  .victory-party-token {
+    right: 1.4rem;
+    bottom: 7vh;
   }
 
   .reveal-panel {
@@ -3359,6 +3599,51 @@ summary:focus-visible {
     top: -1.25rem;
     right: 2%;
     border-width: 3px;
+  }
+
+  .victory-headline {
+    top: 16vh;
+    font-size: clamp(4.1rem, 20vw, 6.5rem);
+    -webkit-text-stroke-width: 2px;
+  }
+
+  .victory-pose {
+    bottom: 8svh;
+    width: 126vw;
+    height: 66svh;
+  }
+
+  .victory-nameplate {
+    bottom: 9vh;
+    left: .65rem;
+    min-width: 0;
+    width: min(68vw, 280px);
+    border-width: 3px;
+  }
+
+  .victory-nameplate small {
+    font-size: .46rem;
+  }
+
+  .victory-nameplate > strong {
+    font-size: clamp(1rem, 5vw, 1.45rem);
+    overflow-wrap: anywhere;
+  }
+
+  .victory-nameplate > span {
+    font-size: clamp(.68rem, 3.2vw, .9rem);
+  }
+
+  .victory-party-token {
+    right: .75rem;
+    bottom: 9vh;
+    width: 78px;
+    padding: 9px;
+    border-width: 5px;
+  }
+
+  .victory-starburst {
+    font-size: 115vw;
   }
 
   .round-progress {
