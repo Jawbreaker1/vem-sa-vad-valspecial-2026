@@ -36,6 +36,7 @@ type Point = { x: number; y: number };
 type Screen = 'intro' | 'question' | 'results';
 type Phase = 'choosing' | 'reveal';
 type Cue = 'start' | 'connect' | 'correct' | 'wrong';
+type CrowdCue = 'cheer' | 'boo';
 
 const parties: Party[] = [
   {
@@ -172,6 +173,7 @@ export default function Home() {
   } | null>(null);
   const jackRef = useRef<HTMLSpanElement>(null);
   const audioRef = useRef<AudioContext | null>(null);
+  const crowdAudioRef = useRef<Partial<Record<CrowdCue, HTMLAudioElement>>>({});
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   const current = roundQuotes[currentIndex] ?? quotes[0];
@@ -216,6 +218,24 @@ export default function Home() {
     const timer = window.setTimeout(() => nextButtonRef.current?.focus({ preventScroll: true }), 650);
     return () => window.clearTimeout(timer);
   }, [phase]);
+
+  useEffect(() => {
+    const cheer = new Audio('/sounds/crowd-cheer.mp3');
+    const boo = new Audio('/sounds/crowd-boo.mp3');
+    cheer.preload = 'auto';
+    boo.preload = 'auto';
+    cheer.volume = .88;
+    boo.volume = .92;
+    crowdAudioRef.current = { cheer, boo };
+
+    return () => {
+      [cheer, boo].forEach((track) => {
+        track.pause();
+        track.currentTime = 0;
+      });
+      crowdAudioRef.current = {};
+    };
+  }, []);
 
   const cable = useMemo(() => {
     if (screen !== 'question' || !geometry) return null;
@@ -301,8 +321,27 @@ export default function Home() {
     }
   }
 
+  function stopCrowd() {
+    Object.values(crowdAudioRef.current).forEach((track) => {
+      track?.pause();
+      if (track) track.currentTime = 0;
+    });
+  }
+
+  function playCrowd(cue: CrowdCue) {
+    if (!soundOn) return;
+    stopCrowd();
+    const track = crowdAudioRef.current[cue];
+    if (!track) return;
+    track.currentTime = 0;
+    void track.play().catch(() => {
+      // A browser may still block media if the page has not received a user gesture.
+    });
+  }
+
   function toggleSound() {
     if (soundOn) {
+      stopCrowd();
       setSoundOn(false);
       return;
     }
@@ -311,6 +350,7 @@ export default function Home() {
   }
 
   function startGame() {
+    stopCrowd();
     setRoundQuotes(buildRound(quotes));
     setAnswers([]);
     setCurrentIndex(0);
@@ -339,6 +379,7 @@ export default function Home() {
     ]);
     setPhase('reveal');
     playCue(correct ? 'correct' : 'wrong');
+    playCrowd(correct ? 'cheer' : 'boo');
   }
 
   function startCable(event: PointerEvent<HTMLSpanElement>) {
@@ -370,6 +411,7 @@ export default function Home() {
   }
 
   function nextQuestion() {
+    stopCrowd();
     if (currentIndex === roundQuotes.length - 1) {
       setScreen('results');
       return;
@@ -384,6 +426,7 @@ export default function Home() {
   }
 
   function returnHome() {
+    stopCrowd();
     setScreen('intro');
     setPhase('choosing');
     setSelected(null);
@@ -409,20 +452,22 @@ export default function Home() {
         <div className="intro-image" aria-hidden="true" />
         <div className="sweep sweep-one" aria-hidden="true" />
         <div className="sweep sweep-two" aria-hidden="true" />
-        <h1 className="intro-logo">
-          <span className="intro-logo-main">Vem sa vad?</span>
-          <span className="intro-logo-edition">
-            <i aria-hidden="true">★</i>
-            Valspecial 2026
-            <i aria-hidden="true">★</i>
-          </span>
-        </h1>
-        <div className="intro-kicker">8 partier · 8 primärkällor · 0 säkra kort</div>
-        <button className="start-button" onClick={startGame}>
-          <span>Starta spelet</span>
-          <small>Koppla citaten till rätt parti</small>
-        </button>
-        <p className="intro-note">
+        <section className="intro-console" aria-labelledby="intro-title">
+          <h1 className="intro-logo" id="intro-title">
+            <span className="intro-logo-main">Vem sa vad?</span>
+            <span className="intro-logo-edition">
+              <i aria-hidden="true">★</i>
+              Valspecial 2026
+              <i aria-hidden="true">★</i>
+            </span>
+          </h1>
+          <button className="start-button" onClick={startGame} aria-describedby="intro-note">
+            <span>Starta spelet</span>
+            <small>Koppla citaten till rätt parti</small>
+          </button>
+          <div className="intro-kicker">8 partier · 8 primärkällor · 0 säkra kort</div>
+        </section>
+        <p className="intro-note" id="intro-note">
           En lekfull prototyp. Historiska citat behöver inte motsvara partiernas politik i dag.
         </p>
         {soundButton}

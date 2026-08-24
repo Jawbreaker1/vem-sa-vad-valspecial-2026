@@ -108,41 +108,29 @@ summary:focus-visible {
   animation: sweep-right 4.6s ease-in-out infinite alternate;
 }
 
-.intro-kicker {
+.intro-console {
   position: absolute;
-  z-index: 4;
-  top: 36%;
+  z-index: 5;
+  top: clamp(.5rem, 1.8vh, 1.35rem);
   left: 50%;
-  width: max-content;
-  max-width: calc(100% - 7.5rem);
+  display: grid;
+  width: min(960px, 88vw);
+  justify-items: center;
   transform: translateX(-50%);
-  padding: .58rem 1.2rem;
-  border: 2px solid rgb(255 210 70 / .82);
-  border-radius: 999px;
-  background: rgb(2 21 60 / .72);
-  box-shadow: 0 8px 24px rgb(0 0 0 / .3);
-  font: 850 clamp(.65rem, 1.3vw, .88rem)/1 system-ui, sans-serif;
-  letter-spacing: .12em;
-  text-align: center;
-  text-transform: uppercase;
-  backdrop-filter: blur(8px);
+  filter: drop-shadow(0 22px 30px rgb(0 0 0 / .5));
+  animation: logo-hover 4.5s ease-in-out infinite alternate;
 }
 
 .intro-logo {
-  position: absolute;
-  z-index: 5;
-  top: clamp(.75rem, 3.2vh, 2.25rem);
-  left: 50%;
+  position: relative;
+  z-index: 3;
   display: grid;
-  width: min(880px, 70vw);
+  width: 100%;
   justify-items: center;
-  transform: translateX(-50%);
   margin: 0;
   color: white;
   text-align: center;
   text-transform: uppercase;
-  filter: drop-shadow(0 20px 30px rgb(0 0 0 / .48));
-  animation: logo-hover 4.5s ease-in-out infinite alternate;
 }
 
 .intro-logo-main {
@@ -221,25 +209,66 @@ summary:focus-visible {
   font-size: .7em;
 }
 
-.start-button {
-  position: absolute;
+.intro-kicker {
+  position: relative;
   z-index: 4;
-  left: 50%;
-  top: 48%;
-  width: clamp(300px, 32vw, 520px);
-  min-height: clamp(88px, 10vw, 124px);
-  transform: translate(-50%, -8%);
+  width: max-content;
+  max-width: min(520px, 68vw);
+  margin-top: -2px;
+  padding: .48rem 1.15rem .44rem;
+  border: 3px solid #fff3bd;
+  border-radius: 0 0 16px 16px;
+  background: linear-gradient(180deg, #dc203c, #8e0b24);
+  box-shadow:
+    0 0 0 4px #743000,
+    0 6px 0 #3b1900,
+    0 0 18px rgb(255 201 45 / .42),
+    inset 0 2px 5px rgb(255 255 255 / .35);
+  font: 900 clamp(.62rem, 1.15vw, .82rem)/1 system-ui, sans-serif;
+  letter-spacing: .11em;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.start-button {
+  position: relative;
+  z-index: 4;
+  width: min(570px, 59vw);
+  min-height: clamp(82px, 9.5vw, 116px);
+  margin-top: clamp(.65rem, 1.5vh, 1rem);
   border: 7px solid #ffd560;
-  border-radius: 999px;
+  border-radius: 30px 8px 30px 8px;
   background: radial-gradient(circle at 50% 15%, #168bf9, #063d9f 62%, #031d64);
   color: #fff;
   text-transform: uppercase;
   box-shadow:
-    0 0 0 4px #6b3700,
+    0 0 0 4px #fff3bd,
+    0 0 0 9px #6b3700,
+    0 11px 0 #3f1e00,
     0 0 42px rgb(255 201 40 / .72),
     inset 0 4px 10px rgb(255 255 255 / .45);
   cursor: pointer;
   transition: transform .18s ease, filter .18s ease;
+}
+
+.start-button::before,
+.start-button::after {
+  content: '★';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffe66a;
+  font-size: clamp(.95rem, 1.65vw, 1.5rem);
+  text-shadow: 0 0 11px white;
+}
+
+.start-button::before {
+  left: clamp(.7rem, 2vw, 1.45rem);
+}
+
+.start-button::after {
+  right: clamp(.7rem, 2vw, 1.45rem);
 }
 
 .start-button span {
@@ -258,12 +287,12 @@ summary:focus-visible {
 }
 
 .start-button:hover {
-  transform: translate(-50%, -8%) scale(1.045);
+  transform: translateY(-3px) scale(1.035);
   filter: brightness(1.13);
 }
 
 .start-button:active {
-  transform: translate(-50%, -8%) scale(.98);
+  transform: translateY(4px) scale(.985);
 }
 
 .intro-note {
@@ -1418,8 +1447,12 @@ summary:focus-visible {
     background-size: auto 100%;
   }
 
+  .intro-console {
+    width: min(940px, 94vw);
+  }
+
   .start-button {
-    width: min(78vw, 430px);
+    width: min(560px, 68vw);
   }
 
   .party-grid {
@@ -1446,9 +1479,13 @@ summary:focus-visible {
 }
 
 @media (max-width: 600px) {
+  .intro-console {
+    top: .65rem;
+    width: 94vw;
+  }
+
   .intro-logo {
-    top: .8rem;
-    width: min(88vw, 520px);
+    width: 100%;
   }
 
   .intro-logo-main {
@@ -1469,21 +1506,27 @@ summary:focus-visible {
   }
 
   .intro-kicker {
-    top: 34%;
-    max-width: calc(100% - 2rem);
-    padding: .45rem .65rem;
+    max-width: 84vw;
+    padding: .42rem .62rem .38rem;
     letter-spacing: .07em;
+    white-space: normal;
   }
 
   .start-button {
-    top: 51%;
-    width: min(83vw, 380px);
+    width: min(80vw, 380px);
     min-height: 88px;
+    margin-top: .8rem;
     border-width: 5px;
+    border-radius: 22px 6px 22px 6px;
   }
 
   .start-button span {
     font-size: clamp(2rem, 10vw, 3.15rem);
+  }
+
+  .start-button::before,
+  .start-button::after {
+    display: none;
   }
 
   .intro-note {
