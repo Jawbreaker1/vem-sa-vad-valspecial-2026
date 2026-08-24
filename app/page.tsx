@@ -384,6 +384,15 @@ export default function Home() {
   const musicReadyRef = useRef(false);
   const musicAttemptedRef = useRef(false);
   const musicRequestRef = useRef(0);
+  const desiredMusicRef = useRef<MusicCue>('intro');
+  const soundOnRef = useRef(true);
+  const screenRef = useRef<Screen>('intro');
+  const switchMusicActionRef = useRef<(
+    cue: MusicCue,
+    force?: boolean,
+    restart?: boolean,
+  ) => void>(() => undefined);
+  const unlockMusicActionRef = useRef<(cue: MusicCue) => void>(() => undefined);
   const cableHumRef = useRef<CableHum | null>(null);
   const selectedRef = useRef<PartyId | null>(null);
   const resolvedRef = useRef(false);
@@ -475,6 +484,17 @@ export default function Home() {
   }, [screen, phase, currentIndex]);
 
   useEffect(() => {
+    screenRef.current = screen;
+    soundOnRef.current = soundOn;
+    switchMusicActionRef.current = switchMusic;
+    unlockMusicActionRef.current = (cue) => {
+      primeCrowdAudio();
+      setSynthSound(true);
+      switchMusic(cue, true, true);
+    };
+  });
+
+  useEffect(() => {
     const cheer = new Audio('/sounds/crowd-cheer.mp3');
     const boo = new Audio('/sounds/crowd-boo.mp3');
     const laugh = new Audio('/sounds/crowd-laugh.mp3');
@@ -492,10 +512,42 @@ export default function Home() {
     gameMusic.loop = true;
     introMusic.volume = MUSIC_VOLUMES.intro;
     gameMusic.volume = MUSIC_VOLUMES.game;
+
+    const recoverMusic = (cue: MusicCue, track: HTMLAudioElement) => {
+      if (desiredMusicRef.current !== cue || !soundOnRef.current) return;
+      musicReadyRef.current = false;
+      musicAttemptedRef.current = false;
+      setMusicReady(false);
+      setMusicAttempted(false);
+      window.setTimeout(() => {
+        if (
+          document.visibilityState === 'visible'
+          && soundOnRef.current
+          && desiredMusicRef.current === cue
+          && track.paused
+          && !activeCrowdRef.current
+        ) {
+          switchMusicActionRef.current(cue);
+        }
+      }, 180);
+    };
+    const recoverIntro = () => recoverMusic('intro', introMusic);
+    const recoverGame = () => recoverMusic('game', gameMusic);
+    introMusic.addEventListener('pause', recoverIntro);
+    introMusic.addEventListener('ended', recoverIntro);
+    gameMusic.addEventListener('pause', recoverGame);
+    gameMusic.addEventListener('ended', recoverGame);
     crowdAudioRef.current = { cheer, boo, laugh };
     musicAudioRef.current = { intro: introMusic, game: gameMusic };
+    musicReadyRef.current = false;
+    musicAttemptedRef.current = false;
+    switchMusicActionRef.current(screenRef.current === 'question' ? 'game' : 'intro');
 
     return () => {
+      introMusic.removeEventListener('pause', recoverIntro);
+      introMusic.removeEventListener('ended', recoverIntro);
+      gameMusic.removeEventListener('pause', recoverGame);
+      gameMusic.removeEventListener('ended', recoverGame);
       [cheer, boo, laugh, introMusic, gameMusic].forEach((track) => {
         track.pause();
         track.currentTime = 0;
@@ -523,6 +575,34 @@ export default function Home() {
       if (context && context.state !== 'closed') void context.close();
     };
   }, []);
+
+  useEffect(() => {
+    if (!soundOn || musicReady || musicAttempted) return;
+
+    const unlockMusic = () => {
+      document.removeEventListener('pointerdown', unlockMusic, true);
+      document.removeEventListener('keydown', unlockMusic, true);
+      unlockMusicActionRef.current(screen === 'question' ? 'game' : 'intro');
+    };
+
+    document.addEventListener('pointerdown', unlockMusic, true);
+    document.addEventListener('keydown', unlockMusic, true);
+    return () => {
+      document.removeEventListener('pointerdown', unlockMusic, true);
+      document.removeEventListener('keydown', unlockMusic, true);
+    };
+  }, [screen, soundOn, musicReady, musicAttempted]);
+
+  useEffect(() => {
+    if (!soundOn) return;
+    const resumeMusic = () => {
+      if (document.visibilityState === 'visible') {
+        switchMusicActionRef.current(desiredMusicRef.current);
+      }
+    };
+    document.addEventListener('visibilitychange', resumeMusic);
+    return () => document.removeEventListener('visibilitychange', resumeMusic);
+  }, [screen, soundOn]);
 
   useEffect(() => {
     timeoutActionRef.current = handleQuestionExpired;
@@ -579,12 +659,7 @@ export default function Home() {
       sfxMasterRef.current = master;
     }
     if (audioRef.current.state === 'suspended') {
-      void audioRef.current.resume().catch(() => {
-        musicReadyRef.current = false;
-        musicAttemptedRef.current = false;
-        setMusicReady(false);
-        setMusicAttempted(false);
-      });
+      void audioRef.current.resume().catch(() => undefined);
     }
     return audioRef.current;
   }
@@ -772,6 +847,13 @@ export default function Home() {
     });
   }
 
+  function resumeDesiredMusic() {
+    if (!soundOnRef.current) return;
+    const cue = desiredMusicRef.current;
+    const desired = musicAudioRef.current[cue];
+    if (desired?.paused) switchMusicActionRef.current(cue);
+  }
+
   function primeCrowdAudio() {
     Object.values(crowdAudioRef.current).forEach((track) => {
       if (!track) return;
@@ -799,6 +881,7 @@ export default function Home() {
     });
     activeCrowdRef.current = null;
     restoreMusicVolume();
+    resumeDesiredMusic();
   }
 
   function stopCableHum() {
@@ -886,11 +969,13 @@ export default function Home() {
     track.onended = () => {
       if (activeCrowdRef.current === track) activeCrowdRef.current = null;
       restoreMusicVolume();
+      resumeDesiredMusic();
       track.onended = null;
     };
     void track.play().catch(() => {
       if (activeCrowdRef.current === track) activeCrowdRef.current = null;
       restoreMusicVolume();
+      resumeDesiredMusic();
       track.onended = null;
     });
   }
@@ -901,39 +986,58 @@ export default function Home() {
       track?.pause();
       if (track && reset) track.currentTime = 0;
     });
+    musicReadyRef.current = false;
+    musicAttemptedRef.current = false;
+    setMusicReady(false);
+    setMusicAttempted(false);
   }
 
-  function switchMusic(cue: MusicCue, force = false) {
+  function switchMusic(cue: MusicCue, force = false, restart = false) {
+    desiredMusicRef.current = cue;
     if (!soundOn && !force) return;
     const desired = musicAudioRef.current[cue];
     if (!desired) return;
     const request = ++musicRequestRef.current;
     musicAttemptedRef.current = true;
+    musicReadyRef.current = false;
     setMusicAttempted(true);
+    setMusicReady(false);
 
-    Object.entries(musicAudioRef.current).forEach(([key, track]) => {
-      if (key === cue || !track) return;
-      track.pause();
-      track.currentTime = 0;
-    });
+    const previousTracks = Object.entries(musicAudioRef.current).filter(
+      ([key, track]) => key !== cue && Boolean(track),
+    ) as Array<[string, HTMLAudioElement]>;
+    desired.loop = true;
     desired.volume = MUSIC_VOLUMES[cue];
+    if (restart) desired.currentTime = 0;
 
     void desired.play().then(() => {
-      if (request !== musicRequestRef.current) return;
+      if (request !== musicRequestRef.current) {
+        if (musicAudioRef.current[cue] !== desired || desiredMusicRef.current !== cue) {
+          desired.pause();
+          desired.currentTime = 0;
+        }
+        return;
+      }
+      previousTracks.forEach(([, track]) => {
+        track.pause();
+        track.currentTime = 0;
+      });
       musicReadyRef.current = true;
       setMusicReady(true);
     }).catch(() => {
       if (request !== musicRequestRef.current) return;
       musicReadyRef.current = false;
+      musicAttemptedRef.current = false;
       setMusicReady(false);
+      setMusicAttempted(false);
     });
   }
 
   function toggleSound() {
-    if (soundOn && !musicReadyRef.current && !musicAttemptedRef.current) {
+    if (soundOn && !musicReadyRef.current) {
       primeCrowdAudio();
       setSynthSound(true);
-      switchMusic(screen === 'question' ? 'game' : 'intro', true);
+      switchMusic(screen === 'question' ? 'game' : 'intro', true, true);
       playCue('connect', true);
       return;
     }
@@ -952,7 +1056,7 @@ export default function Home() {
     primeCrowdAudio();
     setSynthSound(true);
     playCue('connect', true);
-    switchMusic(screen === 'question' ? 'game' : 'intro', true);
+    switchMusic(screen === 'question' ? 'game' : 'intro', true, true);
   }
 
   function clearActionTimers() {
@@ -995,7 +1099,7 @@ export default function Home() {
     setTimeLeft(QUESTION_SECONDS);
     setScreen('question');
     playCue('start');
-    switchMusic('game');
+    switchMusic('game', false, true);
   }
 
   function connectParty(party: PartyId) {
@@ -1120,7 +1224,7 @@ export default function Home() {
     stopCableHum();
     if (currentIndex === roundQuotes.length - 1) {
       setScreen('results');
-      switchMusic('intro');
+      switchMusic('intro', false, true);
       return;
     }
     setPhase('transition');
@@ -1138,6 +1242,7 @@ export default function Home() {
       setTimeLeft(QUESTION_SECONDS);
       window.scrollTo({ top: 0, behavior: 'auto' });
       setPhase('choosing');
+      switchMusicActionRef.current('game', false, true);
       playCue('question');
     }, motionDelay(260));
   }
@@ -1157,7 +1262,7 @@ export default function Home() {
     setTimedOut(false);
     setAutoLocked(false);
     setTimeLeft(QUESTION_SECONDS);
-    switchMusic('intro');
+    switchMusic('intro', false, true);
   }
 
   const soundButton = (
