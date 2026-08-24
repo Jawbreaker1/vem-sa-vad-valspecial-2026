@@ -1651,18 +1651,46 @@ export default function Home() {
             )}
           </div>
         ) : (
-          <aside className={`reveal-panel ${wasCorrect ? 'panel-correct' : 'panel-wrong'}`}>
+          <aside
+            key={`reveal-${current.id}`}
+            className={`reveal-panel ${wasCorrect ? 'panel-correct' : 'panel-wrong'}`}
+            style={{
+              '--reveal-party': correctParty.color,
+              '--reveal-ink': correctParty.ink,
+            } as CSSProperties}
+          >
+            <span className="reveal-chase-lights" aria-hidden="true" />
             <div className="reveal-verdict">
-              <span>{timedOut ? 'Publiken hann före dig!' : autoLocked ? (wasCorrect ? 'Precis på håret!' : 'Valet låstes på noll!') : wasCorrect ? 'Du satte den!' : `Du valde ${selectedParty?.name}`}</span>
-              <strong>Rätt parti: {correctParty.name}</strong>
+              <RevealShowcard
+                quote={current}
+                party={correctParty}
+                chosen={selectedParty}
+                correct={wasCorrect}
+              />
+              <div className="verdict-copy">
+                <span>
+                  {timedOut
+                    ? 'Publiken hann före dig!'
+                    : autoLocked
+                      ? (wasCorrect ? 'Precis på håret!' : 'Valet låstes på noll!')
+                      : wasCorrect
+                        ? 'Du satte den!'
+                        : `Du valde ${selectedParty?.name}`}
+                </span>
+                <strong>
+                  <small>Rätt parti</small>
+                  {correctParty.name}
+                </strong>
+              </div>
             </div>
             <div className="source-story">
+              <span className="source-kicker">Citatet sades av</span>
               <p className="speaker-line">
                 <strong>{current.speaker}</strong>
                 <span>{current.speakerRole}</span>
               </p>
-              <time dateTime={current.date}>{formatDate(current.date)}</time>
-              <p>{current.context}</p>
+              <time className="source-date" dateTime={current.date}>{formatDate(current.date)}</time>
+              <p className="source-context">{current.context}</p>
               <p className="historical-note">
                 Detta sades {current.date.slice(0, 4)} och behöver inte motsvara partiets politik i dag.
               </p>
@@ -1687,14 +1715,17 @@ export default function Home() {
                   <p>{current.editorialNote}</p>
                 </details>
               )}
-              <a href={current.source.url} target="_blank" rel="noreferrer">
-                Se originalkällan hos {current.source.publisher}
-                <span aria-hidden="true"> ↗</span>
-              </a>
-              <small>
-                {current.source.title}
-                {current.source.locator ? ` · ${current.source.locator}` : ''}
-              </small>
+              <div className="source-link-block">
+                <a href={current.source.url} target="_blank" rel="noreferrer">
+                  <span>Originalkälla</span>
+                  {current.source.publisher}
+                  <b aria-hidden="true">↗</b>
+                </a>
+                <small>
+                  {current.source.title}
+                  {current.source.locator ? ` · ${current.source.locator}` : ''}
+                </small>
+              </div>
             </div>
             <button
               ref={nextButtonRef}
@@ -1702,12 +1733,17 @@ export default function Home() {
               onClick={nextQuestion}
               disabled={phase === 'transition'}
             >
-              {phase === 'transition'
-                ? 'Nästa…'
-                : currentIndex === roundQuotes.length - 1
-                  ? 'Visa resultatet'
-                  : 'Nästa citat'}
-              <span aria-hidden="true"> →</span>
+              <span className="next-button-copy">
+                <strong>
+                  {phase === 'transition'
+                    ? 'Nästa…'
+                    : currentIndex === roundQuotes.length - 1
+                      ? 'Visa resultatet'
+                      : 'Nästa citat'}
+                </strong>
+                <small>{currentIndex === roundQuotes.length - 1 ? 'Dags för domen' : 'Fortsätt showen'}</small>
+              </span>
+              <b aria-hidden="true">→</b>
             </button>
           </aside>
         )}
@@ -1765,6 +1801,55 @@ function PartyLeaders({ party }: { party: Party }) {
         </span>
       ))}
     </span>
+  );
+}
+
+function RevealShowcard({
+  quote,
+  party,
+  chosen,
+  correct,
+}: {
+  quote: Quote;
+  party: Party;
+  chosen: Party | null;
+  correct: boolean;
+}) {
+  const hasVerifiedPortrait = Boolean(
+    quote.speakerImage && quote.verification.speakerIdentity,
+  );
+
+  return (
+    <div className={`reveal-showcard ${hasVerifiedPortrait ? 'has-portrait' : 'has-emblem'}`} aria-hidden="true">
+      <span className="reveal-rays" />
+      <span className="showcard-kicker">
+        {hasVerifiedPortrait ? 'Citatet sades av' : 'Vem var det?'}
+      </span>
+      <span className="reveal-image-frame">
+        {hasVerifiedPortrait ? (
+          <img className="reveal-speaker-image" src={quote.speakerImage ?? ''} alt="" />
+        ) : (
+          <>
+            <img className={`reveal-emblem logo-${party.id.toLowerCase()}`} src={party.logo} alt="" />
+            <b className="reveal-quote-mark">”</b>
+          </>
+        )}
+        <span className="reveal-party-seal">
+          <img className={`party-logo logo-${party.id.toLowerCase()}`} src={party.logo} alt="" />
+        </span>
+      </span>
+      <span className="reveal-speaker-caption">
+        <strong>{quote.speaker}</strong>
+        <small>{hasVerifiedPortrait ? 'Verifierad talare' : quote.speakerRole}</small>
+      </span>
+      {!correct && chosen && (
+        <span className="wrong-choice-chip">
+          <small>Ditt svar</small>
+          <img className={`party-logo logo-${chosen.id.toLowerCase()}`} src={chosen.logo} alt="" />
+          <b>×</b>
+        </span>
+      )}
+    </div>
   );
 }
 
