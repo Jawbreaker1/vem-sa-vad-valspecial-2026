@@ -61,7 +61,7 @@
     "sourcePage": "https://www.mp.se/profil-och-logga/",
     "sourceFile": "https://www.mp.se/wp-content/themes/mp/assets/images/logo.svg",
     "retrieved": "2026-08-24",
-    "note": "Officiellt profilmaterial. Ingen uttrycklig öppen logotyplicens anges; varumärkesrätt kan gälla."
+    "note": "Officiellt profilmaterial. SVG-filens viewBox är lokalt beskuren till den officiella maskrossymbolen för den runda spelknappen; vektorformer och färger är oförändrade. Ingen uttrycklig öppen logotyplicens anges; varumärkesrätt kan gälla."
   },
   {
     "asset": "/start-stage.png",

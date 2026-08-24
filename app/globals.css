@@ -1166,12 +1166,18 @@ summary:focus-visible {
   transition: transform .3s cubic-bezier(.18, 1.45, .35, 1), filter .22s ease;
 }
 
-.party-logo.logo-s,
-.party-logo.logo-mp {
+.party-logo.logo-s {
   width: 72%;
   height: 72%;
   object-fit: cover;
   object-position: left center;
+}
+
+.party-logo.logo-mp {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+  object-position: center;
 }
 
 .party-podium.is-selected .party-logo {
