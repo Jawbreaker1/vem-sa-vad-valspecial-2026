@@ -30,12 +30,27 @@ type Answer = {
   party: PartyId;
   chosen: PartyId | null;
   correct: boolean;
+  resolution: 'manual' | 'auto-lock' | 'timeout';
+  secondsLeft: number;
+  streakBefore: number;
 };
 
 type Point = { x: number; y: number };
 type Screen = 'intro' | 'question' | 'results';
-type Phase = 'choosing' | 'reveal';
-type Cue = 'start' | 'grab' | 'connect' | 'tick' | 'timeout' | 'correct' | 'wrong';
+type Phase = 'choosing' | 'locking' | 'reveal' | 'transition';
+type Cue =
+  | 'start'
+  | 'question'
+  | 'hover'
+  | 'grab'
+  | 'connect'
+  | 'countdown'
+  | 'lock'
+  | 'transition'
+  | 'timeout'
+  | 'correct'
+  | 'combo'
+  | 'wrong';
 type CrowdCue = 'cheer' | 'boo' | 'laugh';
 type MusicCue = 'intro' | 'game';
 type CableHum = {
@@ -292,6 +307,54 @@ function formatDate(isoDate: string) {
   });
 }
 
+function trailingCorrectStreak(answers: Answer[]) {
+  let streak = 0;
+  for (let index = answers.length - 1; index >= 0; index -= 1) {
+    if (!answers[index].correct) break;
+    streak += 1;
+  }
+  return streak;
+}
+
+function milestoneForQuestion(questionNumber: number) {
+  if (questionNumber === 6) return 'Första akten klar!';
+  if (questionNumber === 12) return 'Halvvägs!';
+  if (questionNumber === 18) return 'Slutspurt!';
+  if (questionNumber === 24) return 'Finalen avgjord!';
+  return null;
+}
+
+function feedbackCopy(answer: Answer, streak: number) {
+  let headline = 'BZZZT!';
+  let detail = 'Rätt podium lyser upp';
+
+  if (answer.resolution === 'timeout') {
+    headline = 'FÖR SENT!';
+    detail = 'Publiken hann före kabeln';
+  } else if (answer.correct) {
+    headline = streak >= 4
+      ? `MEGASVIT ×${streak}!`
+      : streak === 3
+        ? 'TRIPPEL!'
+        : streak === 2
+          ? 'DUBBEL!'
+          : answer.secondsLeft >= 15
+            ? 'BLIXTSNABBT!'
+            : answer.secondsLeft <= 1
+              ? 'PÅ HÅRET!'
+              : 'RÄTT!';
+    detail = `+1 poäng · ${answer.secondsLeft} sek kvar`;
+  } else if (answer.streakBefore >= 2) {
+    headline = 'SVITEN BRÖTS!';
+    detail = `Du hann bygga en svit på ${answer.streakBefore}`;
+  } else if (answer.resolution === 'auto-lock') {
+    headline = 'LÅST PÅ NOLL!';
+    detail = 'Rätt podium tar strålkastaren';
+  }
+
+  return { headline, detail };
+}
+
 export default function Home() {
   const [screen, setScreen] = useState<Screen>('intro');
   const [phase, setPhase] = useState<Phase>('choosing');
@@ -314,6 +377,7 @@ export default function Home() {
   const jackRef = useRef<HTMLSpanElement>(null);
   const audioRef = useRef<AudioContext | null>(null);
   const sfxMasterRef = useRef<GainNode | null>(null);
+  const feedbackGainRef = useRef<GainNode | null>(null);
   const crowdAudioRef = useRef<Partial<Record<CrowdCue, HTMLAudioElement>>>({});
   const activeCrowdRef = useRef<HTMLAudioElement | null>(null);
   const musicAudioRef = useRef<Partial<Record<MusicCue, HTMLAudioElement>>>({});
@@ -326,13 +390,33 @@ export default function Home() {
   const timeoutActionRef = useRef<() => void>(() => undefined);
   const tickActionRef = useRef<(secondsRemaining: number) => void>(() => undefined);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const instructionRef = useRef<HTMLParagraphElement>(null);
+  const revealTimerRef = useRef<number | null>(null);
+  const transitionTimerRef = useRef<number | null>(null);
+  const hoverCueRef = useRef<{ party: PartyId | null; at: number }>({ party: null, at: 0 });
 
   const current = roundQuotes[currentIndex] ?? quotes[0];
   const currentTheme = questionThemes[current.theme];
   const correctParty = partyById(current.party);
   const selectedParty = selected ? partyById(selected) : null;
+  const showingAnswer = phase === 'reveal' || phase === 'transition';
   const wasCorrect = !timedOut && selected === current.party;
-  const score = answers.filter((answer) => answer.correct).length;
+  const lastAnswer = answers.at(-1);
+  const visibleAnswers = phase === 'locking' && lastAnswer?.quoteId === current.id
+    ? answers.slice(0, -1)
+    : answers;
+  const score = visibleAnswers.filter((answer) => answer.correct).length;
+  const streak = trailingCorrectStreak(visibleAnswers);
+  const bestStreak = Math.max(
+    0,
+    ...answers.map((answer) => (answer.correct ? answer.streakBefore + 1 : answer.streakBefore)),
+  );
+  const currentMilestone = showingAnswer
+    ? milestoneForQuestion(currentIndex + 1)
+    : null;
+  const currentFeedback = showingAnswer && lastAnswer?.quoteId === current.id
+    ? feedbackCopy(lastAnswer, streak)
+    : null;
   const timerRatio = Math.max(0, Math.min(1, timeLeft / QUESTION_SECONDS));
   const timerScale = 1 + Math.max(0, 7 - timeLeft) * .045;
   const needsMusicUnlock = soundOn && !musicReady && !musicAttempted;
@@ -370,9 +454,23 @@ export default function Home() {
 
   useEffect(() => {
     if (phase !== 'reveal') return;
-    const timer = window.setTimeout(() => nextButtonRef.current?.focus({ preventScroll: true }), 650);
+    const timer = window.setTimeout(() => {
+      if (document.activeElement === document.body) {
+        nextButtonRef.current?.focus({ preventScroll: true });
+      }
+    }, 320);
     return () => window.clearTimeout(timer);
   }, [phase]);
+
+  useEffect(() => {
+    if (screen !== 'question' || phase !== 'choosing') return;
+    const frame = window.requestAnimationFrame(() => {
+      if (document.activeElement === document.body) {
+        instructionRef.current?.focus({ preventScroll: true });
+      }
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [screen, phase, currentIndex]);
 
   useEffect(() => {
     const cheer = new Audio('/sounds/crowd-cheer.mp3');
@@ -414,16 +512,19 @@ export default function Home() {
       musicReadyRef.current = false;
       musicAttemptedRef.current = false;
       musicRequestRef.current += 1;
+      if (revealTimerRef.current !== null) window.clearTimeout(revealTimerRef.current);
+      if (transitionTimerRef.current !== null) window.clearTimeout(transitionTimerRef.current);
       const context = audioRef.current;
       audioRef.current = null;
       sfxMasterRef.current = null;
+      feedbackGainRef.current = null;
       if (context && context.state !== 'closed') void context.close();
     };
   }, []);
 
   useEffect(() => {
     timeoutActionRef.current = handleQuestionExpired;
-    tickActionRef.current = (secondsRemaining) => playCue('tick', false, secondsRemaining);
+    tickActionRef.current = (secondsRemaining) => playCue('countdown', false, secondsRemaining);
   });
 
   useEffect(() => {
@@ -439,7 +540,7 @@ export default function Home() {
       if (next === lastSecond) return;
       lastSecond = next;
       setTimeLeft(next);
-      if (next > 0 && next <= 7) tickActionRef.current(next);
+      if (next > 0 && next <= 5) tickActionRef.current(next);
       if (next === 0) {
         window.clearInterval(timer);
         timeoutActionRef.current();
@@ -495,12 +596,32 @@ export default function Home() {
     master.gain.setTargetAtTime(enabled ? 1 : .0001, now, .018);
   }
 
+  function stopFeedbackCue() {
+    const active = feedbackGainRef.current;
+    if (!active) return;
+    feedbackGainRef.current = null;
+    const now = active.context.currentTime;
+    active.gain.cancelScheduledValues(now);
+    active.gain.setTargetAtTime(.0001, now, .012);
+    window.setTimeout(() => active.disconnect(), 80);
+  }
+
   function playCue(cue: Cue, force = false, secondsRemaining = timeLeft) {
     if (!soundOn && !force) return;
     const audio = ensureAudio();
     if (!audio) return;
     const now = audio.currentTime;
-    const destination = sfxMasterRef.current ?? audio.destination;
+    const baseDestination = sfxMasterRef.current ?? audio.destination;
+    let destination: AudioNode = baseDestination;
+
+    if (cue === 'timeout' || cue === 'correct' || cue === 'combo' || cue === 'wrong') {
+      stopFeedbackCue();
+      const feedbackGain = audio.createGain();
+      feedbackGain.gain.setValueAtTime(1, now);
+      feedbackGain.connect(baseDestination);
+      feedbackGainRef.current = feedbackGain;
+      destination = feedbackGain;
+    }
 
     const note = (
       frequency: number,
@@ -571,10 +692,34 @@ export default function Home() {
       note(784, 0.29, 0.42, 'triangle', 0.1);
     }
 
-    if (cue === 'tick') {
-      const urgent = secondsRemaining <= 4;
-      note(urgent ? 1180 : 880, 0, urgent ? .14 : .1, 'square', urgent ? .045 : .026);
-      note(urgent ? 720 : 560, .045, urgent ? .12 : .09, 'triangle', urgent ? .032 : .018);
+    if (cue === 'question') {
+      crackle(0, .12, .022);
+      note(392, .02, .1, 'triangle', .035);
+      note(587, .09, .13, 'triangle', .045);
+      note(784, .17, .2, 'sine', .05);
+    }
+
+    if (cue === 'hover') {
+      note(880, 0, .055, 'sine', .012);
+      note(1175, .025, .06, 'triangle', .009);
+    }
+
+    if (cue === 'countdown') {
+      const step = 5 - secondsRemaining;
+      note(760 + step * 100, 0, .075, 'square', .018 + step * .004);
+      if (secondsRemaining === 5) note(380, .07, .11, 'sine', .022);
+    }
+
+    if (cue === 'lock') {
+      crackle(0, .045, .024);
+      note(1450, 0, .035, 'square', .028);
+      note(105, .028, .085, 'triangle', .035);
+    }
+
+    if (cue === 'transition') {
+      note(740, 0, .09, 'triangle', .025);
+      note(520, .045, .12, 'triangle', .021);
+      crackle(0, .11, .018);
     }
 
     if (cue === 'timeout') {
@@ -585,6 +730,14 @@ export default function Home() {
     if (cue === 'correct') {
       [523, 659, 784, 1047].forEach((frequency, index) => note(frequency, index * 0.1, 0.38, 'triangle', 0.095));
       [523, 659, 784].forEach((frequency) => note(frequency, 0.46, 0.58, 'sine', 0.045));
+    }
+
+    if (cue === 'combo') {
+      [659, 784, 988, 1319].forEach((frequency, index) => {
+        note(frequency, index * .065, .26, index % 2 ? 'sine' : 'triangle', .075);
+      });
+      note(330, 0, .42, 'sawtooth', .035);
+      crackle(.12, .24, .045);
     }
 
     if (cue === 'wrong') {
@@ -777,6 +930,7 @@ export default function Home() {
     if (soundOn) {
       stopCrowd();
       stopCableHum();
+      stopFeedbackCue();
       setSynthSound(false);
       pauseMusic();
       setSoundOn(false);
@@ -790,7 +944,29 @@ export default function Home() {
     switchMusic(screen === 'question' ? 'game' : 'intro', true);
   }
 
+  function clearActionTimers() {
+    if (revealTimerRef.current !== null) window.clearTimeout(revealTimerRef.current);
+    if (transitionTimerRef.current !== null) window.clearTimeout(transitionTimerRef.current);
+    revealTimerRef.current = null;
+    transitionTimerRef.current = null;
+  }
+
+  function motionDelay(milliseconds: number) {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : milliseconds;
+  }
+
+  function previewParty(party: PartyId) {
+    if (phase !== 'choosing' || resolvedRef.current) return;
+    const now = performance.now();
+    const previous = hoverCueRef.current;
+    if (now - previous.at < 90 || (previous.party === party && now - previous.at < 500)) return;
+    hoverCueRef.current = { party, at: now };
+    playCue('hover');
+  }
+
   function startGame() {
+    clearActionTimers();
+    stopFeedbackCue();
     stopCrowd();
     stopCableHum();
     primeCrowdAudio();
@@ -825,16 +1001,30 @@ export default function Home() {
     resolvedRef.current = true;
     stopCableHum();
     const correct = choice === current.party;
+    const streakBefore = trailingCorrectStreak(answers);
     setAnswers((previous) => [
       ...previous,
-      { quoteId: current.id, party: current.party, chosen: choice, correct },
+      {
+        quoteId: current.id,
+        party: current.party,
+        chosen: choice,
+        correct,
+        resolution: lockedByTimer ? 'auto-lock' : 'manual',
+        secondsLeft: lockedByTimer ? 0 : timeLeft,
+        streakBefore,
+      },
     ]);
     setSelected(choice);
     setTimedOut(false);
     setAutoLocked(lockedByTimer);
-    setPhase('reveal');
-    playCue(correct ? 'correct' : 'wrong');
-    playCrowd(correct ? 'cheer' : 'boo');
+    setPhase('locking');
+    playCue('lock');
+    revealTimerRef.current = window.setTimeout(() => {
+      revealTimerRef.current = null;
+      setPhase('reveal');
+      playCue(correct && streakBefore >= 1 ? 'combo' : correct ? 'correct' : 'wrong');
+      playCrowd(correct ? 'cheer' : 'boo');
+    }, motionDelay(110));
   }
 
   function submitAnswer() {
@@ -856,9 +1046,18 @@ export default function Home() {
     }
 
     resolvedRef.current = true;
+    const streakBefore = trailingCorrectStreak(answers);
     setAnswers((previous) => [
       ...previous,
-      { quoteId: current.id, party: current.party, chosen: null, correct: false },
+      {
+        quoteId: current.id,
+        party: current.party,
+        chosen: null,
+        correct: false,
+        resolution: 'timeout',
+        secondsLeft: 0,
+        streakBefore,
+      },
     ]);
     setTimedOut(true);
     setAutoLocked(false);
@@ -901,6 +1100,8 @@ export default function Home() {
   }
 
   function nextQuestion() {
+    if (phase !== 'reveal' || transitionTimerRef.current !== null) return;
+    stopFeedbackCue();
     stopCrowd();
     stopCableHum();
     if (currentIndex === roundQuotes.length - 1) {
@@ -908,21 +1109,28 @@ export default function Home() {
       switchMusic('intro');
       return;
     }
-    resolvedRef.current = false;
-    selectedRef.current = null;
-    setCurrentIndex((index) => index + 1);
-    setSelected(null);
-    setPointer(null);
-    setDragging(false);
-    setPhase('choosing');
-    setTimedOut(false);
-    setAutoLocked(false);
-    setTimeLeft(QUESTION_SECONDS);
-    playCue('connect');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setPhase('transition');
+    playCue('transition');
+    transitionTimerRef.current = window.setTimeout(() => {
+      transitionTimerRef.current = null;
+      resolvedRef.current = false;
+      selectedRef.current = null;
+      setCurrentIndex((index) => index + 1);
+      setSelected(null);
+      setPointer(null);
+      setDragging(false);
+      setTimedOut(false);
+      setAutoLocked(false);
+      setTimeLeft(QUESTION_SECONDS);
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      setPhase('choosing');
+      playCue('question');
+    }, motionDelay(260));
   }
 
   function returnHome() {
+    clearActionTimers();
+    stopFeedbackCue();
     stopCrowd();
     stopCableHum();
     resolvedRef.current = false;
@@ -1030,6 +1238,11 @@ export default function Home() {
             <strong>{score}</strong>
             <span>av {answers.length}</span>
           </div>
+          <p className="result-energy">
+            Bästa svit: <strong>{bestStreak}</strong>
+            <span aria-hidden="true"> · </span>
+            Blixtsnabba rätt: <strong>{answers.filter((answer) => answer.correct && answer.secondsLeft >= 15).length}</strong>
+          </p>
           <h1 id="result-title">{resultTitle}</h1>
           <p className="results-copy">
             Det här mäter din magkänsla för vem som låter som vem — inte vad du själv tycker.
@@ -1080,13 +1293,34 @@ export default function Home() {
       `phase-${phase}`,
       selected ? 'has-selection cable-live' : '',
       dragging ? 'cable-live is-dragging-cable' : '',
-      phase === 'reveal' ? (wasCorrect ? 'answer-correct' : 'answer-wrong') : '',
+      phase === 'choosing' && timeLeft <= 5 ? 'timer-critical' : '',
+      showingAnswer ? (wasCorrect ? 'answer-correct' : 'answer-wrong') : '',
     ].filter(Boolean).join(' ')}>
       <div className="stage-lights" aria-hidden="true" />
-      {phase === 'reveal' && wasCorrect && <Confetti />}
+      <div className="urgency-vignette" aria-hidden="true" />
+      {phase === 'choosing' && (
+        <QuestionEntryBurst
+          key={`entry-${current.id}`}
+          number={currentIndex + 1}
+          theme={currentTheme.label}
+        />
+      )}
+      {phase === 'reveal' && lastAnswer?.quoteId === current.id && (
+        <FeedbackBurst
+          key={`feedback-${current.id}`}
+          answer={lastAnswer}
+          streak={streak}
+          milestone={currentMilestone}
+        />
+      )}
+      {phase === 'reveal' && wasCorrect && (
+        <Confetti intensity={streak >= 3 ? 'full' : 'spark'} />
+      )}
       <p className="sr-only" role="status" aria-live="assertive" aria-atomic="true">
-        {phase === 'reveal'
-          ? `${timedOut ? 'Tiden är ute utan något val.' : autoLocked ? `Tiden är ute och valet ${selectedParty?.name} låstes automatiskt. ${wasCorrect ? 'Rätt svar.' : 'Fel svar.'}` : wasCorrect ? 'Rätt svar.' : `Fel svar. Du valde ${selectedParty?.name}.`} Rätt parti är ${correctParty.name}. Citatet sades av ${current.speaker} år ${current.date.slice(0, 4)}.`
+        {showingAnswer
+          ? `${timedOut ? 'Tiden är ute utan något val.' : autoLocked ? `Tiden är ute och valet ${selectedParty?.name} låstes automatiskt. ${wasCorrect ? 'Rätt svar.' : 'Fel svar.'}` : wasCorrect ? 'Rätt svar.' : `Fel svar. Du valde ${selectedParty?.name}.`} ${currentFeedback ? `${currentFeedback.headline} ${currentFeedback.detail}` : ''} ${currentMilestone ?? ''} Rätt parti är ${correctParty.name}. Citatet sades av ${current.speaker} år ${current.date.slice(0, 4)}.`
+          : phase === 'locking'
+            ? `Svaret ${selectedParty?.name} är låst.`
           : selectedParty
             ? `${selectedParty.name} är inkopplat. Tryck på Svara när du är redo.`
             : ''}
@@ -1107,13 +1341,16 @@ export default function Home() {
           <div className="progress-pill">
             Fråga {currentIndex + 1} av {roundQuotes.length}
             <span className="score-inline">{score} rätt</span>
+            {streak >= 2 && (
+              <span className="streak-inline" key={streak}>⚡ {streak} i rad</span>
+            )}
           </div>
           <div
             className={[
               'timer-console',
               timeLeft <= 7 ? 'is-warning' : '',
               timeLeft <= 4 ? 'is-danger' : '',
-              phase === 'reveal' ? 'is-stopped' : '',
+              phase !== 'choosing' ? 'is-stopped' : '',
               timedOut ? 'is-timeout' : '',
             ].filter(Boolean).join(' ')}
             style={{
@@ -1121,7 +1358,7 @@ export default function Home() {
               '--timer-scale': timerScale,
             } as CSSProperties}
             role="timer"
-            aria-label={phase === 'reveal' ? `Tiden stannade på ${timeLeft} sekunder` : `${timeLeft} sekunder kvar`}
+            aria-label={phase === 'choosing' ? `${timeLeft} sekunder kvar` : `Tiden stannade på ${timeLeft} sekunder`}
           >
             <span className="timer-number" aria-hidden="true">
               <strong><i key={timeLeft}>{timeLeft}</i></strong>
@@ -1133,17 +1370,47 @@ export default function Home() {
                   <i className="fuse-flame" />
                 </span>
               </span>
-              <b>{phase === 'reveal' ? 'STOPP' : 'TID KVAR'}</b>
+              <b>{phase === 'choosing' ? 'TID KVAR' : 'STOPP'}</b>
             </span>
           </div>
         </div>
         {soundButton}
       </header>
 
+      <div
+        className="round-progress"
+        role="progressbar"
+        aria-label={`${visibleAnswers.length} av ${roundQuotes.length} frågor besvarade`}
+        aria-valuemin={0}
+        aria-valuemax={roundQuotes.length}
+        aria-valuenow={visibleAnswers.length}
+      >
+        {roundQuotes.map((quote, index) => {
+          const answer = visibleAnswers[index];
+          return (
+            <i
+              key={quote.id}
+              className={[
+                index === currentIndex && !showingAnswer ? 'is-current' : '',
+                answer?.correct ? 'is-correct' : answer ? 'is-wrong' : '',
+                (index + 1) % 6 === 0 ? 'is-act' : '',
+              ].filter(Boolean).join(' ')}
+              aria-hidden="true"
+            />
+          );
+        })}
+      </div>
+
       <section className="game-content" aria-labelledby="instruction">
         <div className="question-meta">
-          <p className="eyebrow" id="instruction">
-            {phase === 'choosing' ? 'Koppla citatet till ett parti' : 'Ridån går upp'}
+          <p ref={instructionRef} className="eyebrow" id="instruction" tabIndex={-1}>
+            {phase === 'choosing'
+              ? 'Koppla citatet till ett parti'
+              : phase === 'locking'
+                ? 'Svaret låses'
+                : phase === 'transition'
+                  ? 'Nästa fråga laddas'
+                  : 'Ridån går upp'}
           </p>
           <p
             key={current.id}
@@ -1160,8 +1427,8 @@ export default function Home() {
           </p>
         </div>
 
-        <article className="quote-card" aria-describedby="question-theme">
-          {phase === 'reveal' && (
+        <article key={current.id} className="quote-card" aria-describedby="question-theme">
+          {showingAnswer && (
             <div className={`reveal-ribbon ${wasCorrect ? 'is-right' : 'is-wrong'}`} aria-hidden="true">
               {timedOut ? 'Tiden är ute!' : autoLocked ? 'Tiden låste valet!' : wasCorrect ? 'Rätt svar!' : 'Inte riktigt!'}
             </div>
@@ -1190,11 +1457,11 @@ export default function Home() {
         </article>
 
         <div className="party-grid" aria-label="Välj parti">
-          {parties.map((party) => {
+          {parties.map((party, partyIndex) => {
             const isSelected = selected === party.id;
-            const isCorrect = phase === 'reveal' && current.party === party.id;
-            const isWrong = phase === 'reveal' && isSelected && !isCorrect;
-            const isMuted = phase === 'reveal' && !isCorrect && !isSelected;
+            const isCorrect = showingAnswer && current.party === party.id;
+            const isWrong = showingAnswer && isSelected && !isCorrect;
+            const isMuted = showingAnswer && !isCorrect && !isSelected;
             const showLeaders = isSelected || isCorrect;
             return (
               <button
@@ -1207,9 +1474,17 @@ export default function Home() {
                   isWrong ? 'is-wrong' : '',
                   isMuted ? 'is-muted' : '',
                 ].filter(Boolean).join(' ')}
-                style={{ '--party': party.color, '--party-ink': party.ink } as CSSProperties}
+                style={{
+                  '--party': party.color,
+                  '--party-ink': party.ink,
+                  '--podium-index': partyIndex,
+                } as CSSProperties}
                 onClick={() => connectParty(party.id)}
-                disabled={phase === 'reveal'}
+                onPointerEnter={(event) => {
+                  if (event.pointerType === 'mouse') previewParty(party.id);
+                }}
+                onFocus={() => previewParty(party.id)}
+                disabled={phase !== 'choosing'}
                 aria-pressed={isSelected}
                 aria-label={`${party.name}${isSelected ? ', inkopplat' : ''}${isCorrect ? ', rätt svar' : ''}`}
               >
@@ -1228,19 +1503,23 @@ export default function Home() {
           })}
         </div>
 
-        {phase === 'choosing' ? (
-          <div className={`selection-console ${selectedParty ? 'is-armed' : ''}`}>
+        {phase === 'choosing' || phase === 'locking' ? (
+          <div className={`selection-console ${selectedParty ? 'is-armed' : ''} ${phase === 'locking' ? 'is-locking' : ''}`}>
             {selectedParty ? (
               <>
                 <p>
                   <span className="power-dot" aria-hidden="true" />
                   Kabeln leder till <strong>{selectedParty.name}</strong>
                 </p>
-                <button className="lock-answer" onClick={submitAnswer}>
-                  Svara
-                  <span aria-hidden="true"> ⚡</span>
+                <button className="lock-answer" onClick={submitAnswer} disabled={phase === 'locking'}>
+                  {phase === 'locking' ? 'Låst!' : 'Svara'}
+                  <span aria-hidden="true"> {phase === 'locking' ? '✓' : '⚡'}</span>
                 </button>
-                <small>Dra om kabeln eller välj ett annat podium för att byta.</small>
+                <small>
+                  {phase === 'locking'
+                    ? 'Publiken håller andan…'
+                    : 'Dra om kabeln eller välj ett annat podium för att byta.'}
+                </small>
               </>
             ) : (
               <p className="game-hint">
@@ -1294,8 +1573,17 @@ export default function Home() {
                 {current.source.locator ? ` · ${current.source.locator}` : ''}
               </small>
             </div>
-            <button ref={nextButtonRef} className="next-button" onClick={nextQuestion}>
-              {currentIndex === roundQuotes.length - 1 ? 'Visa resultatet' : 'Nästa citat'}
+            <button
+              ref={nextButtonRef}
+              className="next-button"
+              onClick={nextQuestion}
+              disabled={phase === 'transition'}
+            >
+              {phase === 'transition'
+                ? 'Nästa…'
+                : currentIndex === roundQuotes.length - 1
+                  ? 'Visa resultatet'
+                  : 'Nästa citat'}
               <span aria-hidden="true"> →</span>
             </button>
           </aside>
@@ -1357,10 +1645,42 @@ function PartyLeaders({ party }: { party: Party }) {
   );
 }
 
-function Confetti() {
+function QuestionEntryBurst({ number, theme }: { number: number; theme: string }) {
   return (
-    <div className="confetti-field" aria-hidden="true">
-      {confetti.map((piece, index) => (
+    <div className="question-entry-burst" aria-hidden="true">
+      <span>Fråga {number}</span>
+      <strong>{theme}</strong>
+    </div>
+  );
+}
+
+function FeedbackBurst({
+  answer,
+  streak,
+  milestone,
+}: {
+  answer: Answer;
+  streak: number;
+  milestone: string | null;
+}) {
+  const kind = answer.correct ? 'correct' : answer.resolution === 'timeout' ? 'timeout' : 'wrong';
+  const { headline, detail } = feedbackCopy(answer, streak);
+
+  return (
+    <div className={`feedback-burst is-${kind}`} aria-hidden="true">
+      <span className="feedback-symbol">{answer.correct ? '+1' : '×'}</span>
+      <strong>{headline}</strong>
+      <small>{detail}</small>
+      {milestone && <em>{milestone}</em>}
+    </div>
+  );
+}
+
+function Confetti({ intensity = 'full' }: { intensity?: 'spark' | 'full' }) {
+  const pieces = intensity === 'full' ? confetti : confetti.slice(0, 20);
+  return (
+    <div className={`confetti-field is-${intensity}`} aria-hidden="true">
+      {pieces.map((piece, index) => (
         <i
           key={index}
           style={{
