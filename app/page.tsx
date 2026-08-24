@@ -35,8 +35,12 @@ type Answer = {
 type Point = { x: number; y: number };
 type Screen = 'intro' | 'question' | 'results';
 type Phase = 'choosing' | 'reveal';
-type Cue = 'start' | 'connect' | 'correct' | 'wrong';
+type Cue = 'start' | 'grab' | 'connect' | 'correct' | 'wrong';
 type CrowdCue = 'cheer' | 'boo';
+type CableHum = {
+  gain: GainNode;
+  sources: AudioScheduledSourceNode[];
+};
 
 const parties: Party[] = [
   {
@@ -174,6 +178,7 @@ export default function Home() {
   const jackRef = useRef<HTMLSpanElement>(null);
   const audioRef = useRef<AudioContext | null>(null);
   const crowdAudioRef = useRef<Partial<Record<CrowdCue, HTMLAudioElement>>>({});
+  const cableHumRef = useRef<CableHum | null>(null);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   const current = roundQuotes[currentIndex] ?? quotes[0];
@@ -233,6 +238,14 @@ export default function Home() {
         track.pause();
         track.currentTime = 0;
       });
+      cableHumRef.current?.sources.forEach((source) => {
+        try {
+          source.stop();
+        } catch {
+          // The source may already have stopped after a completed drag.
+        }
+      });
+      cableHumRef.current = null;
       crowdAudioRef.current = {};
     };
   }, []);
@@ -323,6 +336,15 @@ export default function Home() {
       crackle(.1, .16, .055);
     }
 
+    if (cue === 'grab') {
+      note(92, 0, .28, 'sawtooth', .05);
+      note(184, .025, .26, 'triangle', .035);
+      note(980, .04, .11, 'square', .028);
+      note(1320, .13, .1, 'square', .022);
+      crackle(0, .3, .1);
+      crackle(.13, .22, .075);
+    }
+
     if (cue === 'start') {
       [262, 392, 523].forEach((frequency, index) => note(frequency, index * 0.09, 0.24));
       note(784, 0.29, 0.42, 'triangle', 0.1);
@@ -355,6 +377,77 @@ export default function Home() {
     });
   }
 
+  function stopCableHum() {
+    const active = cableHumRef.current;
+    if (!active) return;
+    cableHumRef.current = null;
+    const now = active.gain.context.currentTime;
+    active.gain.gain.cancelScheduledValues(now);
+    active.gain.gain.setTargetAtTime(.0001, now, .022);
+    window.setTimeout(() => {
+      active.sources.forEach((source) => {
+        try {
+          source.stop();
+        } catch {
+          // The source may already have stopped during rapid pointer changes.
+        }
+      });
+    }, 120);
+  }
+
+  function startCableHum() {
+    if (!soundOn) return;
+    stopCableHum();
+    const audio = ensureAudio();
+    if (!audio) return;
+    const now = audio.currentTime;
+    const master = audio.createGain();
+    const hum = audio.createOscillator();
+    const overtone = audio.createOscillator();
+    const humGain = audio.createGain();
+    const overtoneGain = audio.createGain();
+    const noise = audio.createBufferSource();
+    const noiseFilter = audio.createBiquadFilter();
+    const noiseGain = audio.createGain();
+
+    const noiseFrames = Math.ceil(audio.sampleRate * .42);
+    const noiseBuffer = audio.createBuffer(1, noiseFrames, audio.sampleRate);
+    const noiseData = noiseBuffer.getChannelData(0);
+    for (let index = 0; index < noiseFrames; index += 1) {
+      const snap = Math.random() > .91 ? 1 : .12;
+      noiseData[index] = (Math.random() * 2 - 1) * snap;
+    }
+
+    hum.type = 'sawtooth';
+    hum.frequency.setValueAtTime(86, now);
+    overtone.type = 'triangle';
+    overtone.frequency.setValueAtTime(173, now);
+    humGain.gain.setValueAtTime(.55, now);
+    overtoneGain.gain.setValueAtTime(.24, now);
+    noise.buffer = noiseBuffer;
+    noise.loop = true;
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.setValueAtTime(2850, now);
+    noiseFilter.Q.setValueAtTime(.82, now);
+    noiseGain.gain.setValueAtTime(.55, now);
+    master.gain.setValueAtTime(.0001, now);
+    master.gain.exponentialRampToValueAtTime(.038, now + .045);
+
+    hum.connect(humGain);
+    humGain.connect(master);
+    overtone.connect(overtoneGain);
+    overtoneGain.connect(master);
+    noise.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(master);
+    master.connect(audio.destination);
+
+    hum.start(now);
+    overtone.start(now);
+    noise.start(now);
+    cableHumRef.current = { gain: master, sources: [hum, overtone, noise] };
+  }
+
   function playCrowd(cue: CrowdCue) {
     if (!soundOn) return;
     stopCrowd();
@@ -369,6 +462,7 @@ export default function Home() {
   function toggleSound() {
     if (soundOn) {
       stopCrowd();
+      stopCableHum();
       setSoundOn(false);
       return;
     }
@@ -378,6 +472,7 @@ export default function Home() {
 
   function startGame() {
     stopCrowd();
+    stopCableHum();
     setRoundQuotes(buildRound(quotes));
     setAnswers([]);
     setCurrentIndex(0);
@@ -399,6 +494,7 @@ export default function Home() {
 
   function submitAnswer() {
     if (phase !== 'choosing' || !selected) return;
+    stopCableHum();
     const correct = selected === current.party;
     setAnswers((previous) => [
       ...previous,
@@ -412,6 +508,8 @@ export default function Home() {
   function startCable(event: PointerEvent<HTMLSpanElement>) {
     if (phase !== 'choosing') return;
     event.currentTarget.setPointerCapture(event.pointerId);
+    playCue('grab');
+    startCableHum();
     setSelected(null);
     setDragging(true);
     setPointer({ x: event.clientX, y: event.clientY });
@@ -429,16 +527,19 @@ export default function Home() {
       ?.closest<HTMLElement>('[data-party]');
     setDragging(false);
     setPointer(null);
+    stopCableHum();
     if (hit?.dataset.party) connectParty(hit.dataset.party as PartyId);
   }
 
   function cancelCable() {
+    stopCableHum();
     setDragging(false);
     setPointer(null);
   }
 
   function nextQuestion() {
     stopCrowd();
+    stopCableHum();
     if (currentIndex === roundQuotes.length - 1) {
       setScreen('results');
       return;
@@ -454,6 +555,7 @@ export default function Home() {
 
   function returnHome() {
     stopCrowd();
+    stopCableHum();
     setScreen('intro');
     setPhase('choosing');
     setSelected(null);
@@ -645,7 +747,14 @@ export default function Home() {
             onPointerUp={dropCable}
             onPointerCancel={cancelCable}
           >
-            <span />
+            <span className="jack-grip" />
+            <span className="jack-sparks" aria-hidden="true">
+              {Array.from({ length: 8 }, (_, index) => <i key={index} />)}
+            </span>
+            <span className="drag-callout" aria-hidden="true">
+              <i>←</i>
+              <b>Klicka &amp; dra</b>
+            </span>
           </span>
         </article>
 

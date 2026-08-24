@@ -663,16 +663,20 @@ summary:focus-visible {
   touch-action: none;
   user-select: none;
   transition: transform .15s ease, filter .15s ease;
+  animation: jack-invite 1.5s ease-in-out infinite;
 }
 
-.cable-jack span {
+.cable-jack .jack-grip {
+  position: relative;
+  z-index: 4;
   display: block;
-  width: 18px;
-  height: 28px;
+  width: 20px;
+  height: 30px;
   margin: auto;
   border-radius: 8px;
-  background: #e9f9ff;
-  box-shadow: 0 0 12px #fff;
+  border: 2px solid #fff8c7;
+  background: repeating-linear-gradient(180deg, #fff 0 4px, #80e8ff 4px 7px, #0875da 7px 10px);
+  box-shadow: 0 0 8px white, 0 0 16px #44dcff, inset 0 0 6px white;
 }
 
 .cable-jack.is-dragging {
@@ -690,30 +694,127 @@ summary:focus-visible {
   animation: jack-overload .28s steps(2, end) infinite alternate;
 }
 
-.cable-jack.is-connected::before,
-.cable-jack.is-connected::after,
-.cable-jack.is-dragging::before,
-.cable-jack.is-dragging::after {
+.cable-jack::before,
+.cable-jack::after {
   content: '';
   position: absolute;
   border-radius: 50%;
   pointer-events: none;
 }
 
+.cable-jack::before {
+  inset: -15px;
+  border: 3px dashed rgb(248 255 255 / .88);
+  filter: drop-shadow(0 0 5px #36dfff);
+  animation: electric-ring .72s linear infinite;
+}
+
+.cable-jack::after {
+  inset: -25px;
+  border: 3px dotted rgb(255 217 62 / .9);
+  filter: drop-shadow(0 0 7px white);
+  animation: electric-ring .49s linear infinite reverse;
+}
+
 .cable-jack.is-connected::before,
 .cable-jack.is-dragging::before {
-  inset: -17px;
-  border: 3px dashed #f8ffff;
-  filter: drop-shadow(0 0 5px #36dfff);
-  animation: electric-ring .52s linear infinite;
+  inset: -19px;
+  border-width: 4px;
+  animation-duration: .34s;
 }
 
 .cable-jack.is-connected::after,
 .cable-jack.is-dragging::after {
-  inset: -27px;
-  border: 2px dotted #ffd93e;
-  filter: drop-shadow(0 0 7px white);
-  animation: electric-ring .36s linear infinite reverse;
+  inset: -31px;
+  border-width: 4px;
+  animation-duration: .22s;
+}
+
+.jack-sparks {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.jack-sparks i {
+  --angle: 0deg;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 4px;
+  height: 17px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, white, #5ce9ff 55%, transparent);
+  box-shadow: 0 0 5px white, 0 0 11px #2cdaff;
+  transform-origin: center;
+  animation: jack-spark .76s steps(3, end) infinite;
+}
+
+.jack-sparks i:nth-child(1) { --angle: 0deg; animation-delay: -.08s; }
+.jack-sparks i:nth-child(2) { --angle: 45deg; animation-delay: -.42s; }
+.jack-sparks i:nth-child(3) { --angle: 90deg; animation-delay: -.2s; }
+.jack-sparks i:nth-child(4) { --angle: 135deg; animation-delay: -.61s; }
+.jack-sparks i:nth-child(5) { --angle: 180deg; animation-delay: -.31s; }
+.jack-sparks i:nth-child(6) { --angle: 225deg; animation-delay: -.7s; }
+.jack-sparks i:nth-child(7) { --angle: 270deg; animation-delay: -.5s; }
+.jack-sparks i:nth-child(8) { --angle: 315deg; animation-delay: -.14s; }
+
+.cable-jack.is-dragging .jack-sparks i,
+.cable-jack.is-connected .jack-sparks i {
+  width: 5px;
+  height: 24px;
+  animation-duration: .32s;
+}
+
+.drag-callout {
+  position: absolute;
+  z-index: 20;
+  top: 50%;
+  left: calc(100% + 33px);
+  display: flex;
+  width: max-content;
+  height: auto;
+  align-items: center;
+  gap: .45rem;
+  margin: 0;
+  padding: .48rem .72rem .43rem;
+  transform: translateY(-50%) rotate(-2deg);
+  border: 3px solid white;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #ffe96c, #ffb91f);
+  color: #09204c;
+  box-shadow:
+    0 0 0 4px #7c3a00,
+    0 6px 0 #3a1900,
+    0 0 21px rgb(255 215 55 / .8);
+  font: 950 clamp(.68rem, 1.15vw, .88rem)/1 system-ui, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: drag-callout-bob .72s ease-in-out infinite alternate;
+  transition: opacity .15s ease, transform .15s ease;
+}
+
+.drag-callout i {
+  color: #e01e37;
+  font: 950 1.55em/1 system-ui, sans-serif;
+  text-shadow: 0 1px white;
+}
+
+.drag-callout b {
+  font-weight: 950;
+}
+
+.cable-jack.is-connected .drag-callout,
+.cable-jack.is-dragging .drag-callout {
+  opacity: 0;
+  transform: translateY(-50%) translateX(-10px) scale(.85);
 }
 
 .party-grid {
@@ -1684,6 +1785,30 @@ summary:focus-visible {
   to { filter: brightness(1.35) saturate(1.3); }
 }
 
+@keyframes jack-invite {
+  0%, 54%, 100% { transform: translateX(-50%) translateY(0) scale(1); }
+  67% { transform: translateX(-50%) translateY(7px) scale(1.08); }
+  79% { transform: translateX(-50%) translateY(-3px) scale(1.03); }
+  89% { transform: translateX(-50%) translateY(3px) scale(1.05); }
+}
+
+@keyframes jack-spark {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-19px) scaleY(.15);
+  }
+  35% { opacity: 1; }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateY(-48px) scaleY(1);
+  }
+}
+
+@keyframes drag-callout-bob {
+  from { transform: translateY(-50%) translateX(0) rotate(-2deg); filter: brightness(.95); }
+  to { transform: translateY(-50%) translateX(-9px) rotate(1deg); filter: brightness(1.22); }
+}
+
 @keyframes plug-throb {
   from { stroke-width: 6; }
   to { stroke-width: 9; }
@@ -1913,6 +2038,15 @@ summary:focus-visible {
     width: 60px;
     height: 60px;
     bottom: -31px;
+  }
+
+  .drag-callout {
+    left: calc(100% + 16px);
+    gap: .3rem;
+    padding: .38rem .48rem .35rem;
+    border-width: 2px;
+    font-size: .6rem;
+    letter-spacing: .055em;
   }
 
   .party-grid {
