@@ -1,0 +1,424 @@
+[
+  {
+    "id": "v-sjostedt-2013-tyko-jonsson",
+    "party": "V",
+    "quote": "Det tog en liten stund innan jag kom på vem det var han påminde om. Det var Tyko Jonsson.",
+    "speaker": "Jonas Sjöstedt",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2013-10-16",
+    "context": "Fredrik Reinfeldt hade angripit Vänsterpartiets sätt att använda sitt politiska inflytande. Sjöstedt liknade honom vid Tyko Jonsson, Karl-Bertil Jonssons far, som skäller på sin son för att han delar med sig till fattiga.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2013/14:13, anförande 109",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/riksdagens-protokoll-20131413-onsdagen-den-16_h10913/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 109"
+    },
+    "editorialNote": "Tyko Jonsson är den stränge fadern i Sagan om Karl-Bertil Jonssons julafton; referensen förklaras efter svaret.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En folklig julreferens förvandlar en hård partiledarreplik till en oväntad och minnesvärd förolämpning.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 3,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 3,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "v-sjostedt-2019-kommunismen-bakom-oss",
+    "party": "V",
+    "quote": "Jag är glad över att vi har lämnat kommunismen bakom oss.",
+    "speaker": "Jonas Sjöstedt",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2019-05-08",
+    "context": "Jimmie Åkesson frågade om kommunister fick vara medlemmar i Vänsterpartiet. Sjöstedt svarade att partiet var till för demokratiska socialister, beskrev sig som en del av omvandlingen och vände sedan kritiken mot SD:s historia.",
+    "source": {
+      "title": "Partiledardebatt inför Europaparlamentsvalet, protokoll 2018/19:88, anförande 116",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-20181988-onsdagen-den-8-maj_h60988/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 116"
+    },
+    "editorialNote": "Spelversionen är den första fullständiga meningen i Sjöstedts längre svar om Vänsterpartiets ideologiska omvandling.",
+    "editorial": {
+      "tags": ["surprising", "misdirection", "historical", "debate-reply"],
+      "riskFlags": [],
+      "rationale": "En V-ledare tar uttryckligen avstånd från kommunismen, vilket går på tvärs mot en vanlig historisk schablon om partiet.",
+      "scores": {
+        "fame": 3,
+        "humor": 2,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "v-dadgostar-2025-tapetsera-skane",
+    "party": "V",
+    "quote": "Du kan tapetsera hela Skåne med kärnkraft, Henrik Vinge, men vad är poängen med det om vi bara ska exportera elen till Tyskland?",
+    "speaker": "Nooshi Dadgostar",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/nooshi-dadgostar.webp",
+    "date": "2025-11-12",
+    "context": "Henrik Vinge hade skyllt höga elpriser på nedlagd kärnkraft och försvarat den europeiska elmarknaden. Dadgostar invände att Sverige redan producerade mer el än landet använde och argumenterade för svenska priser trots fortsatt export.",
+    "source": {
+      "title": "EU-politisk partiledardebatt, protokoll 2025/26:31, anförande 51",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-20252631-onsdagen-den-12-november_hd0931/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 51"
+    },
+    "editorialNote": "Tapetseringen är en avsiktlig överdrift om produktionsvolym; citatet är inte ett generellt avståndstagande från all kärnkraft.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "current", "metaphor", "policy", "debate-reply"],
+      "riskFlags": [],
+      "rationale": "Den absurda bilden av ett kärnkraftstapetserat Skåne ger en aktuell elmarknadsreplik stark humor och hög feldirigering.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "mp-romson-2014-ozz-nujen",
+    "party": "MP",
+    "quote": "Jag tror han kan bli en bra statsminister, han Özz Nûjen. Ja, vem trodde ni jag menade?",
+    "speaker": "Åsa Romson",
+    "speakerRole": "språkrör för Miljöpartiet",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2014-07-02",
+    "context": "Romson öppnade sitt Almedalstal med att berömma föregående dags träffsäkra och roliga tal. Hon avslöjade sedan att hon syftade på komikern Özz Nûjen och kontrasterade honom med Jimmie Åkesson.",
+    "source": {
+      "title": "Åsa Romsons Almedalstal 2014",
+      "publisher": "Miljöpartiet de gröna",
+      "url": "https://www.mp.se/just-nu/asa-romsons-almedalstal-2014/",
+      "type": "official-speech",
+      "locator": "Inledningen, stycket som börjar ”Jag tror han kan bli en bra statsminister”"
+    },
+    "editorialNote": "Partiets sida är ett officiellt talmanus och anger att det talade ordet gäller. Citatet är verifierat mot den publicerade primärtexten, inte separat mot inspelningen.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical"],
+      "riskFlags": [],
+      "rationale": "En medvetet konstruerad statsministerfälla med en komiker som oväntad lösning fungerar direkt i frågesportsformatet.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "mp-bolund-2019-aga-tillsammans",
+    "party": "MP",
+    "quote": "Vi borde starta en kampanj där det står ”Jag älskar att äga – tillsammans”.",
+    "speaker": "Per Bolund",
+    "speakerRole": "språkrör för Miljöpartiet",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2019-06-30",
+    "context": "Bolund hänvisade till Moderata ungdomsförbundets gamla knappkampanj ”Jag älskar att äga”. Han vände formuleringen mot cirkulär ekonomi, reparation, uthyrning, second hand och gemensamt ägande.",
+    "source": {
+      "title": "Per Bolunds tal i Almedalen 2019",
+      "publisher": "Miljöpartiet de gröna",
+      "url": "https://www.mp.se/just-nu/bolunds-tal-i-almedalen-2019/",
+      "type": "official-speech",
+      "locator": "Avsnittet om cirkulär ekonomi, direkt efter hänvisningen till MUF:s kampanj ”Jag älskar att äga”"
+    },
+    "editorialNote": "Partiets sida är en officiellt publicerad taltext. Citatet är verifierat mot denna primärtext, men inte separat mot en ljudupptagning.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical", "policy"],
+      "riskFlags": [],
+      "rationale": "Borgerlig äganderetorik får en grön kollektiv vändning i sista ordet och skapar därmed en ovanligt ren felsvarsfälla.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "mp-fridolin-2019-pizza-akesson",
+    "party": "MP",
+    "quote": "Jag tar gärna en pizza med dig, Jimmie Åkesson. Jag kan göra det i Vittsjö, och jag kan också göra det i Sölvesborg.",
+    "speaker": "Gustav Fridolin",
+    "speakerRole": "språkrör för Miljöpartiet och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2019-01-30",
+    "context": "I Fridolins avskedsdebatt mindes Åkesson att Fridolin hade välkomnat SD-ledamöterna 2010 och erbjöd honom pizza i Sölvesborg. Fridolin accepterade men betonade därefter deras djupa ideologiska motsättningar och vikten av respekt för demokratiskt valda företrädare.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2018/19:44, anförande 125",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-20181944-onsdagen-den-30-januari_h60944/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 125"
+    },
+    "editorialNote": "Pizzainviten var ett personligt avskedsutbyte, inte ett uttryck för politisk samsyn mellan Fridolin och Åkesson.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical", "debate-reply"],
+      "riskFlags": [],
+      "rationale": "Den vänliga privata invitens kontrast mot två tydliga politiska motpoler ger både värme, humor och stark feldirigering.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "sd-akesson-2013-kottbullar-sten",
+    "party": "SD",
+    "quote": "Jag tror i och för sig att samhället hade blivit lite trevligare om man valt att kasta köttbullar i stället för sten.",
+    "speaker": "Jimmie Åkesson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/jimmie-akesson.webp",
+    "date": "2013-06-12",
+    "context": "Annie Lööf frågade ironiskt om kunskap om midsommarfirande och köttbullar verkligen skulle stoppa bilbränder eller skapa jobb. Åkesson svarade med köttbullerepliken innan han återgick till en sakpolitisk diskussion om integration.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2012/13:121, anförande 94",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/riksdagens-protokoll-201213121-onsdagen-den-12_h009121/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 94"
+    },
+    "editorialNote": "Köttbullarna plockar upp Annie Lööfs formulering i den omedelbart föregående repliken; den kopplingen visas i förklaringen efter svaret.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical", "metaphor", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En absurd svensk vardagsbild gör den hårda integrationsdebatten oväntat komisk och döljer delvis den väntade partiavsändaren.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "sd-akesson-2018-svenska-folkhemmet",
+    "party": "SD",
+    "quote": "Det enkla svaret är det svenska folkhemmet. Det bygger i högsta grad på nationalism och socialkonservatism.",
+    "speaker": "Jimmie Åkesson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/jimmie-akesson.webp",
+    "date": "2018-06-13",
+    "context": "Jan Björklund bad Åkesson nämna en historisk period då nationalism hade skapat mer fred, frihet och välstånd än socialliberalism. Åkesson valde det svenska folkhemmet och pekade på sociala reformer, minskade klyftor och samhällelig tillit.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2017/18:131, anförande 69",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-201718131-onsdagen-den-13-juni_h509131/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 69"
+    },
+    "editorialNote": "Citatet är Åkessons ideologiska tolkning av folkhemsepoken och ska inte presenteras som en neutral historisk definition.",
+    "editorial": {
+      "tags": ["famous", "surprising", "misdirection", "historical", "policy", "debate-reply"],
+      "riskFlags": [],
+      "rationale": "En klassisk socialdemokratisk välfärdsreferens kopplas till nationalism och socialkonservatism, vilket ger mycket hög ideologisk feldirigering.",
+      "fameNote": "Folkhemsanspråket blev ett uppmärksammat uttryck för Sverigedemokraternas försök att omtolka en klassisk svensk välfärdsreferens.",
+      "scores": {
+        "fame": 4,
+        "humor": 2,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "sd-akesson-2021-blundatavling",
+    "party": "SD",
+    "quote": "Vi kan väl ha en blundatävling, jag och Per Bolund, och se vem som orkar blunda längst.",
+    "speaker": "Jimmie Åkesson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/jimmie-akesson.webp",
+    "date": "2021-06-09",
+    "context": "Per Bolund jämförde Åkessons klimatpolitik med små barns tro att de inte syns när de blundar. Åkesson återanvände bilden, föreslog en blundtävling och sade att Bolund skulle vinna eftersom regeringen hade ignorerat andra samhällsproblem.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2020/21:137, anförande 65",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/dokument/H809137",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 65"
+    },
+    "editorialNote": "Blundandet är en direkt vändning av Per Bolunds föregående liknelse om Åkessons förhållande till klimatkrisen.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical", "metaphor", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En barnslig tävlingsbild används som syrlig partiledarreplik och kan därför lätt tillskrivas flera olika debattörer.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "v-ohly-2010-brostpump",
+    "party": "V",
+    "quote": "Min dåvarande fru använde bröstpump. Det är ett sådant där modernt verktyg som finns idag...",
+    "speaker": "Lars Ohly",
+    "speakerRole": "partiordförande för Vänsterpartiet",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2010-09-05",
+    "context": "I SVT:s partiledarutfrågning försvarade Ohly förslaget om lika delad föräldraförsäkring när Anna Hedenmo frågade om en mamma ville amma längre. Sveriges Radio återger utbytet i text och ljud, men originalklippet från SVT behöver lokaliseras för slutlig ordagrann kontroll.",
+    "source": {
+      "title": "Få grodor i årets valrörelse",
+      "publisher": "Sveriges Radio",
+      "url": "https://www.sverigesradio.se/artikel/4022500",
+      "type": "public-service-recording",
+      "locator": "Artikelns första citerade utbyte efter stycket om SVT:s partiledarutfrågning; ljudinslag 4:10"
+    },
+    "editorialNote": "SR:s arkivsida återger formuleringen och ett ljudinslag, men källan är en efterhandsåtergivning av SVT-utfrågningen. Godkänn inte förrän originalklippet har kontrollerats.",
+    "editorial": {
+      "tags": ["famous", "funny", "surprising", "misdirection", "historical", "policy"],
+      "riskFlags": ["context-dependent", "clip-needed"],
+      "rationale": "En av valrörelsen 2010:s mest omtalade grodor kombinerar vardagskomik, jämställdhetspolitik och mycket hög igenkänning.",
+      "fameNote": "Bröstpumpsrepliken blev en av valrörelsen 2010:s mest återgivna partiledargrodor och kommenterades i efterhand av Ohly själv.",
+      "scores": {
+        "fame": 5,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 3,
+        "standaloneClarity": 4,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": false,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": false,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "candidate"
+  }
+]

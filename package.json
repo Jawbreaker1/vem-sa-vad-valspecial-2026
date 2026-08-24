@@ -11,6 +11,8 @@
     "start": "vinext start",
     "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
     "check:quotes": "node scripts/validate-quotes.mjs",
+    "check:quote-links": "node scripts/check-quote-links.mjs",
+    "rank:quotes": "node scripts/rank-quotes.mjs",
     "check": "npm run check:quotes && npm run lint && npm run build"
   },
   "dependencies": {

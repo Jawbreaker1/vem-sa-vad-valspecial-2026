@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { PartyId, Quote, quotes } from './quotes';
+import { PartyId, Quote, quotePriority, quotes } from './quotes';
 
 type Party = {
   id: PartyId;
@@ -131,6 +131,7 @@ const confetti = Array.from({ length: 72 }, (_, index) => ({
 }));
 
 const QUESTION_SECONDS = 20;
+const QUESTIONS_PER_PARTY = 3;
 const MUSIC_VOLUMES: Record<MusicCue, number> = { intro: .15, game: .12 };
 
 function shuffle<T>(items: T[]) {
@@ -146,13 +147,36 @@ function partyById(id: PartyId) {
   return parties.find((party) => party.id === id) ?? parties[0];
 }
 
+function weightedSample(items: Quote[], count: number) {
+  const pool = [...items];
+  const selected: Quote[] = [];
+
+  while (pool.length && selected.length < count) {
+    const weights = pool.map((quote) => Math.max(1, quotePriority(quote) - 50) ** 2);
+    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+    let draw = Math.random() * totalWeight;
+    let chosenIndex = pool.length - 1;
+
+    for (let index = 0; index < weights.length; index += 1) {
+      draw -= weights[index];
+      if (draw <= 0) {
+        chosenIndex = index;
+        break;
+      }
+    }
+
+    selected.push(pool.splice(chosenIndex, 1)[0]);
+  }
+
+  return selected;
+}
+
 function buildRound(bank: Quote[]) {
   const balanced = parties.flatMap((party) => {
     const candidates = bank.filter(
       (quote) => quote.party === party.id && quote.reviewStatus === 'approved',
     );
-    if (!candidates.length) return [];
-    return candidates[Math.floor(Math.random() * candidates.length)];
+    return weightedSample(candidates, QUESTIONS_PER_PARTY);
   });
   return shuffle(balanced);
 }
@@ -852,7 +876,9 @@ export default function Home() {
             <span>Starta spelet</span>
             <small>Koppla citaten till rätt parti</small>
           </button>
-          <div className="intro-kicker">8 partier · 8 primärkällor · 0 säkra kort</div>
+          <div className="intro-kicker">
+            8 partier · {quotes.filter((quote) => quote.reviewStatus === 'approved').length} verifierade citat · 0 säkra kort
+          </div>
         </section>
         <p className="intro-note" id="intro-note">
           En lekfull prototyp. Historiska citat behöver inte motsvara partiernas politik i dag.

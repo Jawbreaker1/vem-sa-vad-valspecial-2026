@@ -5,15 +5,40 @@
     "quote": "Jag välkomnar flörten från Ebba, om jag uppfattade den rätt.",
     "speaker": "Magdalena Andersson",
     "speakerRole": "partiordförande och oppositionsledare",
+    "speakerTier": "party-leader",
     "speakerImage": "/leaders/magdalena-andersson.webp",
     "date": "2025-09-10",
     "context": "Ebba Busch hade sagt ”Så överens vi är!”, föreslagit att Socialdemokraterna borde pröva ett annat regeringssamarbete och frågat hur Andersson skulle få igenom sin politik. Andersson kallade den politiska inviten för en flört och fortsatte sedan om blocköverskridande samarbeten.",
     "source": {
       "title": "Partiledardebatt, protokoll 2025/26:3, anförande 41",
       "publisher": "Sveriges riksdag",
-      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-2025263-onsdagen-den-10-september_hd093/html/"
+      "url": "https://data.riksdagen.se/dokument/HD093",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 41"
     },
     "editorialNote": "”Flörten” var metaforisk och gällde Ebba Buschs invit till politiskt samarbete.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "debate-reply", "current"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En oväntat lättsam relationsmetafor i en formell partiledardebatt, med flera rimliga avsändarpartier.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-24"
+    },
     "reviewStatus": "approved"
   },
   {
@@ -22,15 +47,40 @@
     "quote": "I Sverige är vi toleranta, men vi är inte toleranta mot intoleransen. Båda dessa värderingar kommer att vägleda den här regeringen till hundra procent.",
     "speaker": "Ulf Kristersson",
     "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
     "speakerImage": "/leaders/ulf-kristersson.webp",
     "date": "2022-10-26",
     "context": "Magdalena Andersson frågade om organisationer som granskade Tidöavtalet riskerade indraget stöd. Kristersson skilde mellan full yttrandefrihet och skattefinansiering av verksamhet som motarbetar demokratins grundläggande funktionssätt.",
     "source": {
       "title": "Partiledardebatt, protokoll 2022/23:14, anförande 13",
       "publisher": "Sveriges riksdag",
-      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-20222314-onsdagen-den-26-oktober_ha0914/html/"
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-20222314-onsdagen-den-26-oktober_ha0914/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 13"
     },
     "editorialNote": "”Intoleransen” syftar här på antidemokratisk verksamhet och offentlig finansiering, inte vanlig regeringskritik.",
+    "editorial": {
+      "tags": ["surprising", "misdirection", "policy", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den retoriska paradoxen låter principiell snarare än tydligt moderat och skapar därför användbar osäkerhet.",
+      "scores": {
+        "fame": 2,
+        "humor": 2,
+        "surprise": 3,
+        "misdirection": 3,
+        "relevance": 4,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-24"
+    },
     "reviewStatus": "approved"
   },
   {
@@ -39,15 +89,40 @@
     "quote": "Mycket kort: Jag behöver ingen verktygslåda, för jag har inte tagit sönder någonting.",
     "speaker": "Jimmie Åkesson",
     "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
     "speakerImage": "/leaders/jimmie-akesson.webp",
     "date": "2012-10-17",
     "context": "Annie Lööf sade att Sverigedemokraternas ”verktygslåda” ekade tom och efterfrågade konkreta integrationsförslag. Åkessons hela replik var denna korta ordlek.",
     "source": {
       "title": "Partiledardebatt, protokoll 2012/13:11, anförande 99",
       "publisher": "Sveriges riksdag",
-      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/riksdagens-protokoll-20121311-onsdagen-den-17_h00911/html/"
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/riksdagens-protokoll-20121311-onsdagen-den-17_h00911/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 99"
     },
     "editorialNote": "Punchlinen bygger på Annie Lööfs omedelbart föregående verktygsmetafor.",
+    "editorial": {
+      "tags": ["funny", "surprising", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En extremt kort och tydlig punchline som kan tillskrivas nästan vilken självsäker partiledare som helst.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 3,
+        "relevance": 3,
+        "standaloneClarity": 3,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-24"
+    },
     "reviewStatus": "approved"
   },
   {
@@ -56,15 +131,40 @@
     "quote": "Johan Pehrson har missuppfattat marknadsekonomin. Jag beklagar detta.",
     "speaker": "Nooshi Dadgostar",
     "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
     "speakerImage": "/leaders/nooshi-dadgostar.webp",
     "date": "2022-11-16",
     "context": "Johan Pehrson hade försvarat den gemensamma elmarknaden och anklagat Vänsterpartiet för att hata marknaden. Dadgostar svarade genom att förklara hur betalningsviljan styr prisallokeringen och argumenterade därefter för reglering av elmarknaden.",
     "source": {
       "title": "EU-politisk partiledardebatt, protokoll 2022/23:21, anförande 68",
       "publisher": "Sveriges riksdag",
-      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-20222321-onsdagen-den-16-november_ha0921/html/"
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-20222321-onsdagen-den-16-november_ha0921/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 68"
     },
     "editorialNote": "Det oväntade ligger i att en V-ledare tillrättavisar en liberal om marknadsekonomins funktionssätt.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "policy", "debate-reply"],
+      "riskFlags": [],
+      "rationale": "En torr tillrättavisning där en vänsterledare försvarar sin egen läsning av marknadsekonomin mot en liberal.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-24"
+    },
     "reviewStatus": "approved"
   },
   {
@@ -73,15 +173,40 @@
     "quote": "Men för dem som arbetar inom vården innebär personalbristen att de måste springa fortare, kissa snabbare och i bästa fall hinna äta lunch.",
     "speaker": "Annie Lööf",
     "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
     "speakerImage": null,
     "date": "2022-06-02",
     "context": "Lööf beskrev en åldrande befolkning och bristen på utbildad vårdpersonal. Hon föreslog utbildnings- och jobbvägar, särskilt för utrikes födda kvinnor, samt serviceassistenter som kan avlasta utbildad personal.",
     "source": {
       "title": "Så får fler utrikes födda kvinnor jobb inom vården",
       "publisher": "Centerpartiet",
-      "url": "https://www.centerpartiet.se/nyheter/2022/2022-06-02-sa-far-fler-utrikes-fodda-kvinnor-jobb-inom-varden"
+      "url": "https://www.centerpartiet.se/nyheter/2022/2022-06-02-sa-far-fler-utrikes-fodda-kvinnor-jobb-inom-varden",
+      "type": "official-party-page",
+      "locator": "Brödtexten, stycket som börjar ”Samtidigt blir Sveriges befolkning allt äldre”."
     },
     "editorialNote": "Citatet återges ordagrant i Centerpartiets officiella referat av hennes tal under Järvaveckan.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "policy"],
+      "riskFlags": [],
+      "rationale": "Den kroppsligt konkreta formuleringen sticker ut kraftigt från normal vårdpolitik och är lätt att minnas.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-24"
+    },
     "reviewStatus": "approved"
   },
   {
@@ -90,15 +215,40 @@
     "quote": "EU som idé kläcktes inte av politiker som var oroade över böjda gurkor.",
     "speaker": "Ebba Busch",
     "speakerRole": "partiordförande, vice statsminister och energi- och näringsminister",
+    "speakerTier": "party-leader",
     "speakerImage": "/leaders/ebba-busch.webp",
     "date": "2024-04-19",
     "context": "Busch kontrasterade detaljreglering med EU:s grundläggande syften: fred, frihandel och frihet. Formuleringen introducerade Kristdemokraternas EU-valstema ”Gränser och frihet”.",
     "source": {
       "title": "EU-tal av Ebba Busch",
       "publisher": "Kristdemokraterna",
-      "url": "https://kristdemokraterna.se/arkiv/nyheter/2024/2024-04-19-eu-tal-av-ebba-busch"
+      "url": "https://kristdemokraterna.se/arkiv/nyheter/2024/2024-04-19-eu-tal-av-ebba-busch",
+      "type": "official-speech",
+      "locator": "Talets inledande avsnitt om fred, frihandel och böjda gurkor."
     },
     "editorialNote": "Gurkreferensen är kampanjmässig kortform för det som partiet beskrev som onödig detaljreglering.",
+    "editorial": {
+      "tags": ["funny", "surprising", "metaphor", "policy"],
+      "riskFlags": [],
+      "rationale": "Böjda gurkor är en välbekant EU-kliché, men den spetsiga historieskrivningen gör formuleringen spelstark.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 3,
+        "misdirection": 3,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-24"
+    },
     "reviewStatus": "approved"
   },
   {
@@ -107,15 +257,40 @@
     "quote": "Det är därför jag träffar Jimmie, Ebba och Ulf nästan oftare än min familj. Och det är därför våra förhandlingar ofta blir riktigt hårda.",
     "speaker": "Simona Mohamsson",
     "speakerRole": "partiordförande samt utbildnings- och integrationsminister",
+    "speakerTier": "party-leader",
     "speakerImage": "/leaders/simona-mohamsson.webp",
     "date": "2026-06-23",
     "context": "Efter att ha räknat upp resultat av regeringssamarbetet förklarade Mohamsson att täta och svåra förhandlingar behövs för att få igenom liberala prioriteringar. Förnamnen syftar på Åkesson, Busch och Kristersson.",
     "source": {
       "title": "Simona Mohamssons tal i Almedalen 2026",
       "publisher": "Liberalerna",
-      "url": "https://www.liberalerna.se/nyheter/simona-mohamssons-tal-i-almedalen-2026"
+      "url": "https://www.liberalerna.se/nyheter/simona-mohamssons-tal-i-almedalen-2026",
+      "type": "official-speech",
+      "locator": "Avsnittet om Tidösamarbetet och liberala förhandlingar."
     },
     "editorialNote": "Den officiella sidan anger att det talade ordet gäller; citatet följer den publicerade taltexten.",
+    "editorial": {
+      "tags": ["funny", "surprising", "current", "misdirection"],
+      "riskFlags": [],
+      "rationale": "Familjejämförelsen gör regeringsförhandlingarna komiskt privata och namnen ger flera trovärdiga avsändare.",
+      "scores": {
+        "fame": 1,
+        "humor": 4,
+        "surprise": 3,
+        "misdirection": 3,
+        "relevance": 5,
+        "standaloneClarity": 4,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-24"
+    },
     "reviewStatus": "approved"
   },
   {
@@ -124,15 +299,40 @@
     "quote": "Jag tillhör dem som inte bara uppskattar tystnaden i naturen. Jag har också börjat bli rädd för den.",
     "speaker": "Per Bolund",
     "speakerRole": "språkrör samt finansmarknads- och bostadsminister",
+    "speakerTier": "party-leader",
     "speakerImage": null,
     "date": "2019-06-30",
     "context": "Bolund beskrev först stilla promenader i naturen och förklarade sedan att landskapet blivit onaturligt tyst. Han kopplade tystnaden till minskande biologisk mångfald, insekter och fåglar.",
     "source": {
       "title": "Per Bolunds tal i Almedalen 2019",
       "publisher": "Miljöpartiet de gröna",
-      "url": "https://www.mp.se/just-nu/bolunds-tal-i-almedalen-2019/"
+      "url": "https://www.mp.se/just-nu/bolunds-tal-i-almedalen-2019/",
+      "type": "official-speech",
+      "locator": "Avsnittet om naturens tystnad och biologisk mångfald."
     },
     "editorialNote": "Den fruktade tystnaden är en bild för förlust av biologisk mångfald, inte en allmän rädsla för naturen.",
+    "editorial": {
+      "tags": ["surprising", "misdirection", "metaphor", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den poetiska vändningen är stark och oväntat mörk, samtidigt som flera partier skulle kunna tala om naturen så.",
+      "scores": {
+        "fame": 2,
+        "humor": 1,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-24"
+    },
     "reviewStatus": "approved"
   }
 ]

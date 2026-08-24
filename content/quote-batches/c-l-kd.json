@@ -1,0 +1,467 @@
+[
+  {
+    "id": "c-loof-2017-klassamhalle",
+    "party": "C",
+    "quote": "Det är ett nytt klassamhälle som håller på att byggas. Där Socialdemokraterna agerar arbetsledare.",
+    "speaker": "Annie Lööf",
+    "speakerRole": "partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2017-07-04",
+    "context": "I Almedalstalet beskrev Lööf höga trösklar till arbetsmarknaden som grogrund för en ny social underklass. Hon vände klassretoriken mot Socialdemokraterna och efterlyste reformer för jobb, utbildning och omställning.",
+    "source": {
+      "title": "Annie Lööf i Almedalen: Nu rustar vi jobbsökarna",
+      "publisher": "Centerpartiet",
+      "url": "https://www.centerpartiet.se/nyheter/2017-arkiverad/2017-07-04-annie-loof-i-almedalen-nu-rustar-vi-jobbsokarna",
+      "type": "official-party-page",
+      "locator": "Brödtexten, stycket som börjar ”Hon riktade skarp kritik”."
+    },
+    "editorialNote": "Klassamhälle och arbetsledare är medvetet socialdemokratiskt laddade ord som Lööf riktar tillbaka mot Socialdemokraterna.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "metaphor", "policy"],
+      "riskFlags": [],
+      "rationale": "Den kvicka arbetsledarmetaforen låter som intern vänsterkritik men kommer från en liberal centerledare.",
+      "scores": {
+        "fame": 3,
+        "humor": 3,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "c-demirok-2024-arbetslos",
+    "party": "C",
+    "quote": "Europas fjärde högsta arbetslöshet borde göra regeringen arbetslös.",
+    "speaker": "Muharrem Demirok",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2024-09-11",
+    "context": "Demirok citerade Moderaternas valaffisch från 2022 och frågade om Kristersson fortfarande stod fast vid budskapet. När statsministern svarade ja vände Demirok slagordet mot den sittande regeringen och dess arbetslöshetssiffror.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2024/25:3, anförande 18",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-2024253-onsdagen-den-11-september_hc093/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 18"
+    },
+    "editorialNote": "Demirok uttalade men uppfann inte meningen: den var Moderaternas valslogan 2022, som han citerade för att vända den mot regeringen.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "policy", "debate-reply"],
+      "riskFlags": ["commonly-misattributed", "context-dependent"],
+      "rationale": "En borgerlig valslogan återanvänds ordagrant av en centerledare mot en moderat regering, vilket ger maximal felriktning.",
+      "scores": {
+        "fame": 3,
+        "humor": 4,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "c-thand-ringqvist-2026-trad-tonaringar",
+    "party": "C",
+    "quote": "När det kommer till koldioxid är nämligen träd som tonåringar: De käkar mest när de växer.",
+    "speaker": "Elisabeth Thand Ringqvist",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/elisabeth-thand-ringqvist.webp",
+    "date": "2026-01-14",
+    "context": "I en replik till Miljöpartiets Amanda Lind försvarade Thand Ringqvist ett aktivt brukande av skogen. Tonåringsliknelsen sammanfattade hennes argument att växande träd binder koldioxid och att skogsråvara kan ersätta fossilbaserade material.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2025/26:57, anförande 162",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-20252657-onsdagen-den-14-januari_hd0957/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 162"
+    },
+    "editorialNote": "Jämförelsen är ett retoriskt argument för aktivt skogsbruk, inte en fullständig vetenskaplig beskrivning av skogens klimatnytta.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "current", "metaphor", "policy", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den vardagliga tonårsbilden gör teknisk skogs- och klimatpolitik omedelbart komisk, tydlig och svår att partibestämma.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "c-loof-2018-nazister-skriker",
+    "party": "C",
+    "quote": "Det här är nazister som skriker nu. Vi kan väl lyssna lite på dem?",
+    "speaker": "Annie Lööf",
+    "speakerRole": "partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2018-07-04",
+    "context": "Nordiska motståndsrörelsens rop avbröt Lööfs tal i Almedalen. Hon stannade upp, pekade ut avsändarna och lät kontrasten till talets försvar för öppenhet och mot hat bli hörbar.",
+    "source": {
+      "title": "Annie Lööf talar i Almedalen 2018",
+      "publisher": "Centerpartiet",
+      "url": "https://www.youtube.com/watch?v=R8ULGVBSG5Y",
+      "type": "official-audio-video",
+      "locator": "Avsnittet där NMR:s rop avbryter talet; exakt tidskod återstår att verifiera."
+    },
+    "editorialNote": "Ordvalet, inklusive ”lite”, och den exakta tidskoden måste verifieras mot Centerpartiets originalvideo innan posten kan godkännas.",
+    "editorial": {
+      "tags": ["famous", "funny", "surprising", "misdirection", "historical"],
+      "riskFlags": ["clip-needed", "context-dependent"],
+      "rationale": "Den torra uppmaningen mitt under ett hotfullt avbrott är berömd, modig och retoriskt oväntad, med stark spelpunch.",
+      "fameNote": "Ett av Almedalsveckan 2018 mest uppmärksammade ögonblick; repliken återkom i bred nyhetsrapportering och i Centerpartiets egna tillbakablickar.",
+      "scores": {
+        "fame": 5,
+        "humor": 4,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": false,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "candidate"
+  },
+  {
+    "id": "l-bjorklund-2017-socialt-ansvar",
+    "party": "L",
+    "quote": "Socialt ansvar men utan socialism. Eller individuell frihet men utan egoism. Eller social välfärd men utan en kvävande kollektivism.",
+    "speaker": "Jan Björklund",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2017-07-03",
+    "context": "Björklund beskrev sin ideologiska resa från en ungdomlig nyliberal motreaktion till socialliberalism, präglad av erfarenheter av vård, omsorg och utsatthet. Tretalet sammanfattade den balans mellan frihet och gemensamt ansvar som han ville göra till Liberalernas uppgift.",
+    "source": {
+      "title": "Jan Björklunds tal i Almedalen",
+      "publisher": "Liberalerna",
+      "url": "https://www.liberalerna.se/nyheter/jan-bjorklunds-tal-almedalen",
+      "type": "official-speech",
+      "locator": "Ingressen samt talets avslutande värderingsavsnitt."
+    },
+    "editorialNote": "Citatet följer den sammanhållna trikolonen i den officiella sidans ingress; talmanuset återkommer senare med en lätt förkortad variant.",
+    "editorial": {
+      "tags": ["famous", "surprising", "misdirection", "historical", "policy"],
+      "riskFlags": [],
+      "rationale": "Tre ideologiska motsatspar kan låta socialdemokratiska, borgerliga eller kristdemokratiska men formar en tydlig socialliberal signatur.",
+      "fameNote": "Tretalet lyfts som sidans ingress och återkommer i talets ideologiska final, vilket gör det till en av Björklunds tydligaste socialliberala signaturformuleringar.",
+      "scores": {
+        "fame": 4,
+        "humor": 2,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "l-pehrson-2025-giftig-cocktail",
+    "party": "L",
+    "quote": "Kommunaliseringen som kombinationen Centerpartiet och Socialdemokraterna genomförde, med alltför fria tyglar för friskolor, har blivit en giftig cocktail",
+    "speaker": "Johan Pehrson",
+    "speakerRole": "partiordförande och utbildningsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2025-01-15",
+    "context": "Muharrem Demirok krävde mer resurser och ansvarstagande för ordning och reda i skolan. Pehrson svarade att skolan återreglerades och beskrev kombinationen av kommunalisering och alltför fria friskoleregler som orsaken till pedagogiskt undermåliga experiment.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2024/25:56, anförande 100",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-20242556-onsdagen-den-15-januari_hc0956/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 100"
+    },
+    "editorialNote": "Citatet är ett sammanhängande 18-ordsutdrag; originalmeningen fortsätter med cocktailens följder för pedagogiska experiment.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "current", "metaphor", "policy", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den giftiga cocktailen låter som miljö- eller folkhälsopolitik men betecknar en liberal uppgörelse med skolans styrning.",
+      "scores": {
+        "fame": 2,
+        "humor": 3,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "l-mohamsson-2025-vasaloppet-brollop",
+    "party": "L",
+    "quote": "I mitt Sverige är det lika självklart att åka Vasaloppet som att gå på ett kurdiskt bröllop, att fira jul som att fira eid.",
+    "speaker": "Simona Mohamsson",
+    "speakerRole": "partiordförande samt utbildnings- och integrationsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/simona-mohamsson.webp",
+    "date": "2025-09-10",
+    "context": "I en replikväxling med Jimmie Åkesson argumenterade Mohamsson för en öppen svensk värdegemenskap som bygger på medborgarskap och deltagande snarare än härkomst. Hon radade upp vardagliga svenska, kurdiska, kristna och muslimska erfarenheter som jämbördiga delar av det nya Sverige.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2025/26:3, anförande 67",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/dokument/HD093",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 67"
+    },
+    "editorialNote": "Detta är de första 24 sammanhängande orden i uppräkningen; originalet fortsätter med att tacka nej till fläsk och ta en öl med vänner.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "current", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "De oväntade kulturparen ger hög igenkänning men kan trovärdigt komma från flera partiers integrationsretorik.",
+      "scores": {
+        "fame": 3,
+        "humor": 3,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-svensson-1997-svarsstund",
+    "party": "KD",
+    "quote": "Det är alldeles signifikativt att det här är en frågestund och ingen svarsstund.",
+    "speaker": "Alf Svensson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "1997-09-18",
+    "context": "Under riksmötets första muntliga frågestund hade statsminister Göran Persson hänvisat en fråga om änkepensioner vidare med motiveringen att han inte var socialförsäkringsminister. Svensson svarade att allmänna frågor till statsministern också borde ge konkreta svar.",
+    "source": {
+      "title": "Frågestund, snabbprotokoll 1997/98:3, anförande 20",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/riksdagens-snabbprotokoll-1997983-torsdagen-den_gl093/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 20"
+    },
+    "editorialNote": "Ordleken svarar direkt på Göran Perssons föregående besked och blir tydligast med den replikkontexten.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den torra skillnaden mellan frågestund och svarsstund fungerar som en tidlös parlamentarisk punchline utan tydlig partifärg.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 3,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-busch-2025-dikt-logn",
+    "party": "KD",
+    "quote": "Det är dikt och förbannad lögn att läsa vår politik som fan läser Bibeln.",
+    "speaker": "Ebba Busch",
+    "speakerRole": "partiordförande, vice statsminister och energi- och näringsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/ebba-busch.webp",
+    "date": "2025-06-11",
+    "context": "Centerpartiets Rickard Nordin anklagade regeringen för ensidig och dyr kärnkraftspolitik och hänvisade till formuleringar i regeringens eget underlag. Busch svarade att alla fossilfria kraftslag behövdes och räknade upp regeringens åtgärder för mer elproduktion.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2024/25:130, anförande 75",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/protokoll-202425130-onsdagen-den-11-juni_hc09130/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 75"
+    },
+    "editorialNote": "Formuleringen kombinerar ”dikt och förbannad lögn” med idiomet ”som fan läser Bibeln” och innehåller därför både svordom och religiös referens.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "current", "metaphor", "policy", "debate-reply"],
+      "riskFlags": ["sensitive", "context-dependent"],
+      "rationale": "Svordomen och bibelidiomet från en kristdemokratisk partiledare är maximalt överraskande, kärnfullt och lätt att spela på.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-busch-2025-vard-efter-behov",
+    "party": "KD",
+    "quote": "Sverige behöver en vård som ger till var och en efter behov. Och inte efter var och en av regionernas förmåga.",
+    "speaker": "Ebba Busch",
+    "speakerRole": "partiordförande, vice statsminister och energi- och näringsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/ebba-busch.webp",
+    "date": "2025-06-27",
+    "context": "I Almedalstalet jämförde Busch vårdgarantins mycket olika utfall i Jönköping och Östergötland. Hon använde den ideologiskt laddade formeln för att argumentera mot 21 regionala vårdsystem och för ett mer statligt ansvar.",
+    "source": {
+      "title": "Ebbas tal i Almedalen",
+      "publisher": "Kristdemokraterna",
+      "url": "https://kristdemokraterna.se/arkiv/nyheter/2025/2025-06-27-ebbas-tal-i-almedalen",
+      "type": "official-speech",
+      "locator": "Avsnittet om vårdgarantin och de 21 regionerna."
+    },
+    "editorialNote": "Meningen vrider formeln ”åt var och en efter behov, av var och en efter förmåga” till en kritik av regionernas skiftande vårdkapacitet.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "current", "metaphor", "policy"],
+      "riskFlags": [],
+      "rationale": "Den välkända vänsterformeln får en kristdemokratisk vårdpolitisk punchline och skapar därför mycket stark partimisdirection.",
+      "scores": {
+        "fame": 3,
+        "humor": 4,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-hagglund-2014-hastlasagne-politiker",
+    "party": "KD",
+    "quote": "Det finns hästlasagne-politiker, herr talman, som försöker ta svenska folket genom valrörelsen utan att ge några som helst besked om innehållet.",
+    "speaker": "Göran Hägglund",
+    "speakerRole": "partiordförande och socialminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "date": "2014-06-18",
+    "context": "I den sista partiledardebatten före valet använde Hägglund hästköttsskandalen som bild för oppositionens brist på innehållsdeklaration. Han krävde besked av Socialdemokraterna om hur en regering tillsammans med Miljöpartiet skulle se ut.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2013/14:128, anförande 36",
+      "publisher": "Sveriges riksdag",
+      "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/protokoll/riksdagens-protokoll-201314128-onsdagen-den-18_h109128/html/",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 36; protokollet återger ”hästlasagne i politiker”, så videoklippet måste kontrolleras."
+    },
+    "editorialNote": "Den sannolika sammansättningen ”hästlasagne-politiker” måste verifieras i riksdagens ljud eller video; textprotokollet har den semantiskt orimliga formen ”hästlasagne i politiker”.",
+    "editorial": {
+      "tags": ["famous", "funny", "surprising", "misdirection", "historical", "metaphor", "debate-reply"],
+      "riskFlags": ["clip-needed", "context-dependent"],
+      "rationale": "Hästlasagnen är en absurd men omedelbart begriplig innehållsmetafor och en av Hägglunds mest spelvänliga debattrepliker.",
+      "fameNote": "”Hästlasagne-politiker” blev en av de mest återgivna formuleringarna från den sista partiledardebatten före valet 2014.",
+      "scores": {
+        "fame": 4,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 3,
+        "standaloneClarity": 4,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": false,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "candidate"
+  }
+]

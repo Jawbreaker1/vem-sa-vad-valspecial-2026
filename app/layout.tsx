@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Vem sa vad? – Valspecial 2026',
-    description: 'Åtta oväntade politikercitat. Kan du koppla alla till rätt parti?',
+    description: '24 oväntade politikercitat. Kan du koppla dem till rätt parti?',
     locale: 'sv_SE',
     type: 'website',
     images: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Vem sa vad? – Valspecial 2026',
-    description: 'Åtta oväntade politikercitat. Kan du koppla alla till rätt parti?',
+    description: '24 oväntade politikercitat. Kan du koppla dem till rätt parti?',
     images: ['/og-v2.png'],
   },
 };

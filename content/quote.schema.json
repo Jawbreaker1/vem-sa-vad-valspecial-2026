@@ -5,27 +5,90 @@
   "items": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["id", "party", "quote", "speaker", "speakerRole", "date", "context", "source", "reviewStatus"],
+    "required": ["id", "party", "quote", "speaker", "speakerRole", "speakerTier", "date", "context", "source", "editorial", "verification", "reviewStatus"],
     "properties": {
       "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
       "party": { "enum": ["S", "M", "SD", "V", "C", "KD", "L", "MP"] },
       "quote": { "type": "string", "minLength": 10 },
       "speaker": { "type": "string", "minLength": 1 },
       "speakerRole": { "type": "string", "minLength": 1 },
+      "speakerTier": { "enum": ["party-leader", "prime-minister", "minister", "official-spokesperson"] },
       "speakerImage": { "type": ["string", "null"] },
       "date": { "type": "string", "format": "date" },
       "context": { "type": "string", "minLength": 30 },
       "source": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["title", "publisher", "url"],
+        "required": ["title", "publisher", "url", "type"],
         "properties": {
           "title": { "type": "string" },
           "publisher": { "type": "string" },
-          "url": { "type": "string", "format": "uri" }
+          "url": { "type": "string", "format": "uri" },
+          "type": {
+            "enum": [
+              "riksdag-protocol",
+              "official-speech",
+              "official-party-page",
+              "government-page",
+              "official-audio-video",
+              "public-service-recording",
+              "secondary-lead"
+            ]
+          },
+          "locator": { "type": "string" }
         }
       },
       "editorialNote": { "type": "string" },
+      "editorial": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tags", "riskFlags", "rationale", "scores"],
+        "properties": {
+          "tags": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": ["famous", "funny", "surprising", "misdirection", "historical", "current", "metaphor", "policy", "debate-reply"]
+            }
+          },
+          "riskFlags": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": ["context-dependent", "commonly-misattributed", "sensitive", "translation", "clip-needed", "date-uncertain"]
+            }
+          },
+          "rationale": { "type": "string", "minLength": 30 },
+          "fameNote": { "type": "string", "minLength": 20 },
+          "scores": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["fame", "humor", "surprise", "misdirection", "relevance", "standaloneClarity", "sourceStrength"],
+            "properties": {
+              "fame": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "humor": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "surprise": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "misdirection": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "relevance": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "standaloneClarity": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "sourceStrength": { "type": "integer", "minimum": 1, "maximum": 5 }
+            }
+          }
+        }
+      },
+      "verification": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["exactWording", "speakerIdentity", "date", "context", "primarySource", "lastChecked"],
+        "properties": {
+          "exactWording": { "type": "boolean" },
+          "speakerIdentity": { "type": "boolean" },
+          "date": { "type": "boolean" },
+          "context": { "type": "boolean" },
+          "primarySource": { "type": "boolean" },
+          "lastChecked": { "type": ["string", "null"], "format": "date" }
+        }
+      },
       "reviewStatus": { "enum": ["candidate", "context-checked", "primary-source-checked", "approved", "rejected"] }
     }
   }
