@@ -1,0 +1,82 @@
+[
+  {
+    "asset": "/party-logos/s.svg",
+    "party": "Socialdemokraterna",
+    "sourcePage": "https://www.socialdemokraterna.se/vart-parti/press",
+    "sourceFile": "https://www.socialdemokraterna.se/images/18.61366e091900c5b2729727a/1720011611069/S%20logga%20-%20Liggande%20Positiv.svg",
+    "retrieved": "2026-08-24",
+    "note": "Officiellt pressmaterial. Ingen uttrycklig öppen logotyplicens anges; varumärkesrätt kan gälla."
+  },
+  {
+    "asset": "/party-logos/m.webp",
+    "party": "Moderaterna",
+    "sourcePage": "https://moderaterna.se/press/",
+    "sourceFile": "https://moderaterna.se/app/uploads/2021/12/M_logo_bla%CC%8A_2021.png",
+    "retrieved": "2026-08-24",
+    "note": "Officiell webbfil. Ingen uttrycklig öppen logotyplicens anges; varumärkesrätt kan gälla."
+  },
+  {
+    "asset": "/party-logos/sd.png",
+    "party": "Sverigedemokraterna",
+    "sourcePage": "https://www.sd.se/press/",
+    "sourceFile": "https://www.sd.se/wp-content/uploads/2022/07/logo_sd_logo_blasippa.png",
+    "retrieved": "2026-08-24",
+    "note": "Partiets pressida anger redaktionell användning och förbjuder produkttryck utan tillstånd. Kommersiell lansering måste klareras."
+  },
+  {
+    "asset": "/party-logos/v.svg",
+    "party": "Vänsterpartiet",
+    "sourcePage": "https://www.vansterpartiet.se/grafisk-profil/",
+    "sourceFile": "https://www.vansterpartiet.se/wp-content/uploads/2025/03/logo.svg",
+    "retrieved": "2026-08-24",
+    "note": "Officiellt profilmaterial. Logotypen ska inte förvanskas; varumärkesrätt kan gälla."
+  },
+  {
+    "asset": "/party-logos/c.png",
+    "party": "Centerpartiet",
+    "sourcePage": "https://www.centerpartiet.se/om-centerpartiet/grafisk-profil",
+    "sourceFile": "https://www.centerpartiet.se/images/18.1f0bd54219afcc2a05ec70b/1765454690885/Centerpartiet_partisymbol_klover_bordered.png",
+    "retrieved": "2026-08-24",
+    "note": "Officiellt profilmaterial. Ingen uttrycklig öppen logotyplicens anges; varumärkesrätt kan gälla."
+  },
+  {
+    "asset": "/party-logos/kd.svg",
+    "party": "Kristdemokraterna",
+    "sourcePage": "https://press.kristdemokraterna.se/presskits/25663/logotyp-rund-variant-undantag-bara-i-media",
+    "sourceFile": "https://kristdemokraterna.se/images/18.72d9f8c817e8ce3de0254710/1643616846958/KD-logo-blue.svg",
+    "retrieved": "2026-08-24",
+    "note": "Pressmaterial för medieanvändning. Varumärkesrätt kan gälla."
+  },
+  {
+    "asset": "/party-logos/l.svg",
+    "party": "Liberalerna",
+    "sourcePage": "https://www.liberalerna.se/grafisk-profil",
+    "sourceFile": "https://www.liberalerna.se/wp-content/themes/liberalerna/assets/images/logo-round.svg",
+    "retrieved": "2026-08-24",
+    "note": "Officiellt profilmaterial. Ingen uttrycklig öppen logotyplicens anges; varumärkesrätt kan gälla."
+  },
+  {
+    "asset": "/party-logos/mp.svg",
+    "party": "Miljöpartiet de gröna",
+    "sourcePage": "https://www.mp.se/profil-och-logga/",
+    "sourceFile": "https://www.mp.se/wp-content/themes/mp/assets/images/logo.svg",
+    "retrieved": "2026-08-24",
+    "note": "Officiellt profilmaterial. Ingen uttrycklig öppen logotyplicens anges; varumärkesrätt kan gälla."
+  },
+  {
+    "asset": "/start-stage.png",
+    "party": null,
+    "sourcePage": null,
+    "sourceFile": "design/mockups/start-page-v2-verified-leaders.png",
+    "retrieved": "2026-08-24",
+    "note": "AI-genererad scenkomposit för det privata teknikprovet. Inte slutligt rättighetsklarerad för offentlig eller kommersiell lansering."
+  },
+  {
+    "asset": "/leaders/*.webp",
+    "party": null,
+    "sourcePage": null,
+    "sourceFile": "design/references/party-leaders-2026/",
+    "retrieved": "2026-08-24",
+    "note": "Tillfälliga porträttreferenser för privat teknikprov. Fullständig källa och licens ska dokumenteras eller bilderna ersättas före offentlig eller kommersiell lansering."
+  }
+]
