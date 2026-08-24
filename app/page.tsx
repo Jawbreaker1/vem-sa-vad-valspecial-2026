@@ -481,7 +481,14 @@ export default function Home() {
         <div className="sweep sweep-two" aria-hidden="true" />
         <section className="intro-console" aria-labelledby="intro-title">
           <h1 className="intro-logo" id="intro-title">
-            <span className="intro-logo-main">Vem sa vad?</span>
+            <span className="intro-crown" aria-hidden="true">
+              <i>★</i>
+              <i>★</i>
+              <i>★</i>
+            </span>
+            <span className="intro-logo-main">
+              <span className="intro-title-text">Vem sa vad?</span>
+            </span>
             <span className="intro-logo-edition">
               <i aria-hidden="true">★</i>
               Valspecial 2026
