@@ -418,7 +418,9 @@ export default function Home() {
     ? feedbackCopy(lastAnswer, streak)
     : null;
   const timerRatio = Math.max(0, Math.min(1, timeLeft / QUESTION_SECONDS));
-  const timerScale = 1 + Math.max(0, 7 - timeLeft) * .045;
+  const timerPressure = 1 - timerRatio;
+  const timerScale = 1 + Math.pow(timerPressure, 2.2) * .95;
+  const timerShellScale = 1 + Math.pow(timerPressure, 3) * .18;
   const needsMusicUnlock = soundOn && !musicReady && !musicAttempted;
 
   useEffect(() => {
@@ -706,8 +708,14 @@ export default function Home() {
 
     if (cue === 'countdown') {
       const step = 5 - secondsRemaining;
-      note(760 + step * 100, 0, .075, 'square', .018 + step * .004);
+      note(760 + step * 115, 0, .085, 'square', .021 + step * .006);
       if (secondsRemaining === 5) note(380, .07, .11, 'sine', .022);
+      if (secondsRemaining <= 3) {
+        const impact = 4 - secondsRemaining;
+        note(128 - impact * 13, .018, .12, 'triangle', .025 + impact * .012);
+        crackle(.025, .055, .012 + impact * .009);
+      }
+      if (secondsRemaining === 1) note(54, .075, .22, 'sine', .075);
     }
 
     if (cue === 'lock') {
@@ -723,8 +731,11 @@ export default function Home() {
     }
 
     if (cue === 'timeout') {
+      note(54, 0, .72, 'sine', .16);
+      note(82, 0, .28, 'square', .085);
       [196, 147, 110].forEach((frequency, index) => note(frequency, index * .17, .34, 'sawtooth', .075));
-      crackle(.02, .48, .045);
+      crackle(0, .18, .14);
+      crackle(.14, .42, .06);
     }
 
     if (cue === 'correct') {
@@ -1038,6 +1049,10 @@ export default function Home() {
     stopCableHum();
     setDragging(false);
     setPointer(null);
+    playCue('timeout');
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      navigator.vibrate?.([90, 35, 170]);
+    }
 
     const choice = selectedRef.current;
     if (choice) {
@@ -1062,7 +1077,6 @@ export default function Home() {
     setTimedOut(true);
     setAutoLocked(false);
     setPhase('reveal');
-    playCue('timeout');
     playCrowd('laugh');
   }
 
@@ -1294,6 +1308,7 @@ export default function Home() {
       selected ? 'has-selection cable-live' : '',
       dragging ? 'cable-live is-dragging-cable' : '',
       phase === 'choosing' && timeLeft <= 5 ? 'timer-critical' : '',
+      timeLeft === 0 ? 'timer-exploded' : '',
       showingAnswer ? (wasCorrect ? 'answer-correct' : 'answer-wrong') : '',
     ].filter(Boolean).join(' ')}>
       <div className="stage-lights" aria-hidden="true" />
@@ -1350,12 +1365,14 @@ export default function Home() {
               'timer-console',
               timeLeft <= 7 ? 'is-warning' : '',
               timeLeft <= 4 ? 'is-danger' : '',
+              timeLeft <= 3 ? 'is-final' : '',
               phase !== 'choosing' ? 'is-stopped' : '',
               timedOut ? 'is-timeout' : '',
             ].filter(Boolean).join(' ')}
             style={{
               '--fuse': `${timerRatio * 100}%`,
               '--timer-scale': timerScale,
+              '--timer-shell-scale': timerShellScale,
             } as CSSProperties}
             role="timer"
             aria-label={phase === 'choosing' ? `${timeLeft} sekunder kvar` : `Tiden stannade på ${timeLeft} sekunder`}
@@ -1364,6 +1381,7 @@ export default function Home() {
               <strong><i key={timeLeft}>{timeLeft}</i></strong>
               <small>sek</small>
             </span>
+            {timeLeft === 0 && <span className="timer-bang" aria-hidden="true">BAAANG!</span>}
             <span className="timer-fuse" aria-hidden="true">
               <span className="fuse-track">
                 <span className="fuse-remaining">

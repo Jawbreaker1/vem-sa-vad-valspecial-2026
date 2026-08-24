@@ -768,24 +768,26 @@ summary:focus-visible {
 .timer-console {
   --fuse: 100%;
   --timer-scale: 1;
+  --timer-shell-scale: 1;
   position: relative;
   display: grid;
-  grid-template-columns: 50px minmax(0, 1fr);
+  grid-template-columns: 66px minmax(0, 1fr);
   align-items: center;
-  gap: .45rem;
-  width: 178px;
-  min-height: 58px;
-  padding: .25rem .65rem .25rem .35rem;
-  border: 4px solid #ffc83d;
-  border-radius: 18px 7px 18px 7px;
+  gap: .62rem;
+  width: 236px;
+  min-height: 78px;
+  padding: .34rem .85rem .34rem .42rem;
+  border: 5px solid #ffc83d;
+  border-radius: 23px 8px 23px 8px;
   background:
     radial-gradient(circle at 21% 50%, rgb(40 147 255 / .28), transparent 33%),
     linear-gradient(145deg, #0a4fa5, #03163f 72%);
   box-shadow:
-    0 5px 0 #6b3600,
+    0 7px 0 #6b3600,
     inset 0 2px 5px rgb(255 255 255 / .35),
-    0 0 16px rgb(20 141 255 / .25);
-  transition: border-color .2s ease, filter .2s ease, background .2s ease;
+    0 0 24px rgb(20 141 255 / .38);
+  transform-origin: center;
+  transition: border-color .2s ease, filter .2s ease, background .2s ease, box-shadow .2s ease;
 }
 
 .timer-console::after {
@@ -801,15 +803,16 @@ summary:focus-visible {
   position: relative;
   z-index: 2;
   display: grid;
-  width: 46px;
-  height: 46px;
+  width: 62px;
+  height: 62px;
   place-content: center;
-  border: 2px solid rgb(255 255 255 / .5);
+  transform: scale(var(--timer-shell-scale));
+  border: 3px solid rgb(255 255 255 / .68);
   border-radius: 50%;
   background: radial-gradient(circle at 40% 27%, #effaff, #21a8ff 35%, #073c8e 72%);
-  box-shadow: inset 0 2px 7px white, 0 0 11px rgb(53 191 255 / .6);
+  box-shadow: inset 0 3px 9px white, 0 0 15px rgb(53 191 255 / .72);
   line-height: .75;
-  transition: background .2s ease;
+  transition: background .2s ease, transform .24s cubic-bezier(.2, 1.4, .35, 1), box-shadow .2s ease;
 }
 
 .timer-number strong {
@@ -818,13 +821,14 @@ summary:focus-visible {
   transform: scale(var(--timer-scale));
   transform-origin: center;
   color: white;
-  font-size: 1.72rem;
+  font-size: 2.25rem;
   text-align: center;
   text-shadow: 0 3px 0 #04204c;
   transition: transform .28s cubic-bezier(.2, 1.45, .4, 1), font-size .2s ease;
 }
 
 .timer-number strong i {
+  position: relative;
   display: block;
   font-style: normal;
   animation: timer-digit-pop .26s cubic-bezier(.2, 1.7, .35, 1) both;
@@ -834,7 +838,7 @@ summary:focus-visible {
   display: block;
   margin-top: .15rem;
   color: #d9efff;
-  font: 850 .42rem/1 system-ui, sans-serif;
+  font: 900 .5rem/1 system-ui, sans-serif;
   letter-spacing: .12em;
   text-align: center;
   text-transform: uppercase;
@@ -850,7 +854,7 @@ summary:focus-visible {
 
 .timer-fuse b {
   color: #dcecff;
-  font: 900 .52rem/1 system-ui, sans-serif;
+  font: 950 .62rem/1 system-ui, sans-serif;
   letter-spacing: .13em;
   text-align: center;
 }
@@ -858,7 +862,7 @@ summary:focus-visible {
 .fuse-track {
   position: relative;
   display: block;
-  height: 11px;
+  height: 15px;
   border: 2px solid #512800;
   border-radius: 999px;
   background: repeating-linear-gradient(135deg, #250b05 0 5px, #57190c 5px 10px);
@@ -881,8 +885,8 @@ summary:focus-visible {
   position: absolute;
   top: 50%;
   right: -8px;
-  width: 16px;
-  height: 21px;
+  width: 19px;
+  height: 26px;
   transform: translateY(-50%) rotate(42deg);
   border-radius: 70% 15% 65% 35%;
   background: radial-gradient(circle at 63% 67%, white 0 13%, #ffed57 17% 34%, #ff7b16 39% 61%, #e51a33 66% 77%, transparent 80%);
@@ -909,7 +913,37 @@ summary:focus-visible {
 
 .timer-console.is-danger .timer-number strong {
   color: #fff8c4;
-  font-size: 1.92rem;
+  font-size: 2.5rem;
+  text-shadow: 0 4px 0 #53000e, 0 0 9px white, 0 0 20px #ff3b28;
+}
+
+.timer-console.is-final:not(.is-stopped) {
+  border-color: #fff27b;
+  box-shadow:
+    0 7px 0 #5d0800,
+    inset 0 2px 7px rgb(255 255 255 / .48),
+    0 0 18px white,
+    0 0 42px #ff2d20;
+  animation: timer-final-console .36s cubic-bezier(.2, 1.45, .35, 1) both;
+}
+
+.timer-console.is-final .timer-number strong i {
+  animation: timer-digit-bang .38s cubic-bezier(.12, 1.75, .25, 1) both;
+}
+
+.timer-console.is-final .timer-number strong i::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: 1.1em;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border: 3px solid #fff7a6;
+  border-radius: 50%;
+  box-shadow: 0 0 12px white, 0 0 24px #ff3028;
+  animation: timer-shock-ring .42s ease-out both;
 }
 
 .timer-console.is-stopped .fuse-flame {
@@ -922,7 +956,34 @@ summary:focus-visible {
 
 .timer-console.is-timeout {
   border-color: #ff3659;
-  filter: saturate(1.35) brightness(.92);
+  filter: saturate(1.55) brightness(1.18);
+  background: radial-gradient(circle at 28% 50%, #fff 0 4%, #ff342d 24%, #4a0012 74%);
+  box-shadow: 0 7px 0 #390008, 0 0 28px white, 0 0 58px #ff183d;
+}
+
+.timer-bang {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 30;
+  width: max-content;
+  color: #fff6a8;
+  filter: drop-shadow(0 5px 0 #50000c) drop-shadow(0 0 16px white) drop-shadow(0 0 35px #ff152f);
+  font-size: clamp(3rem, 6vw, 6.3rem);
+  line-height: .78;
+  letter-spacing: -.025em;
+  -webkit-text-stroke: 2px #9d0922;
+  transform-origin: center;
+  animation: timer-bang-word .82s cubic-bezier(.12, 1.65, .25, 1) both;
+  pointer-events: none;
+}
+
+.timer-exploded .urgency-vignette {
+  animation: timeout-flash .62s ease-out both;
+}
+
+.timer-exploded .game-content {
+  animation: timeout-stage-hit .42s ease-out both;
 }
 
 .score-inline {
@@ -2562,6 +2623,46 @@ summary:focus-visible {
   50% { filter: brightness(1.35) saturate(1.35); }
 }
 
+@keyframes timer-final-console {
+  0% { transform: scale(.96) rotate(-1deg); }
+  58% { transform: scale(1.075) rotate(.7deg); }
+  100% { transform: scale(1.02) rotate(0); }
+}
+
+@keyframes timer-digit-bang {
+  0% { opacity: .15; transform: scale(.18) rotate(-12deg); filter: brightness(2.4); }
+  58% { opacity: 1; transform: scale(1.48) rotate(2deg); filter: brightness(1.65); }
+  100% { opacity: 1; transform: scale(1) rotate(0); filter: brightness(1); }
+}
+
+@keyframes timer-shock-ring {
+  0% { opacity: 1; transform: translate(-50%, -50%) scale(.25); }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(2.35); }
+}
+
+@keyframes timer-bang-word {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.12) rotate(-13deg); }
+  20% { opacity: 1; transform: translate(-50%, -50%) scale(1.28) rotate(3deg); }
+  48%, 68% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(-1deg); }
+  100% { opacity: 0; visibility: hidden; transform: translate(-50%, -78%) scale(1.15) rotate(1deg); }
+}
+
+@keyframes timeout-flash {
+  0% { opacity: 0; background-color: white; }
+  12% { opacity: 1; background-color: rgb(255 255 255 / .72); }
+  38% { opacity: .66; background-color: rgb(255 30 58 / .55); }
+  100% { opacity: .28; background-color: transparent; }
+}
+
+@keyframes timeout-stage-hit {
+  0% { transform: translateX(0); filter: brightness(1); }
+  16% { transform: translateX(-7px) rotate(-.25deg); filter: brightness(1.7); }
+  34% { transform: translateX(6px) rotate(.2deg); }
+  52% { transform: translateX(-3px); }
+  72% { transform: translateX(2px); }
+  100% { transform: translateX(0); filter: brightness(1); }
+}
+
 @keyframes critical-arrive {
   0% { opacity: 0; }
   16% { opacity: .76; }
@@ -2654,9 +2755,15 @@ summary:focus-visible {
   }
 
   .timer-console {
-    grid-template-columns: 46px minmax(0, 1fr);
-    width: 157px;
-    padding-right: .5rem;
+    grid-template-columns: 57px minmax(0, 1fr);
+    width: 202px;
+    min-height: 68px;
+    padding: .28rem .66rem .28rem .34rem;
+  }
+
+  .timer-number {
+    width: 54px;
+    height: 54px;
   }
 
   .party-grid {
@@ -2840,31 +2947,31 @@ summary:focus-visible {
   }
 
   .timer-console {
-    grid-template-columns: 37px minmax(0, 1fr);
-    gap: .28rem;
-    width: 121px;
-    min-height: 47px;
-    padding: .2rem .4rem .2rem .25rem;
+    grid-template-columns: 45px minmax(0, 1fr);
+    gap: .36rem;
+    width: 150px;
+    min-height: 56px;
+    padding: .23rem .45rem .23rem .27rem;
     border-width: 3px;
     border-radius: 14px 5px 14px 5px;
     box-shadow: 0 4px 0 #6b3600, inset 0 2px 4px rgb(255 255 255 / .3), 0 0 12px rgb(20 141 255 / .25);
   }
 
   .timer-number {
-    width: 35px;
-    height: 35px;
+    width: 43px;
+    height: 43px;
   }
 
   .timer-number strong {
-    font-size: 1.28rem;
+    font-size: 1.55rem;
   }
 
   .timer-console.is-danger .timer-number strong {
-    font-size: 1.45rem;
+    font-size: 1.8rem;
   }
 
   .timer-number small {
-    font-size: .34rem;
+    font-size: .37rem;
   }
 
   .timer-fuse {
@@ -2876,7 +2983,11 @@ summary:focus-visible {
   }
 
   .fuse-track {
-    height: 9px;
+    height: 10px;
+  }
+
+  .timer-bang {
+    font-size: clamp(2.8rem, 16vw, 4.7rem);
   }
 
   .fuse-flame {
@@ -3103,8 +3214,14 @@ summary:focus-visible {
   }
 
   .timer-console {
-    grid-template-columns: 35px minmax(0, 1fr);
-    width: 116px;
+    grid-template-columns: 42px minmax(0, 1fr);
+    width: 138px;
+    padding-inline: .24rem .38rem;
+  }
+
+  .timer-number {
+    width: 40px;
+    height: 40px;
   }
 
   .sound-button.in-game {
