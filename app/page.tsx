@@ -17,6 +17,10 @@ type Party = {
   name: string;
   shortName: string;
   logo: string;
+  leaders: Array<{
+    name: string;
+    image: string;
+  }>;
   color: string;
   ink: string;
 };
@@ -34,14 +38,81 @@ type Phase = 'choosing' | 'reveal';
 type Cue = 'start' | 'connect' | 'correct' | 'wrong';
 
 const parties: Party[] = [
-  { id: 'S', name: 'Socialdemokraterna', shortName: 'S', logo: '/party-logos/s.svg', color: '#e52532', ink: '#fff' },
-  { id: 'M', name: 'Moderaterna', shortName: 'M', logo: '/party-logos/m.webp', color: '#1598d3', ink: '#fff' },
-  { id: 'SD', name: 'Sverigedemokraterna', shortName: 'SD', logo: '/party-logos/sd.png', color: '#f5ca26', ink: '#102a56' },
-  { id: 'V', name: 'Vänsterpartiet', shortName: 'V', logo: '/party-logos/v.svg', color: '#d71933', ink: '#fff' },
-  { id: 'C', name: 'Centerpartiet', shortName: 'C', logo: '/party-logos/c.png', color: '#079447', ink: '#fff' },
-  { id: 'KD', name: 'Kristdemokraterna', shortName: 'KD', logo: '/party-logos/kd.svg', color: '#203c8d', ink: '#fff' },
-  { id: 'L', name: 'Liberalerna', shortName: 'L', logo: '/party-logos/l.svg', color: '#1265b0', ink: '#fff' },
-  { id: 'MP', name: 'Miljöpartiet', shortName: 'MP', logo: '/party-logos/mp.svg', color: '#69a942', ink: '#fff' },
+  {
+    id: 'S',
+    name: 'Socialdemokraterna',
+    shortName: 'S',
+    logo: '/party-logos/s.svg',
+    leaders: [{ name: 'Magdalena Andersson', image: '/leaders/magdalena-andersson.webp' }],
+    color: '#e52532',
+    ink: '#fff',
+  },
+  {
+    id: 'M',
+    name: 'Moderaterna',
+    shortName: 'M',
+    logo: '/party-logos/m.webp',
+    leaders: [{ name: 'Ulf Kristersson', image: '/leaders/ulf-kristersson.webp' }],
+    color: '#1598d3',
+    ink: '#fff',
+  },
+  {
+    id: 'SD',
+    name: 'Sverigedemokraterna',
+    shortName: 'SD',
+    logo: '/party-logos/sd.png',
+    leaders: [{ name: 'Jimmie Åkesson', image: '/leaders/jimmie-akesson.webp' }],
+    color: '#f5ca26',
+    ink: '#102a56',
+  },
+  {
+    id: 'V',
+    name: 'Vänsterpartiet',
+    shortName: 'V',
+    logo: '/party-logos/v.svg',
+    leaders: [{ name: 'Nooshi Dadgostar', image: '/leaders/nooshi-dadgostar.webp' }],
+    color: '#d71933',
+    ink: '#fff',
+  },
+  {
+    id: 'C',
+    name: 'Centerpartiet',
+    shortName: 'C',
+    logo: '/party-logos/c.png',
+    leaders: [{ name: 'Elisabeth Thand Ringqvist', image: '/leaders/elisabeth-thand-ringqvist.webp' }],
+    color: '#079447',
+    ink: '#fff',
+  },
+  {
+    id: 'KD',
+    name: 'Kristdemokraterna',
+    shortName: 'KD',
+    logo: '/party-logos/kd.svg',
+    leaders: [{ name: 'Ebba Busch', image: '/leaders/ebba-busch.webp' }],
+    color: '#203c8d',
+    ink: '#fff',
+  },
+  {
+    id: 'L',
+    name: 'Liberalerna',
+    shortName: 'L',
+    logo: '/party-logos/l.svg',
+    leaders: [{ name: 'Simona Mohamsson', image: '/leaders/simona-mohamsson.webp' }],
+    color: '#1265b0',
+    ink: '#fff',
+  },
+  {
+    id: 'MP',
+    name: 'Miljöpartiet',
+    shortName: 'MP',
+    logo: '/party-logos/mp.svg',
+    leaders: [
+      { name: 'Amanda Lind', image: '/leaders/amanda-lind.webp' },
+      { name: 'Daniel Helldén', image: '/leaders/daniel-hellden.webp' },
+    ],
+    color: '#69a942',
+    ink: '#fff',
+  },
 ];
 
 const confetti = Array.from({ length: 72 }, (_, index) => ({
@@ -83,14 +154,6 @@ function formatDate(isoDate: string) {
     month: 'long',
     year: 'numeric',
   });
-}
-
-function initials(name: string) {
-  return name
-    .split(' ')
-    .map((part) => part[0])
-    .join('')
-    .slice(0, 2);
 }
 
 export default function Home() {
@@ -137,14 +200,16 @@ export default function Home() {
       });
     };
     const frame = requestAnimationFrame(measure);
+    const settleTimer = window.setTimeout(measure, 420);
     window.addEventListener('resize', measure);
     window.addEventListener('scroll', measure, true);
     return () => {
       cancelAnimationFrame(frame);
+      window.clearTimeout(settleTimer);
       window.removeEventListener('resize', measure);
       window.removeEventListener('scroll', measure, true);
     };
-  }, [screen, currentIndex, phase]);
+  }, [screen, currentIndex, phase, selected]);
 
   useEffect(() => {
     if (phase !== 'reveal') return;
@@ -204,8 +269,11 @@ export default function Home() {
     };
 
     if (cue === 'connect') {
-      note(190, 0, 0.07, 'square', 0.035);
-      note(390, 0.055, 0.1, 'square', 0.035);
+      [510, 820, 640, 960, 720].forEach((frequency, index) => {
+        note(frequency, index * 0.025, 0.055, 'square', 0.018);
+      });
+      note(160, 0, 0.16, 'sawtooth', 0.032);
+      note(430, 0.11, 0.14, 'triangle', 0.045);
     }
 
     if (cue === 'start') {
@@ -254,15 +322,20 @@ export default function Home() {
     playCue('start');
   }
 
-  function submitAnswer(party: PartyId) {
+  function connectParty(party: PartyId) {
     if (phase !== 'choosing') return;
-    const correct = party === current.party;
     setSelected(party);
     setPointer(null);
     setDragging(false);
+    playCue('connect');
+  }
+
+  function submitAnswer() {
+    if (phase !== 'choosing' || !selected) return;
+    const correct = selected === current.party;
     setAnswers((previous) => [
       ...previous,
-      { quoteId: current.id, party: current.party, chosen: party, correct },
+      { quoteId: current.id, party: current.party, chosen: selected, correct },
     ]);
     setPhase('reveal');
     playCue(correct ? 'correct' : 'wrong');
@@ -288,7 +361,7 @@ export default function Home() {
       ?.closest<HTMLElement>('[data-party]');
     setDragging(false);
     setPointer(null);
-    if (hit?.dataset.party) submitAnswer(hit.dataset.party as PartyId);
+    if (hit?.dataset.party) connectParty(hit.dataset.party as PartyId);
   }
 
   function cancelCable() {
@@ -435,13 +508,21 @@ export default function Home() {
   }
 
   return (
-    <main className={`game-screen phase-${phase} ${phase === 'reveal' ? (wasCorrect ? 'answer-correct' : 'answer-wrong') : ''}`}>
+    <main className={[
+      'game-screen',
+      `phase-${phase}`,
+      selected ? 'has-selection cable-live' : '',
+      dragging ? 'cable-live is-dragging-cable' : '',
+      phase === 'reveal' ? (wasCorrect ? 'answer-correct' : 'answer-wrong') : '',
+    ].filter(Boolean).join(' ')}>
       <div className="stage-lights" aria-hidden="true" />
       {phase === 'reveal' && wasCorrect && <Confetti />}
       <p className="sr-only" role="status" aria-live="assertive" aria-atomic="true">
         {phase === 'reveal'
           ? `${wasCorrect ? 'Rätt svar.' : `Fel svar. Du valde ${selectedParty?.name}.`} Rätt parti är ${correctParty.name}. Citatet sades av ${current.speaker} år ${current.date.slice(0, 4)}.`
-          : ''}
+          : selectedParty
+            ? `${selectedParty.name} är inkopplat. Lås in svaret när du är redo.`
+            : ''}
       </p>
 
       <header className="game-header">
@@ -488,6 +569,7 @@ export default function Home() {
             const isCorrect = phase === 'reveal' && current.party === party.id;
             const isWrong = phase === 'reveal' && isSelected && !isCorrect;
             const isMuted = phase === 'reveal' && !isCorrect && !isSelected;
+            const showLeaders = isSelected || isCorrect;
             return (
               <button
                 key={party.id}
@@ -500,20 +582,15 @@ export default function Home() {
                   isMuted ? 'is-muted' : '',
                 ].filter(Boolean).join(' ')}
                 style={{ '--party': party.color, '--party-ink': party.ink } as CSSProperties}
-                onClick={() => submitAnswer(party.id)}
+                onClick={() => connectParty(party.id)}
                 disabled={phase === 'reveal'}
-                aria-label={`${party.name}${isCorrect ? ', rätt svar' : ''}`}
+                aria-pressed={isSelected}
+                aria-label={`${party.name}${isSelected ? ', inkopplat' : ''}${isCorrect ? ', rätt svar' : ''}`}
               >
-                {isCorrect && (
+                {showLeaders && (
                   <>
-                    <span className="correct-spotlight" aria-hidden="true" />
-                    <span className="speaker-pop" aria-hidden="true">
-                      {current.speakerImage ? (
-                        <img src={current.speakerImage} alt="" />
-                      ) : (
-                        <span className="speaker-initials">{initials(current.speaker)}</span>
-                      )}
-                    </span>
+                    {isCorrect && <span className="correct-spotlight" aria-hidden="true" />}
+                    <PartyLeaders party={party} />
                   </>
                 )}
                 <span className="party-token">
@@ -526,9 +603,25 @@ export default function Home() {
         </div>
 
         {phase === 'choosing' ? (
-          <p className="game-hint">
-            Dra i den gula kontakten — eller tryck direkt på ett podium.
-          </p>
+          <div className={`selection-console ${selectedParty ? 'is-armed' : ''}`}>
+            {selectedParty ? (
+              <>
+                <p>
+                  <span className="power-dot" aria-hidden="true" />
+                  Kabeln leder till <strong>{selectedParty.name}</strong>
+                </p>
+                <button className="lock-answer" onClick={submitAnswer}>
+                  Lås in svaret
+                  <span aria-hidden="true"> ⚡</span>
+                </button>
+                <small>Dra om kabeln eller välj ett annat podium för att byta.</small>
+              </>
+            ) : (
+              <p className="game-hint">
+                Dra i den gula kontakten — eller tryck direkt på ett podium.
+              </p>
+            )}
+          </div>
         ) : (
           <aside className={`reveal-panel ${wasCorrect ? 'panel-correct' : 'panel-wrong'}`}>
             <div className="reveal-verdict">
@@ -565,16 +658,41 @@ export default function Home() {
         )}
       </section>
 
-      <svg className="cable-layer" aria-hidden="true">
+      <svg className={`cable-layer ${dragging || selected ? 'is-live' : ''}`} aria-hidden="true">
         {cable && (
           <>
             <path className="cable-shadow" d={cable.path} />
             <path className="cable-core" d={cable.path} />
-            {dragging && <circle className="cable-plug" cx={cable.end.x} cy={cable.end.y} r="13" />}
+            <path className="cable-current cable-current-gold" d={cable.path} pathLength="100" />
+            <path className="cable-current cable-current-blue" d={cable.path} pathLength="100" />
+            {(dragging || selected) && (
+              <>
+                <circle className="electric-ring" cx={cable.end.x} cy={cable.end.y} r="22" />
+                <circle className="cable-plug" cx={cable.end.x} cy={cable.end.y} r="13" />
+                <g className="spark-burst" transform={`translate(${cable.end.x} ${cable.end.y})`}>
+                  <line x1="-18" y1="-4" x2="-30" y2="-9" />
+                  <line x1="15" y1="-13" x2="24" y2="-23" />
+                  <line x1="18" y1="7" x2="31" y2="12" />
+                  <line x1="-8" y1="18" x2="-13" y2="30" />
+                </g>
+              </>
+            )}
           </>
         )}
       </svg>
     </main>
+  );
+}
+
+function PartyLeaders({ party }: { party: Party }) {
+  return (
+    <span className={`leader-pop ${party.leaders.length > 1 ? 'is-duo' : ''}`} aria-hidden="true">
+      {party.leaders.map((leader) => (
+        <span className="leader-portrait" key={leader.name}>
+          <img src={leader.image} alt="" />
+        </span>
+      ))}
+    </span>
   );
 }
 
