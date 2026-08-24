@@ -70,7 +70,7 @@ summary:focus-visible {
 .intro-image {
   position: absolute;
   inset: 0;
-  background: url('/start-stage.png') center / cover no-repeat;
+  background: url('/start-stage-clean.png') center / cover no-repeat;
   animation: intro-breathe 8s ease-in-out infinite alternate;
 }
 
@@ -111,7 +111,7 @@ summary:focus-visible {
 .intro-kicker {
   position: absolute;
   z-index: 4;
-  top: 1.15rem;
+  top: 36%;
   left: 50%;
   width: max-content;
   max-width: calc(100% - 7.5rem);
@@ -128,11 +128,104 @@ summary:focus-visible {
   backdrop-filter: blur(8px);
 }
 
+.intro-logo {
+  position: absolute;
+  z-index: 5;
+  top: clamp(.75rem, 3.2vh, 2.25rem);
+  left: 50%;
+  display: grid;
+  width: min(880px, 70vw);
+  justify-items: center;
+  transform: translateX(-50%);
+  margin: 0;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  filter: drop-shadow(0 20px 30px rgb(0 0 0 / .48));
+  animation: logo-hover 4.5s ease-in-out infinite alternate;
+}
+
+.intro-logo-main {
+  position: relative;
+  z-index: 2;
+  display: block;
+  width: 100%;
+  padding: .14em .2em .17em;
+  border: clamp(5px, .65vw, 9px) solid #ffcf4b;
+  border-radius: 28px 8px 28px 8px;
+  background:
+    radial-gradient(circle at 50% 0, rgb(35 148 255 / .95), transparent 42%),
+    repeating-linear-gradient(90deg, rgb(255 255 255 / .07) 0 2px, transparent 2px 48px),
+    linear-gradient(180deg, #0755bd, #021c58);
+  box-shadow:
+    0 0 0 4px #fff6ba,
+    0 0 0 9px #6d3500,
+    0 12px 0 #3d1c00,
+    0 0 36px rgb(80 205 255 / .7),
+    inset 0 0 32px rgb(255 255 255 / .24);
+  font-size: clamp(3.1rem, 8vw, 7.7rem);
+  line-height: .72;
+  letter-spacing: -.025em;
+  text-shadow:
+    0 5px 0 #06194a,
+    0 9px 0 #00102e,
+    0 0 18px rgb(255 255 255 / .42);
+}
+
+.intro-logo-main::before,
+.intro-logo-main::after {
+  content: '★';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #ffe56a;
+  font-size: .22em;
+  text-shadow: 0 0 10px white;
+}
+
+.intro-logo-main::before {
+  left: .85rem;
+}
+
+.intro-logo-main::after {
+  right: .85rem;
+}
+
+.intro-logo-edition {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  width: max-content;
+  max-width: 82%;
+  align-items: center;
+  gap: .75em;
+  margin-top: -.04em;
+  padding: .32em 1.1em;
+  border: 4px solid #f6f8ff;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #173a82, #061844);
+  box-shadow:
+    0 0 0 5px #d92338,
+    0 0 0 9px #713200,
+    0 8px 0 #3b1a00,
+    0 0 20px rgb(255 255 255 / .4);
+  font-size: clamp(1.05rem, 2.6vw, 2.35rem);
+  line-height: 1;
+  letter-spacing: .035em;
+  text-shadow: 0 3px 0 #000d2b;
+}
+
+.intro-logo-edition i {
+  color: #ffe353;
+  font-style: normal;
+  font-size: .7em;
+}
+
 .start-button {
   position: absolute;
   z-index: 4;
   left: 50%;
-  top: 50%;
+  top: 48%;
   width: clamp(300px, 32vw, 520px);
   min-height: clamp(88px, 10vw, 124px);
   transform: translate(-50%, -8%);
@@ -1213,6 +1306,11 @@ summary:focus-visible {
   }
 }
 
+@keyframes logo-hover {
+  from { transform: translateX(-50%) translateY(0) rotate(-.25deg); }
+  to { transform: translateX(-50%) translateY(4px) rotate(.25deg); }
+}
+
 @keyframes sweep-left {
   from { transform: rotate(-31deg); }
   to { transform: rotate(20deg); }
@@ -1348,9 +1446,31 @@ summary:focus-visible {
 }
 
 @media (max-width: 600px) {
+  .intro-logo {
+    top: .8rem;
+    width: min(88vw, 520px);
+  }
+
+  .intro-logo-main {
+    border-radius: 18px 5px 18px 5px;
+    font-size: clamp(2.45rem, 12vw, 4.5rem);
+  }
+
+  .intro-logo-main::before,
+  .intro-logo-main::after {
+    display: none;
+  }
+
+  .intro-logo-edition {
+    gap: .45em;
+    padding: .3em .85em;
+    border-width: 3px;
+    font-size: clamp(.86rem, 4vw, 1.3rem);
+  }
+
   .intro-kicker {
-    top: .75rem;
-    max-width: calc(100% - 5.5rem);
+    top: 34%;
+    max-width: calc(100% - 2rem);
     padding: .45rem .65rem;
     letter-spacing: .07em;
   }
@@ -1375,6 +1495,11 @@ summary:focus-visible {
     top: .75rem;
     right: .75rem;
     width: 44px;
+  }
+
+  .intro-screen .sound-button {
+    top: auto;
+    bottom: 2.8rem;
   }
 
   .game-header {

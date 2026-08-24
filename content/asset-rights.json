@@ -72,6 +72,22 @@
     "note": "AI-genererad scenkomposit för det privata teknikprovet. Inte slutligt rättighetsklarerad för offentlig eller kommersiell lansering."
   },
   {
+    "asset": "/start-stage-clean.png",
+    "party": null,
+    "sourcePage": null,
+    "sourceFile": "/start-stage.png",
+    "retrieved": "2026-08-24",
+    "note": "AI-redigerad scenbakgrund utan inbakad rubrik eller knapp, med förstärkt kantljus och djupseparation. Avsedd för det privata teknikprovet; inte slutligt rättighetsklarerad för offentlig eller kommersiell lansering."
+  },
+  {
+    "asset": "/og-v2.png",
+    "party": null,
+    "sourcePage": null,
+    "sourceFile": "/start-stage-clean.png",
+    "retrieved": "2026-08-24",
+    "note": "AI-genererad social delningsbild med den separata Vem sa vad-identiteten. Avsedd för det privata teknikprovet; inte slutligt rättighetsklarerad för offentlig eller kommersiell lansering."
+  },
+  {
     "asset": "/leaders/*.webp",
     "party": null,
     "sourcePage": null,

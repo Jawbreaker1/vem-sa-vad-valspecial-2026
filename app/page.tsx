@@ -406,10 +406,17 @@ export default function Home() {
   if (screen === 'intro') {
     return (
       <main className="intro-screen">
-        <h1 className="sr-only">Vem sa vad? Valspecial 2026</h1>
         <div className="intro-image" aria-hidden="true" />
         <div className="sweep sweep-one" aria-hidden="true" />
         <div className="sweep sweep-two" aria-hidden="true" />
+        <h1 className="intro-logo">
+          <span className="intro-logo-main">Vem sa vad?</span>
+          <span className="intro-logo-edition">
+            <i aria-hidden="true">★</i>
+            Valspecial 2026
+            <i aria-hidden="true">★</i>
+          </span>
+        </h1>
         <div className="intro-kicker">8 partier · 8 primärkällor · 0 säkra kort</div>
         <button className="start-button" onClick={startGame}>
           <span>Starta spelet</span>

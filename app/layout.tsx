@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og.png',
+        url: '/og-v2.png',
         width: 1536,
         height: 1024,
         alt: 'Den färgsprakande gameshow-scenen för Vem sa vad?',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Vem sa vad? – Valspecial 2026',
     description: 'Åtta oväntade politikercitat. Kan du koppla alla till rätt parti?',
-    images: ['/og.png'],
+    images: ['/og-v2.png'],
   },
 };
 
