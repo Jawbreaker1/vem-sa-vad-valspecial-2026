@@ -288,12 +288,39 @@ export default function Home() {
       oscillator.stop(now + offset + duration + 0.03);
     };
 
+    const crackle = (offset: number, duration: number, volume: number) => {
+      const frameCount = Math.ceil(audio.sampleRate * duration);
+      const buffer = audio.createBuffer(1, frameCount, audio.sampleRate);
+      const channel = buffer.getChannelData(0);
+      for (let index = 0; index < frameCount; index += 1) {
+        const snap = Math.random() > .84 ? 1 : .16;
+        channel[index] = (Math.random() * 2 - 1) * snap * (1 - index / frameCount);
+      }
+      const source = audio.createBufferSource();
+      const filter = audio.createBiquadFilter();
+      const gain = audio.createGain();
+      source.buffer = buffer;
+      filter.type = 'bandpass';
+      filter.frequency.setValueAtTime(2450, now + offset);
+      filter.Q.setValueAtTime(.72, now + offset);
+      gain.gain.setValueAtTime(.0001, now + offset);
+      gain.gain.exponentialRampToValueAtTime(volume, now + offset + .012);
+      gain.gain.exponentialRampToValueAtTime(.0001, now + offset + duration);
+      source.connect(filter);
+      filter.connect(gain);
+      gain.connect(audio.destination);
+      source.start(now + offset);
+      source.stop(now + offset + duration);
+    };
+
     if (cue === 'connect') {
       [510, 820, 640, 960, 720].forEach((frequency, index) => {
         note(frequency, index * 0.025, 0.055, 'square', 0.018);
       });
       note(160, 0, 0.16, 'sawtooth', 0.032);
       note(430, 0.11, 0.14, 'triangle', 0.045);
+      crackle(0, .2, .075);
+      crackle(.1, .16, .055);
     }
 
     if (cue === 'start') {
@@ -573,7 +600,7 @@ export default function Home() {
         {phase === 'reveal'
           ? `${wasCorrect ? 'Rätt svar.' : `Fel svar. Du valde ${selectedParty?.name}.`} Rätt parti är ${correctParty.name}. Citatet sades av ${current.speaker} år ${current.date.slice(0, 4)}.`
           : selectedParty
-            ? `${selectedParty.name} är inkopplat. Lås in svaret när du är redo.`
+            ? `${selectedParty.name} är inkopplat. Tryck på Svara när du är redo.`
             : ''}
       </p>
 
@@ -663,7 +690,7 @@ export default function Home() {
                   Kabeln leder till <strong>{selectedParty.name}</strong>
                 </p>
                 <button className="lock-answer" onClick={submitAnswer}>
-                  Lås in svaret
+                  Svara
                   <span aria-hidden="true"> ⚡</span>
                 </button>
                 <small>Dra om kabeln eller välj ett annat podium för att byta.</small>
@@ -713,12 +740,19 @@ export default function Home() {
       <svg className={`cable-layer ${dragging || selected ? 'is-live' : ''}`} aria-hidden="true">
         {cable && (
           <>
+            <path className="cable-aura" d={cable.path} />
             <path className="cable-shadow" d={cable.path} />
             <path className="cable-core" d={cable.path} />
+            <path className="cable-hotline" d={cable.path} pathLength="100" />
             <path className="cable-current cable-current-gold" d={cable.path} pathLength="100" />
             <path className="cable-current cable-current-blue" d={cable.path} pathLength="100" />
+            <path className="cable-charge charge-one" d={cable.path} pathLength="100" />
+            <path className="cable-charge charge-two" d={cable.path} pathLength="100" />
+            <path className="cable-charge charge-three" d={cable.path} pathLength="100" />
             {(dragging || selected) && (
               <>
+                <circle className="electric-halo" cx={cable.end.x} cy={cable.end.y} r="39" />
+                <circle className="electric-ring electric-ring-outer" cx={cable.end.x} cy={cable.end.y} r="31" />
                 <circle className="electric-ring" cx={cable.end.x} cy={cable.end.y} r="22" />
                 <circle className="cable-plug" cx={cable.end.x} cy={cable.end.y} r="13" />
                 <g className="spark-burst" transform={`translate(${cable.end.x} ${cable.end.y})`}>
@@ -726,6 +760,16 @@ export default function Home() {
                   <line x1="15" y1="-13" x2="24" y2="-23" />
                   <line x1="18" y1="7" x2="31" y2="12" />
                   <line x1="-8" y1="18" x2="-13" y2="30" />
+                  <line x1="2" y1="-21" x2="4" y2="-35" />
+                  <line x1="21" y1="-1" x2="37" y2="-3" />
+                  <line x1="10" y1="18" x2="18" y2="33" />
+                  <line x1="-17" y1="13" x2="-29" y2="23" />
+                  <polyline points="-15,-15 -24,-24 -19,-30 -29,-42" />
+                  <polyline points="15,14 23,22 18,29 29,39" />
+                  <polyline points="15,-8 27,-13 25,-20 40,-25" />
+                  <circle cx="-39" cy="5" r="2.8" />
+                  <circle cx="34" cy="18" r="2.4" />
+                  <circle cx="-4" cy="-42" r="2.2" />
                 </g>
               </>
             )}

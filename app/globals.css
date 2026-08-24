@@ -568,6 +568,42 @@ summary:focus-visible {
   transform: translateX(-50%) scale(1.12);
 }
 
+.cable-jack.is-connected,
+.cable-jack.is-dragging {
+  box-shadow:
+    0 0 0 5px #6f3700,
+    0 0 12px 4px white,
+    0 0 30px 10px #39dfff,
+    0 0 54px 17px rgb(255 210 48 / .72);
+  animation: jack-overload .28s steps(2, end) infinite alternate;
+}
+
+.cable-jack.is-connected::before,
+.cable-jack.is-connected::after,
+.cable-jack.is-dragging::before,
+.cable-jack.is-dragging::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.cable-jack.is-connected::before,
+.cable-jack.is-dragging::before {
+  inset: -17px;
+  border: 3px dashed #f8ffff;
+  filter: drop-shadow(0 0 5px #36dfff);
+  animation: electric-ring .52s linear infinite;
+}
+
+.cable-jack.is-connected::after,
+.cable-jack.is-dragging::after {
+  inset: -27px;
+  border: 2px dotted #ffd93e;
+  filter: drop-shadow(0 0 7px white);
+  animation: electric-ring .36s linear infinite reverse;
+}
+
 .party-grid {
   position: relative;
   z-index: 7;
@@ -1053,20 +1089,56 @@ summary:focus-visible {
 
 .cable-shadow,
 .cable-core,
-.cable-current {
+.cable-current,
+.cable-aura,
+.cable-hotline,
+.cable-charge {
   fill: none;
   stroke-linecap: round;
 }
 
+.cable-aura {
+  opacity: 0;
+  stroke: #2adfff;
+  stroke-width: 30;
+  filter: blur(7px) drop-shadow(0 0 12px #31dfff);
+}
+
+.cable-layer.is-live .cable-aura {
+  opacity: .48;
+  animation: cable-aura-pulse .26s steps(2, end) infinite alternate;
+}
+
 .cable-shadow {
   stroke: #613200;
-  stroke-width: 20;
+  stroke-width: 23;
+  filter: drop-shadow(0 8px 7px rgb(0 0 0 / .72));
 }
 
 .cable-core {
   stroke: #ffd334;
-  stroke-width: 11;
-  filter: drop-shadow(0 0 8px #ffd334);
+  stroke-width: 13;
+  filter:
+    drop-shadow(0 0 4px white)
+    drop-shadow(0 0 10px #ffd334)
+    drop-shadow(0 0 18px #ff991f);
+}
+
+.cable-layer.is-live .cable-core {
+  animation: cable-surge .22s steps(2, end) infinite alternate;
+}
+
+.cable-hotline {
+  opacity: 0;
+  stroke: white;
+  stroke-width: 4.5;
+  stroke-dasharray: 9 12;
+  filter: drop-shadow(0 0 5px white) drop-shadow(0 0 9px #50e6ff);
+}
+
+.cable-layer.is-live .cable-hotline {
+  opacity: .92;
+  animation: current-race .19s linear infinite;
 }
 
 .cable-current {
@@ -1079,26 +1151,62 @@ summary:focus-visible {
 }
 
 .cable-current-gold {
-  stroke: #fff9ca;
-  stroke-width: 3.5;
-  stroke-dasharray: 1 8;
-  animation: current-race .38s linear infinite;
-  filter: drop-shadow(0 0 4px white);
+  stroke: #fff3a1;
+  stroke-width: 6;
+  stroke-dasharray: 2 10;
+  animation: current-race .28s linear infinite;
+  filter: drop-shadow(0 0 6px white);
 }
 
 .cable-current-blue {
-  stroke: #62dfff;
-  stroke-width: 2;
-  stroke-dasharray: .5 15;
-  animation: current-race .25s linear infinite reverse;
-  filter: drop-shadow(0 0 6px #38cfff);
+  stroke: #27dfff;
+  stroke-width: 4;
+  stroke-dasharray: 1 13;
+  animation: current-race .16s linear infinite reverse;
+  filter: drop-shadow(0 0 8px #38cfff) drop-shadow(0 0 13px #126dff);
+}
+
+.cable-charge {
+  opacity: 0;
+  stroke: #fff;
+  stroke-width: 8;
+  stroke-dasharray: 7 93;
+  filter: drop-shadow(0 0 7px white) drop-shadow(0 0 15px #2de4ff);
+}
+
+.cable-layer.is-live .cable-charge {
+  animation: charge-rush 1.15s linear infinite;
+}
+
+.cable-layer.is-live .charge-two {
+  stroke: #ffe143;
+  animation-delay: -.38s;
+}
+
+.cable-layer.is-live .charge-three {
+  stroke: #58eaff;
+  animation-delay: -.76s;
 }
 
 .cable-plug {
-  fill: #0a78dd;
+  fill: #eafcff;
   stroke: #ffd334;
   stroke-width: 7;
-  filter: drop-shadow(0 0 8px #fff);
+  filter:
+    drop-shadow(0 0 5px white)
+    drop-shadow(0 0 12px #41dfff)
+    drop-shadow(0 0 22px #ffd334);
+  animation: plug-throb .2s steps(2, end) infinite alternate;
+}
+
+.electric-halo {
+  fill: rgb(51 224 255 / .16);
+  stroke: rgb(255 255 255 / .46);
+  stroke-width: 2;
+  filter: blur(2px) drop-shadow(0 0 14px #26dfff);
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: electric-halo .36s steps(2, end) infinite alternate;
 }
 
 .electric-ring {
@@ -1112,17 +1220,39 @@ summary:focus-visible {
   animation: electric-ring .48s linear infinite;
 }
 
-.spark-burst line {
+.electric-ring-outer {
+  stroke: #ffe44e;
+  stroke-width: 2.5;
+  stroke-dasharray: 2 8;
+  filter: drop-shadow(0 0 7px white) drop-shadow(0 0 12px #ffb619);
+  animation-duration: .31s;
+  animation-direction: reverse;
+}
+
+.spark-burst line,
+.spark-burst polyline {
+  fill: none;
   stroke: #faffff;
-  stroke-width: 3;
+  stroke-width: 4;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 4px #4fdfff);
-  animation: spark-flicker .24s steps(2, end) infinite alternate;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 5px white) drop-shadow(0 0 9px #21dcff);
+  animation: spark-flicker .16s steps(2, end) infinite alternate;
+}
+
+.spark-burst circle {
+  fill: white;
+  filter: drop-shadow(0 0 5px #29dfff) drop-shadow(0 0 9px white);
+  animation: spark-pop .28s steps(2, end) infinite alternate;
 }
 
 .spark-burst line:nth-child(2) { animation-delay: -.08s; }
 .spark-burst line:nth-child(3) { animation-delay: -.16s; }
 .spark-burst line:nth-child(4) { animation-delay: -.21s; }
+.spark-burst line:nth-child(5) { animation-delay: -.11s; }
+.spark-burst line:nth-child(6) { animation-delay: -.04s; }
+.spark-burst line:nth-child(7) { animation-delay: -.14s; }
+.spark-burst line:nth-child(8) { animation-delay: -.19s; }
 
 .answer-wrong .cable-layer {
   animation: failed-cable .7s .18s forwards;
@@ -1404,12 +1534,49 @@ summary:focus-visible {
   to { stroke-dashoffset: -18; }
 }
 
+@keyframes cable-aura-pulse {
+  from { opacity: .3; stroke-width: 25; }
+  to { opacity: .66; stroke-width: 34; }
+}
+
+@keyframes cable-surge {
+  from { stroke-width: 12; filter: drop-shadow(0 0 3px white) drop-shadow(0 0 8px #ffd334) drop-shadow(0 0 14px #ff991f); }
+  to { stroke-width: 14.5; filter: drop-shadow(0 0 7px white) drop-shadow(0 0 14px #ffed60) drop-shadow(0 0 24px #22cfff); }
+}
+
+@keyframes charge-rush {
+  0% { opacity: 0; stroke-dashoffset: 108; }
+  12% { opacity: 1; }
+  74% { opacity: 1; }
+  100% { opacity: 0; stroke-dashoffset: -108; }
+}
+
+@keyframes jack-overload {
+  from { filter: brightness(1) saturate(1); }
+  to { filter: brightness(1.35) saturate(1.3); }
+}
+
+@keyframes plug-throb {
+  from { stroke-width: 6; }
+  to { stroke-width: 9; }
+}
+
+@keyframes electric-halo {
+  from { opacity: .45; transform: scale(.78); }
+  to { opacity: 1; transform: scale(1.18); }
+}
+
 @keyframes electric-ring {
   to { transform: rotate(360deg); }
 }
 
 @keyframes spark-flicker {
-  from { opacity: .25; }
+  from { opacity: .18; stroke-dashoffset: 12; }
+  to { opacity: 1; stroke-dashoffset: 0; }
+}
+
+@keyframes spark-pop {
+  from { opacity: .18; }
   to { opacity: 1; }
 }
 
