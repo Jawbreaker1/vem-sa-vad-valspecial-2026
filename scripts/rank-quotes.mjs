@@ -1,4 +1,4 @@
-import { approvalGateFailures, quotePriority, quoteTier } from './quote-quality.mjs';
+import { approvalGateFailures, quotePriority, quoteThemes, quoteTier } from './quote-quality.mjs';
 import { loadQuotes } from './load-quotes.mjs';
 
 const quotes = loadQuotes();
@@ -40,6 +40,14 @@ for (const quote of ranked) {
 console.log('\nTÄCKNING PER PARTI\n');
 for (const party of parties) {
   console.log(`${party.padEnd(3)} ${String(counts[party].approved).padStart(2)} godkända · ${String(counts[party].pipeline).padStart(2)} i granskningskö`);
+}
+
+console.log('\nTÄCKNING PER FRÅGETEMA\n');
+for (const theme of quoteThemes) {
+  const approvedForTheme = quotes.filter(
+    (quote) => quote.theme === theme && quote.reviewStatus === 'approved',
+  ).length;
+  console.log(`${theme.padEnd(15)} ${String(approvedForTheme).padStart(2)} godkända`);
 }
 
 const approved = quotes.filter((quote) => quote.reviewStatus === 'approved').length;

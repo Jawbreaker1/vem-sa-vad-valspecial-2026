@@ -16,6 +16,15 @@ export const verificationKeys = [
   'primarySource',
 ];
 
+export const quoteThemes = [
+  'classic',
+  'grodcircus',
+  'aged-poorly',
+  'disguise',
+  'duel',
+  'word-picture',
+];
+
 const primarySourceTypes = new Set([
   'riksdag-protocol',
   'official-speech',
@@ -73,6 +82,23 @@ export function approvalGateFailures(quote) {
 
   if ((quote?.editorial?.scores?.standaloneClarity ?? 0) < 3) {
     failures.push('citatet fungerar för dåligt fristående');
+  }
+
+  if (quote?.theme === 'aged-poorly') {
+    const aftermath = quote?.aftermath;
+    if (!aftermath) {
+      failures.push('temat ”Det där åldrades… sådär” saknar en senare belagd händelse');
+    } else {
+      if (!primarySourceTypes.has(aftermath?.source?.type)) {
+        failures.push('den senare händelsen saknar godkänd primärkälla');
+      }
+      if (!aftermath?.source?.locator) {
+        failures.push('den senare källan saknar en tydlig locator');
+      }
+      if (!aftermath?.date || aftermath.date <= quote.date) {
+        failures.push('den senare händelsen måste ha ett datum efter originalcitatet');
+      }
+    }
   }
 
   return failures;

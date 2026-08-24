@@ -3,13 +3,13 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: 'Vem sa vad? – Valspecial 2026',
-  description: 'Koppla autentiska politiska citat till rätt svenskt riksdagsparti.',
+  description: 'Koppla autentiska politiska citat i sex temakategorier till rätt svenskt riksdagsparti.',
   icons: {
     icon: '/favicon.svg',
   },
   openGraph: {
     title: 'Vem sa vad? – Valspecial 2026',
-    description: '24 oväntade politikercitat. Kan du koppla dem till rätt parti?',
+    description: '24 oväntade politikercitat i sex temakategorier. Kan du koppla dem till rätt parti?',
     locale: 'sv_SE',
     type: 'website',
     images: [
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Vem sa vad? – Valspecial 2026',
-    description: '24 oväntade politikercitat. Kan du koppla dem till rätt parti?',
+    description: '24 oväntade politikercitat i sex temakategorier. Kan du koppla dem till rätt parti?',
     images: ['/og-v2.png'],
   },
 };

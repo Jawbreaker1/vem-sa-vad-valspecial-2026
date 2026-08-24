@@ -5,9 +5,10 @@
   "items": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["id", "party", "quote", "speaker", "speakerRole", "speakerTier", "date", "context", "source", "editorial", "verification", "reviewStatus"],
+    "required": ["id", "theme", "party", "quote", "speaker", "speakerRole", "speakerTier", "date", "context", "source", "editorial", "verification", "reviewStatus"],
     "properties": {
       "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+      "theme": { "enum": ["classic", "grodcircus", "aged-poorly", "disguise", "duel", "word-picture"] },
       "party": { "enum": ["S", "M", "SD", "V", "C", "KD", "L", "MP"] },
       "quote": { "type": "string", "minLength": 10 },
       "speaker": { "type": "string", "minLength": 1 },
@@ -39,6 +40,38 @@
         }
       },
       "editorialNote": { "type": "string" },
+      "aftermath": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["kind", "date", "headline", "summary", "source"],
+        "properties": {
+          "kind": { "enum": ["apology", "retraction", "policy-change", "later-contradiction"] },
+          "date": { "type": "string", "format": "date" },
+          "headline": { "type": "string", "minLength": 10 },
+          "summary": { "type": "string", "minLength": 40 },
+          "source": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "publisher", "url", "type", "locator"],
+            "properties": {
+              "title": { "type": "string" },
+              "publisher": { "type": "string" },
+              "url": { "type": "string", "format": "uri" },
+              "type": {
+                "enum": [
+                  "riksdag-protocol",
+                  "official-speech",
+                  "official-party-page",
+                  "government-page",
+                  "official-audio-video",
+                  "public-service-recording"
+                ]
+              },
+              "locator": { "type": "string", "minLength": 8 }
+            }
+          }
+        }
+      },
       "editorial": {
         "type": "object",
         "additionalProperties": false,

@@ -1,8 +1,10 @@
 import { loadQuotes } from './load-quotes.mjs';
 
-const uniqueSources = [
-  ...new Map(loadQuotes().map((quote) => [quote.source.url, quote.source])).values(),
-];
+const sources = loadQuotes().flatMap((quote) => [
+  quote.source,
+  ...(quote.aftermath?.source ? [quote.aftermath.source] : []),
+]);
+const uniqueSources = [...new Map(sources.map((source) => [source.url, source])).values()];
 const results = [];
 let cursor = 0;
 

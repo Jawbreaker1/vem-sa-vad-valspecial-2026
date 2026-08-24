@@ -1,6 +1,7 @@
 [
   {
     "id": "c-loof-2017-klassamhalle",
+    "theme": "disguise",
     "party": "C",
     "quote": "Det är ett nytt klassamhälle som håller på att byggas. Där Socialdemokraterna agerar arbetsledare.",
     "speaker": "Annie Lööf",
@@ -43,6 +44,7 @@
   },
   {
     "id": "c-demirok-2024-arbetslos",
+    "theme": "duel",
     "party": "C",
     "quote": "Europas fjärde högsta arbetslöshet borde göra regeringen arbetslös.",
     "speaker": "Muharrem Demirok",
@@ -85,6 +87,7 @@
   },
   {
     "id": "c-thand-ringqvist-2026-trad-tonaringar",
+    "theme": "word-picture",
     "party": "C",
     "quote": "När det kommer till koldioxid är nämligen träd som tonåringar: De käkar mest när de växer.",
     "speaker": "Elisabeth Thand Ringqvist",
@@ -127,6 +130,7 @@
   },
   {
     "id": "c-loof-2018-nazister-skriker",
+    "theme": "grodcircus",
     "party": "C",
     "quote": "Det här är nazister som skriker nu. Vi kan väl lyssna lite på dem?",
     "speaker": "Annie Lööf",
@@ -170,6 +174,7 @@
   },
   {
     "id": "l-bjorklund-2017-socialt-ansvar",
+    "theme": "disguise",
     "party": "L",
     "quote": "Socialt ansvar men utan socialism. Eller individuell frihet men utan egoism. Eller social välfärd men utan en kvävande kollektivism.",
     "speaker": "Jan Björklund",
@@ -213,6 +218,7 @@
   },
   {
     "id": "l-pehrson-2025-giftig-cocktail",
+    "theme": "word-picture",
     "party": "L",
     "quote": "Kommunaliseringen som kombinationen Centerpartiet och Socialdemokraterna genomförde, med alltför fria tyglar för friskolor, har blivit en giftig cocktail",
     "speaker": "Johan Pehrson",
@@ -255,6 +261,7 @@
   },
   {
     "id": "l-mohamsson-2025-vasaloppet-brollop",
+    "theme": "disguise",
     "party": "L",
     "quote": "I mitt Sverige är det lika självklart att åka Vasaloppet som att gå på ett kurdiskt bröllop, att fira jul som att fira eid.",
     "speaker": "Simona Mohamsson",
@@ -297,6 +304,7 @@
   },
   {
     "id": "kd-svensson-1997-svarsstund",
+    "theme": "duel",
     "party": "KD",
     "quote": "Det är alldeles signifikativt att det här är en frågestund och ingen svarsstund.",
     "speaker": "Alf Svensson",
@@ -339,6 +347,7 @@
   },
   {
     "id": "kd-busch-2025-dikt-logn",
+    "theme": "duel",
     "party": "KD",
     "quote": "Det är dikt och förbannad lögn att läsa vår politik som fan läser Bibeln.",
     "speaker": "Ebba Busch",
@@ -381,6 +390,7 @@
   },
   {
     "id": "kd-busch-2025-vard-efter-behov",
+    "theme": "disguise",
     "party": "KD",
     "quote": "Sverige behöver en vård som ger till var och en efter behov. Och inte efter var och en av regionernas förmåga.",
     "speaker": "Ebba Busch",
@@ -423,6 +433,7 @@
   },
   {
     "id": "kd-hagglund-2014-hastlasagne-politiker",
+    "theme": "word-picture",
     "party": "KD",
     "quote": "Det finns hästlasagne-politiker, herr talman, som försöker ta svenska folket genom valrörelsen utan att ge några som helst besked om innehållet.",
     "speaker": "Göran Hägglund",

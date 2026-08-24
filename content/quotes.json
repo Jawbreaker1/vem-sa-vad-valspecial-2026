@@ -1,6 +1,7 @@
 [
   {
     "id": "s-andersson-2025-florten",
+    "theme": "grodcircus",
     "party": "S",
     "quote": "Jag välkomnar flörten från Ebba, om jag uppfattade den rätt.",
     "speaker": "Magdalena Andersson",
@@ -43,6 +44,7 @@
   },
   {
     "id": "m-kristersson-2022-intoleransen",
+    "theme": "duel",
     "party": "M",
     "quote": "I Sverige är vi toleranta, men vi är inte toleranta mot intoleransen. Båda dessa värderingar kommer att vägleda den här regeringen till hundra procent.",
     "speaker": "Ulf Kristersson",
@@ -85,6 +87,7 @@
   },
   {
     "id": "sd-akesson-2012-verktygslada",
+    "theme": "duel",
     "party": "SD",
     "quote": "Mycket kort: Jag behöver ingen verktygslåda, för jag har inte tagit sönder någonting.",
     "speaker": "Jimmie Åkesson",
@@ -127,6 +130,7 @@
   },
   {
     "id": "v-dadgostar-2022-marknadsekonomin",
+    "theme": "disguise",
     "party": "V",
     "quote": "Johan Pehrson har missuppfattat marknadsekonomin. Jag beklagar detta.",
     "speaker": "Nooshi Dadgostar",
@@ -169,6 +173,7 @@
   },
   {
     "id": "c-loof-2022-kissa-snabbare",
+    "theme": "grodcircus",
     "party": "C",
     "quote": "Men för dem som arbetar inom vården innebär personalbristen att de måste springa fortare, kissa snabbare och i bästa fall hinna äta lunch.",
     "speaker": "Annie Lööf",
@@ -211,6 +216,7 @@
   },
   {
     "id": "kd-busch-2024-gurkor",
+    "theme": "grodcircus",
     "party": "KD",
     "quote": "EU som idé kläcktes inte av politiker som var oroade över böjda gurkor.",
     "speaker": "Ebba Busch",
@@ -253,6 +259,7 @@
   },
   {
     "id": "l-mohamsson-2026-familjen",
+    "theme": "grodcircus",
     "party": "L",
     "quote": "Det är därför jag träffar Jimmie, Ebba och Ulf nästan oftare än min familj. Och det är därför våra förhandlingar ofta blir riktigt hårda.",
     "speaker": "Simona Mohamsson",
@@ -295,6 +302,7 @@
   },
   {
     "id": "mp-bolund-2019-tystnaden",
+    "theme": "word-picture",
     "party": "MP",
     "quote": "Jag tillhör dem som inte bara uppskattar tystnaden i naturen. Jag har också börjat bli rädd för den.",
     "speaker": "Per Bolund",

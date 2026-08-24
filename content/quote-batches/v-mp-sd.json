@@ -1,6 +1,7 @@
 [
   {
     "id": "v-sjostedt-2013-tyko-jonsson",
+    "theme": "duel",
     "party": "V",
     "quote": "Det tog en liten stund innan jag kom på vem det var han påminde om. Det var Tyko Jonsson.",
     "speaker": "Jonas Sjöstedt",
@@ -43,6 +44,7 @@
   },
   {
     "id": "v-sjostedt-2019-kommunismen-bakom-oss",
+    "theme": "disguise",
     "party": "V",
     "quote": "Jag är glad över att vi har lämnat kommunismen bakom oss.",
     "speaker": "Jonas Sjöstedt",
@@ -85,6 +87,7 @@
   },
   {
     "id": "v-dadgostar-2025-tapetsera-skane",
+    "theme": "word-picture",
     "party": "V",
     "quote": "Du kan tapetsera hela Skåne med kärnkraft, Henrik Vinge, men vad är poängen med det om vi bara ska exportera elen till Tyskland?",
     "speaker": "Nooshi Dadgostar",
@@ -127,6 +130,7 @@
   },
   {
     "id": "mp-romson-2014-ozz-nujen",
+    "theme": "grodcircus",
     "party": "MP",
     "quote": "Jag tror han kan bli en bra statsminister, han Özz Nûjen. Ja, vem trodde ni jag menade?",
     "speaker": "Åsa Romson",
@@ -169,6 +173,7 @@
   },
   {
     "id": "mp-bolund-2019-aga-tillsammans",
+    "theme": "disguise",
     "party": "MP",
     "quote": "Vi borde starta en kampanj där det står ”Jag älskar att äga – tillsammans”.",
     "speaker": "Per Bolund",
@@ -211,6 +216,7 @@
   },
   {
     "id": "mp-fridolin-2019-pizza-akesson",
+    "theme": "disguise",
     "party": "MP",
     "quote": "Jag tar gärna en pizza med dig, Jimmie Åkesson. Jag kan göra det i Vittsjö, och jag kan också göra det i Sölvesborg.",
     "speaker": "Gustav Fridolin",
@@ -253,6 +259,7 @@
   },
   {
     "id": "sd-akesson-2013-kottbullar-sten",
+    "theme": "duel",
     "party": "SD",
     "quote": "Jag tror i och för sig att samhället hade blivit lite trevligare om man valt att kasta köttbullar i stället för sten.",
     "speaker": "Jimmie Åkesson",
@@ -295,6 +302,7 @@
   },
   {
     "id": "sd-akesson-2018-svenska-folkhemmet",
+    "theme": "disguise",
     "party": "SD",
     "quote": "Det enkla svaret är det svenska folkhemmet. Det bygger i högsta grad på nationalism och socialkonservatism.",
     "speaker": "Jimmie Åkesson",
@@ -338,6 +346,7 @@
   },
   {
     "id": "sd-akesson-2021-blundatavling",
+    "theme": "duel",
     "party": "SD",
     "quote": "Vi kan väl ha en blundatävling, jag och Per Bolund, och se vem som orkar blunda längst.",
     "speaker": "Jimmie Åkesson",
@@ -380,6 +389,7 @@
   },
   {
     "id": "v-ohly-2010-brostpump",
+    "theme": "grodcircus",
     "party": "V",
     "quote": "Min dåvarande fru använde bröstpump. Det är ett sådant där modernt verktyg som finns idag...",
     "speaker": "Lars Ohly",

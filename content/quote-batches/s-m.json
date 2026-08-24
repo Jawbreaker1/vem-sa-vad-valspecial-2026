@@ -1,6 +1,7 @@
 [
   {
     "id": "s-persson-1995-skuld",
+    "theme": "classic",
     "party": "S",
     "quote": "Den som är satt i skuld är icke fri.",
     "speaker": "Göran Persson",
@@ -44,6 +45,7 @@
   },
   {
     "id": "s-lofven-2014-kabbel",
+    "theme": "classic",
     "party": "S",
     "quote": "Det där är bara käbbel, jag har nog läst det där mer än du.",
     "speaker": "Stefan Löfven",
@@ -87,6 +89,7 @@
   },
   {
     "id": "s-lofven-2015-mitt-europa",
+    "theme": "aged-poorly",
     "party": "S",
     "quote": "Mitt Europa bygger inte murar, vi hjälps åt när nöden är stor.",
     "speaker": "Stefan Löfven",
@@ -103,6 +106,19 @@
       "locator": "Stycket som börjar ”Mitt Europa tar emot människor”"
     },
     "editorialNote": "Citatets efterhandsladdning kommer av den stora migrationspolitiska omläggning som följde senare under Löfvens statsministertid.",
+    "aftermath": {
+      "kind": "policy-change",
+      "date": "2015-12-19",
+      "headline": "Tre månader senare lades flyktingpolitiken om",
+      "summary": "I sitt jultal sade Löfven att regeringen hade lagt om flyktingpolitiken för att få fler att söka sig till andra EU-länder.",
+      "source": {
+        "title": "Jultal 2015",
+        "publisher": "Socialdemokraterna",
+        "url": "https://www.socialdemokraterna.se/vart-parti/vara-politiker/stefan-lofvens-tal/jultal-2015",
+        "type": "official-speech",
+        "locator": "Stycket som börjar ”När den globala flyktingkrisen tilltog”"
+      }
+    },
     "editorial": {
       "tags": ["famous", "surprising", "historical", "policy"],
       "riskFlags": [],
@@ -130,6 +146,7 @@
   },
   {
     "id": "m-reinfeldt-2011-arbetarparti",
+    "theme": "disguise",
     "party": "M",
     "quote": "Det är därför som vi kallar oss ett arbetarparti.",
     "speaker": "Fredrik Reinfeldt",
@@ -173,6 +190,7 @@
   },
   {
     "id": "m-reinfeldt-2014-oppna-hjartan",
+    "theme": "classic",
     "party": "M",
     "quote": "Nu vädjar jag till det svenska folket om tålamod, om att öppna era hjärtan.",
     "speaker": "Fredrik Reinfeldt",
@@ -216,6 +234,7 @@
   },
   {
     "id": "m-kinberg-batra-2017-valjarna",
+    "theme": "grodcircus",
     "party": "M",
     "quote": "Jag tror inte att väljarna är så imponerade av oss nu.",
     "speaker": "Anna Kinberg Batra",
@@ -259,6 +278,7 @@
   },
   {
     "id": "m-kinberg-batra-1998-lantisar",
+    "theme": "grodcircus",
     "party": "M",
     "quote": "Stockholmare är smartare än lantisar.",
     "speaker": "Anna Kinberg Batra",

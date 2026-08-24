@@ -4,9 +4,25 @@ import socialDemocratModerateQuotes from '@/content/quote-batches/s-m.json';
 import leftGreenSwedenDemocratQuotes from '@/content/quote-batches/v-mp-sd.json';
 
 export type PartyId = 'S' | 'M' | 'SD' | 'V' | 'C' | 'KD' | 'L' | 'MP';
+export type QuoteThemeId =
+  | 'classic'
+  | 'grodcircus'
+  | 'aged-poorly'
+  | 'disguise'
+  | 'duel'
+  | 'word-picture';
+
+export type QuoteSource = {
+  title: string;
+  publisher: string;
+  url: string;
+  type: 'riksdag-protocol' | 'official-speech' | 'official-party-page' | 'government-page' | 'official-audio-video' | 'public-service-recording' | 'secondary-lead';
+  locator?: string;
+};
 
 export type Quote = {
   id: string;
+  theme: QuoteThemeId;
   party: PartyId;
   quote: string;
   speaker: string;
@@ -15,12 +31,13 @@ export type Quote = {
   speakerImage: string | null;
   date: string;
   context: string;
-  source: {
-    title: string;
-    publisher: string;
-    url: string;
-    type: 'riksdag-protocol' | 'official-speech' | 'official-party-page' | 'government-page' | 'official-audio-video' | 'public-service-recording' | 'secondary-lead';
-    locator?: string;
+  source: QuoteSource;
+  aftermath?: {
+    kind: 'apology' | 'retraction' | 'policy-change' | 'later-contradiction';
+    date: string;
+    headline: string;
+    summary: string;
+    source: QuoteSource & { locator: string };
   };
   editorialNote?: string;
   editorial: {

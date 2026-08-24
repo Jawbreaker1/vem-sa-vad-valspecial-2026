@@ -1,6 +1,7 @@
 import {
   approvalGateFailures,
   quotePriority,
+  quoteThemes,
   scoreKeys,
   verificationKeys,
 } from './quote-quality.mjs';
@@ -25,6 +26,7 @@ const sourceTypes = [
   'public-service-recording',
   'secondary-lead',
 ];
+const aftermathKinds = ['apology', 'retraction', 'policy-change', 'later-contradiction'];
 const allowedTags = new Set([
   'famous',
   'funny',
@@ -44,6 +46,13 @@ const allowedRiskFlags = new Set([
   'clip-needed',
   'date-uncertain',
 ]);
+const requiredThemeTags = {
+  classic: 'famous',
+  grodcircus: 'funny',
+  disguise: 'misdirection',
+  duel: 'debate-reply',
+  'word-picture': 'metaphor',
+};
 const errors = [];
 const warnings = [];
 const ids = new Set();
@@ -56,6 +65,8 @@ for (const [index, quote] of quotes.entries()) {
   if (!quote?.id || !/^[a-z0-9-]+$/.test(quote.id)) errors.push(`${label}: ogiltigt id.`);
   if (ids.has(quote.id)) errors.push(`${label}: dubblerat id.`);
   ids.add(quote.id);
+
+  if (!quoteThemes.includes(quote.theme)) errors.push(`${label}: ogiltigt frågetema.`);
 
   const normalizedQuote = quote.quote
     ?.toLocaleLowerCase('sv')
@@ -94,12 +105,43 @@ for (const [index, quote] of quotes.entries()) {
     errors.push(`${label}: käll-URL är ogiltig.`);
   }
 
+  if (quote.aftermath !== undefined) {
+    const aftermath = quote.aftermath;
+    if (!aftermathKinds.includes(aftermath?.kind)) errors.push(`${label}: ogiltig typ av senare händelse.`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(aftermath?.date ?? '')) {
+      errors.push(`${label}: datum för senare händelse måste vara ISO-format.`);
+    } else if (aftermath.date <= quote.date) {
+      errors.push(`${label}: senare händelse måste inträffa efter originalcitatet.`);
+    }
+    if ((aftermath?.headline ?? '').length < 10) errors.push(`${label}: rubriken för senare händelse är för tunn.`);
+    if ((aftermath?.summary ?? '').length < 40) errors.push(`${label}: sammanfattningen av senare händelse är för tunn.`);
+    if (!aftermath?.source?.title || !aftermath?.source?.publisher) {
+      errors.push(`${label}: källmetadata för senare händelse saknas.`);
+    }
+    if (!sourceTypes.includes(aftermath?.source?.type) || aftermath?.source?.type === 'secondary-lead') {
+      errors.push(`${label}: senare händelse måste ha en godkänd primärkälla.`);
+    }
+    if ((aftermath?.source?.locator ?? '').length < 8) {
+      errors.push(`${label}: senare händelse behöver en tydlig locator i källan.`);
+    }
+    try {
+      const source = new URL(aftermath?.source?.url);
+      if (source.protocol !== 'https:') errors.push(`${label}: senare källa måste använda HTTPS.`);
+    } catch {
+      errors.push(`${label}: URL för senare källa är ogiltig.`);
+    }
+  }
+
   const tags = quote.editorial?.tags;
   if (!Array.isArray(tags) || !tags.length) {
     errors.push(`${label}: minst en redaktionell tagg krävs.`);
   } else {
     for (const tag of tags) if (!allowedTags.has(tag)) errors.push(`${label}: okänd tagg ${tag}.`);
     if (new Set(tags).size !== tags.length) errors.push(`${label}: dubblerade redaktionella taggar.`);
+  }
+  const requiredThemeTag = requiredThemeTags[quote.theme];
+  if (requiredThemeTag && !tags?.includes(requiredThemeTag)) {
+    errors.push(`${label}: frågetemat ${quote.theme} kräver taggen ${requiredThemeTag}.`);
   }
 
   const riskFlags = quote.editorial?.riskFlags;
@@ -157,6 +199,15 @@ for (const party of parties) {
     errors.push(`Citatbanken saknar en godkänd, spelbar post för ${party}.`);
   } else if (approvedForParty.length < 4) {
     warnings.push(`${party}: bara ${approvedForParty.length} godkända citat; redaktionellt mål är minst 4.`);
+  }
+}
+
+for (const theme of quoteThemes) {
+  const approvedForTheme = quotes.filter(
+    (quote) => quote.theme === theme && quote.reviewStatus === 'approved',
+  );
+  if (!approvedForTheme.length) {
+    errors.push(`Citatbanken saknar ett godkänt citat för frågetemat ${theme}.`);
   }
 }
 

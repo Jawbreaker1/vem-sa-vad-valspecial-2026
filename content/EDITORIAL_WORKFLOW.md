@@ -35,6 +35,21 @@ Alla delpoäng sätts 1–5. Slutpoängen beräknas automatiskt till 0–100.
 
 Kändisskap och humor behandlas som två alternativa huvudvägar. Ett ikoniskt allvarligt citat och en okänd men briljant punchline kan därför båda hamna högt.
 
+## Frågeteman
+
+Varje citat får ett tydligt huvudtema som visas innan spelaren svarar. En vanlig runda blandar temana och undviker samma tema två frågor i rad.
+
+| Tema | Syfte |
+| --- | --- |
+| `classic` | Ett ikoniskt eller epokdefinierande citat. |
+| `grodcircus` | En komisk, märklig eller medvetet absurd formulering. |
+| `aged-poorly` | Ett citat som får ny laddning av en senare, belagd reträtt eller kursändring. |
+| `disguise` | Ord som ideologiskt låter som om de kom från ett annat parti. |
+| `duel` | En replik eller kontring vars styrka kommer ur den politiska duellen. |
+| `word-picture` | En metafor, paradox eller annan särskilt bildrik formulering. |
+
+`aged-poorly` får aldrig bygga på redaktionell magkänsla. Posten måste även ha ett `aftermath`-objekt med datum, neutral sammanfattning, primärkälla och exakt locator. Om personen eller partiet inte uttryckligen har bett om ursäkt säger spelet inte att de ”ångrar” citatet; det visar bara vad som faktiskt hände senare.
+
 ## Hårda godkännandekrav
 
 - Exakt ordalydelse verifierad.
@@ -55,6 +70,7 @@ Kändisskap och humor behandlas som två alternativa huvudvägar. Ett ikoniskt a
 - Därefter blandas svårighetsgraden: några rättvisa, några luriga och högst ett verkligt obskyrt kort i följd.
 - Samma talare bör normalt inte förekomma mer än en gång per runda.
 - Historiska citat fördelas över perioden så att spelet inte blir en nutida partiledardebatt med några enstaka arkivkort.
+- Teman varvas så att samma temavinjettt helst aldrig visas två frågor i följd.
 
 Kör `npm run rank:quotes` för den aktuella prioriteringslistan och återstående granskningsgrindar.
 

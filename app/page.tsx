@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { PartyId, Quote, quotePriority, quotes } from './quotes';
+import { PartyId, Quote, QuoteThemeId, quotePriority, quotes } from './quotes';
 
 type Party = {
   id: PartyId;
@@ -41,6 +41,13 @@ type MusicCue = 'intro' | 'game';
 type CableHum = {
   gain: GainNode;
   sources: AudioScheduledSourceNode[];
+};
+
+type QuestionTheme = {
+  id: QuoteThemeId;
+  label: string;
+  description: string;
+  mark: string;
 };
 
 const parties: Party[] = [
@@ -133,6 +140,44 @@ const confetti = Array.from({ length: 72 }, (_, index) => ({
 const QUESTION_SECONDS = 20;
 const QUESTIONS_PER_PARTY = 3;
 const MUSIC_VOLUMES: Record<MusicCue, number> = { intro: .15, game: .12 };
+const questionThemes: Record<QuoteThemeId, QuestionTheme> = {
+  classic: {
+    id: 'classic',
+    label: 'Klassikern',
+    description: 'Citatet som fastnade',
+    mark: '★',
+  },
+  grodcircus: {
+    id: 'grodcircus',
+    label: 'Grodcirkusen',
+    description: 'Politik när den blir märklig',
+    mark: '?!',
+  },
+  'aged-poorly': {
+    id: 'aged-poorly',
+    label: 'Det där åldrades… sådär',
+    description: 'Originalet möter vad som hände sedan',
+    mark: '↺',
+  },
+  disguise: {
+    id: 'disguise',
+    label: 'Partimaskeraden',
+    description: 'När orden låter som fel parti',
+    mark: '?',
+  },
+  duel: {
+    id: 'duel',
+    label: 'Duellen',
+    description: 'Repliken som träffade tillbaka',
+    mark: 'VS',
+  },
+  'word-picture': {
+    id: 'word-picture',
+    label: 'Ordbilden',
+    description: 'Politik målad med stora penslar',
+    mark: '“”',
+  },
+};
 
 function shuffle<T>(items: T[]) {
   const copy = [...items];
@@ -147,12 +192,18 @@ function partyById(id: PartyId) {
   return parties.find((party) => party.id === id) ?? parties[0];
 }
 
-function weightedSample(items: Quote[], count: number) {
-  const pool = [...items];
-  const selected: Quote[] = [];
+function weightedSample(items: Quote[], count: number, required: Quote[] = []) {
+  const requiredIds = new Set(required.map((quote) => quote.id));
+  const pool = items.filter((quote) => !requiredIds.has(quote.id));
+  const selected: Quote[] = [...required].slice(0, count);
 
   while (pool.length && selected.length < count) {
-    const weights = pool.map((quote) => Math.max(1, quotePriority(quote) - 50) ** 2);
+    const usedThemes = new Set(selected.map((quote) => quote.theme));
+    const weights = pool.map((quote) => {
+      const qualityWeight = Math.max(1, quotePriority(quote) - 50) ** 2;
+      const themeWeight = usedThemes.has(quote.theme) ? .24 : 1.15;
+      return qualityWeight * themeWeight;
+    });
     const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
     let draw = Math.random() * totalWeight;
     let chosenIndex = pool.length - 1;
@@ -171,14 +222,66 @@ function weightedSample(items: Quote[], count: number) {
   return selected;
 }
 
+function orderByTheme(items: Quote[]) {
+  const pool = shuffle(items);
+  const ordered: Quote[] = [];
+
+  while (pool.length) {
+    const last = ordered.at(-1);
+    let candidates = pool.filter((quote) => quote.theme !== last?.theme);
+    if (!candidates.length) candidates = [...pool];
+
+    if (!ordered.length) {
+      const showOpeners = candidates.filter(
+        (quote) => quote.theme === 'classic' || quote.theme === 'grodcircus',
+      );
+      if (showOpeners.length) candidates = showOpeners;
+    }
+
+    const counts = new Map<QuoteThemeId, number>();
+    for (const quote of pool) counts.set(quote.theme, (counts.get(quote.theme) ?? 0) + 1);
+    const highestRemaining = Math.max(...candidates.map((quote) => counts.get(quote.theme) ?? 0));
+    candidates = candidates.filter((quote) => counts.get(quote.theme) === highestRemaining);
+
+    const differentParty = candidates.filter((quote) => quote.party !== last?.party);
+    if (differentParty.length) candidates = differentParty;
+
+    const chosen = candidates[Math.floor(Math.random() * candidates.length)];
+    ordered.push(chosen);
+    pool.splice(pool.findIndex((quote) => quote.id === chosen.id), 1);
+  }
+
+  return ordered;
+}
+
 function buildRound(bank: Quote[]) {
-  const balanced = parties.flatMap((party) => {
-    const candidates = bank.filter(
-      (quote) => quote.party === party.id && quote.reviewStatus === 'approved',
-    );
-    return weightedSample(candidates, QUESTIONS_PER_PARTY);
-  });
-  return shuffle(balanced);
+  const approved = bank.filter((quote) => quote.reviewStatus === 'approved');
+  const themeCounts = new Map<QuoteThemeId, number>();
+  for (const quote of approved) {
+    themeCounts.set(quote.theme, (themeCounts.get(quote.theme) ?? 0) + 1);
+  }
+
+  let bestSelection: Quote[] = [];
+  let bestThemeCoverage = 0;
+
+  for (let attempt = 0; attempt < 40; attempt += 1) {
+    const selection = parties.flatMap((party) => {
+      const candidates = approved.filter((quote) => quote.party === party.id);
+      if (candidates.length < QUESTIONS_PER_PARTY) {
+        throw new Error(`${party.name} saknar tillräckligt många godkända citat.`);
+      }
+      const uniqueThemeQuotes = candidates.filter((quote) => themeCounts.get(quote.theme) === 1);
+      return weightedSample(candidates, QUESTIONS_PER_PARTY, uniqueThemeQuotes);
+    });
+    const coverage = new Set(selection.map((quote) => quote.theme)).size;
+    if (coverage > bestThemeCoverage) {
+      bestSelection = selection;
+      bestThemeCoverage = coverage;
+    }
+    if (coverage === themeCounts.size) break;
+  }
+
+  return orderByTheme(bestSelection);
 }
 
 function formatDate(isoDate: string) {
@@ -225,6 +328,7 @@ export default function Home() {
   const nextButtonRef = useRef<HTMLButtonElement>(null);
 
   const current = roundQuotes[currentIndex] ?? quotes[0];
+  const currentTheme = questionThemes[current.theme];
   const correctParty = partyById(current.party);
   const selectedParty = selected ? partyById(selected) : null;
   const wasCorrect = !timedOut && selected === current.party;
@@ -877,7 +981,7 @@ export default function Home() {
             <small>Koppla citaten till rätt parti</small>
           </button>
           <div className="intro-kicker">
-            8 partier · {quotes.filter((quote) => quote.reviewStatus === 'approved').length} verifierade citat · 0 säkra kort
+            8 partier · {Object.keys(questionThemes).length} teman · {quotes.filter((quote) => quote.reviewStatus === 'approved').length} verifierade citat
           </div>
         </section>
         <p className="intro-note" id="intro-note">
@@ -988,7 +1092,11 @@ export default function Home() {
             : ''}
       </p>
       <p className="sr-only" aria-live="polite" aria-atomic="true">
-        {phase === 'choosing' && (timeLeft === 7 || timeLeft === 3) ? `${timeLeft} sekunder kvar.` : ''}
+        {phase === 'choosing' && timeLeft === QUESTION_SECONDS
+          ? `Tema: ${currentTheme.label}. ${currentTheme.description}.`
+          : phase === 'choosing' && (timeLeft === 7 || timeLeft === 3)
+            ? `${timeLeft} sekunder kvar.`
+            : ''}
       </p>
 
       <header className="game-header">
@@ -1033,11 +1141,26 @@ export default function Home() {
       </header>
 
       <section className="game-content" aria-labelledby="instruction">
-        <p className="eyebrow" id="instruction">
-          {phase === 'choosing' ? 'Koppla citatet till ett parti' : 'Ridån går upp'}
-        </p>
+        <div className="question-meta">
+          <p className="eyebrow" id="instruction">
+            {phase === 'choosing' ? 'Koppla citatet till ett parti' : 'Ridån går upp'}
+          </p>
+          <p
+            key={current.id}
+            id="question-theme"
+            className={`theme-badge theme-${currentTheme.id}`}
+            aria-label={`Tema: ${currentTheme.label}. ${currentTheme.description}`}
+          >
+            <span className="theme-mark" aria-hidden="true">{currentTheme.mark}</span>
+            <span className="theme-copy">
+              <small>Tema</small>
+              <strong>{currentTheme.label}</strong>
+              <span>{currentTheme.description}</span>
+            </span>
+          </p>
+        </div>
 
-        <article className="quote-card">
+        <article className="quote-card" aria-describedby="question-theme">
           {phase === 'reveal' && (
             <div className={`reveal-ribbon ${wasCorrect ? 'is-right' : 'is-wrong'}`} aria-hidden="true">
               {timedOut ? 'Tiden är ute!' : autoLocked ? 'Tiden låste valet!' : wasCorrect ? 'Rätt svar!' : 'Inte riktigt!'}
@@ -1141,6 +1264,21 @@ export default function Home() {
               <p className="historical-note">
                 Detta sades {current.date.slice(0, 4)} och behöver inte motsvara partiets politik i dag.
               </p>
+              {current.aftermath && (
+                <section className="aftermath-card" aria-label="Vad hände sedan?">
+                  <span>Men sedan…</span>
+                  <strong>{current.aftermath.headline}</strong>
+                  <time dateTime={current.aftermath.date}>{formatDate(current.aftermath.date)}</time>
+                  <p>{current.aftermath.summary}</p>
+                  <a href={current.aftermath.source.url} target="_blank" rel="noreferrer">
+                    Se belägget hos {current.aftermath.source.publisher}
+                    <span aria-hidden="true"> ↗</span>
+                  </a>
+                  <small>
+                    {current.aftermath.source.title} · {current.aftermath.source.locator}
+                  </small>
+                </section>
+              )}
               {current.editorialNote && (
                 <details>
                   <summary>Redaktionell precisering</summary>
@@ -1151,7 +1289,10 @@ export default function Home() {
                 Se originalkällan hos {current.source.publisher}
                 <span aria-hidden="true"> ↗</span>
               </a>
-              <small>{current.source.title}</small>
+              <small>
+                {current.source.title}
+                {current.source.locator ? ` · ${current.source.locator}` : ''}
+              </small>
             </div>
             <button ref={nextButtonRef} className="next-button" onClick={nextQuestion}>
               {currentIndex === roundQuotes.length - 1 ? 'Visa resultatet' : 'Nästa citat'}
