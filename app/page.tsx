@@ -11,6 +11,11 @@ import {
   useState,
 } from 'react';
 import { PartyId, Quote, QuoteThemeId, quotePriority, quotes } from './quotes';
+import {
+  quotePresentations,
+  quoteVisualGlyphs,
+  type QuotePresentation,
+} from './quote-presentations';
 
 type Party = {
   id: PartyId;
@@ -314,6 +319,43 @@ function formatDate(isoDate: string) {
     month: 'long',
     year: 'numeric',
   });
+}
+
+type QuoteSegment = {
+  kind: 'plain' | 'impact' | 'soft';
+  text: string;
+};
+
+function segmentQuote(text: string, presentation: QuotePresentation | undefined) {
+  if (!presentation) return [{ kind: 'plain', text }] satisfies QuoteSegment[];
+
+  const ranges = [
+    presentation.impact && { kind: 'impact' as const, phrase: presentation.impact },
+    presentation.soft && { kind: 'soft' as const, phrase: presentation.soft },
+  ]
+    .filter((item): item is { kind: 'impact' | 'soft'; phrase: string } => Boolean(item))
+    .map((item) => ({ ...item, start: text.indexOf(item.phrase) }))
+    .filter((item) => item.start >= 0)
+    .sort((a, b) => a.start - b.start)
+    .filter((item, index, items) => {
+      if (index === 0) return true;
+      const previous = items[index - 1];
+      return item.start >= previous.start + previous.phrase.length;
+    });
+
+  if (!ranges.length) return [{ kind: 'plain', text }] satisfies QuoteSegment[];
+
+  const segments: QuoteSegment[] = [];
+  let cursor = 0;
+  ranges.forEach((range) => {
+    if (range.start > cursor) {
+      segments.push({ kind: 'plain', text: text.slice(cursor, range.start) });
+    }
+    segments.push({ kind: range.kind, text: range.phrase });
+    cursor = range.start + range.phrase.length;
+  });
+  if (cursor < text.length) segments.push({ kind: 'plain', text: text.slice(cursor) });
+  return segments;
 }
 
 function trailingCorrectStreak(answers: Answer[]) {
@@ -1577,14 +1619,28 @@ export default function Home() {
           </p>
         </div>
 
-        <article key={current.id} className="quote-card" aria-describedby="question-theme">
+        <article
+          key={current.id}
+          className={[
+            'quote-card',
+            `quote-theme-${current.theme}`,
+            current.quote.length <= 72
+              ? 'quote-length-short'
+              : current.quote.length >= 150
+                ? 'quote-length-long'
+                : 'quote-length-medium',
+          ].join(' ')}
+          aria-describedby="question-theme"
+        >
           {showingAnswer && (
             <div className={`reveal-ribbon ${wasCorrect ? 'is-right' : 'is-wrong'}`} aria-hidden="true">
               {timedOut ? 'Tiden är ute!' : autoLocked ? 'Tiden låste valet!' : wasCorrect ? 'Rätt svar!' : 'Inte riktigt!'}
             </div>
           )}
           <span className="quote-mark opening" aria-hidden="true">“</span>
-          <blockquote>{current.quote}</blockquote>
+          <blockquote>
+            <QuoteTypography quote={current} />
+          </blockquote>
           <span className="quote-mark closing" aria-hidden="true">”</span>
           <span
             ref={jackRef}
@@ -1856,6 +1912,48 @@ function VictoryShow({ party }: { party: Party }) {
         <img className={`party-logo logo-${party.id.toLowerCase()}`} src={party.logo} alt="" />
       </span>
     </div>
+  );
+}
+
+function QuoteTypography({ quote }: { quote: Quote }) {
+  const presentation = quotePresentations[quote.id];
+  const segments = segmentQuote(quote.quote, presentation);
+
+  return (
+    <>
+      <span className="sr-only">{quote.quote}</span>
+      {presentation?.visual && (
+        <span
+          className={`quote-visual visual-${presentation.visual}`}
+          aria-hidden="true"
+        >
+          {quoteVisualGlyphs[presentation.visual]}
+        </span>
+      )}
+      <span className="quote-stage-copy" aria-hidden="true">
+        {segments.map((segment, index) => {
+          if (segment.kind === 'impact') {
+            return (
+              <strong className="quote-impact" key={`${segment.kind}-${index}`}>
+                {segment.text}
+              </strong>
+            );
+          }
+          if (segment.kind === 'soft') {
+            return (
+              <span className="quote-soft" key={`${segment.kind}-${index}`}>
+                {segment.text}
+              </span>
+            );
+          }
+          return (
+            <span className="quote-plain" key={`${segment.kind}-${index}`}>
+              {segment.text}
+            </span>
+          );
+        })}
+      </span>
+    </>
   );
 }
 

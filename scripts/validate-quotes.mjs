@@ -6,6 +6,7 @@ import {
   verificationKeys,
 } from './quote-quality.mjs';
 import { loadQuotes } from './load-quotes.mjs';
+import { readFileSync } from 'node:fs';
 
 const quotes = loadQuotes();
 const parties = ['S', 'M', 'SD', 'V', 'C', 'KD', 'L', 'MP'];
@@ -211,6 +212,54 @@ for (const theme of quoteThemes) {
   }
 }
 
+const presentationSource = readFileSync(
+  new URL('../app/quote-presentations.ts', import.meta.url),
+  'utf8',
+);
+const presentations = new Map();
+const presentationPattern = /'([^']+)': \{\n([\s\S]*?)\n  \},/g;
+for (const match of presentationSource.matchAll(presentationPattern)) {
+  const [, id, body] = match;
+  const impact = body.match(/\bimpact: '([^']+)'/)?.[1];
+  const soft = body.match(/\bsoft: '([^']+)'/)?.[1];
+  if (presentations.has(id)) errors.push(`${id}: dubblerad typografiregi.`);
+  presentations.set(id, { impact, soft });
+}
+
+for (const id of presentations.keys()) {
+  if (!ids.has(id)) errors.push(`${id}: typografiregi saknar motsvarande citat.`);
+}
+
+const approvedWithoutPresentation = quotes.filter(
+  (quote) => quote.reviewStatus === 'approved' && !presentations.has(quote.id),
+);
+for (const quote of approvedWithoutPresentation) {
+  errors.push(`${quote.id}: godkänt citat saknar typografiregi.`);
+}
+
+for (const quote of quotes) {
+  const presentation = presentations.get(quote.id);
+  if (!presentation) continue;
+  if (quote.reviewStatus === 'approved' && !presentation.impact) {
+    errors.push(`${quote.id}: godkänt citat saknar en betonad originalfras.`);
+  }
+  for (const field of ['impact', 'soft']) {
+    const phrase = presentation[field];
+    if (phrase && !quote.quote.includes(phrase)) {
+      errors.push(`${quote.id}: ${field}-frasen ”${phrase}” finns inte ordagrant i citatet.`);
+    }
+  }
+  if (presentation.impact && presentation.soft) {
+    const impactStart = quote.quote.indexOf(presentation.impact);
+    const impactEnd = impactStart + presentation.impact.length;
+    const softStart = quote.quote.indexOf(presentation.soft);
+    const softEnd = softStart + presentation.soft.length;
+    if (impactStart < softEnd && softStart < impactEnd) {
+      errors.push(`${quote.id}: betonad och nedtonad fras överlappar.`);
+    }
+  }
+}
+
 if (warnings.length) console.warn(warnings.map((warning) => `⚠ ${warning}`).join('\n'));
 
 if (errors.length) {
@@ -227,3 +276,4 @@ const averagePriority = approved.length
 console.log(
   `Citatbanken är giltig: ${quotes.length} citat · ${approved.length} godkända · ${pipeline.length} i granskningskö · snittprioritet ${averagePriority}/100.`,
 );
+console.log(`Typografiregin är giltig: ${approved.length}/${approved.length} spelbara citat har ordagranna betoningar.`);
