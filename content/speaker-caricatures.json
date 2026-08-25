@@ -246,6 +246,23 @@
       "releaseStatus": "private-poc-only"
     },
     {
+      "speaker": "Maud Olofsson",
+      "party": "C",
+      "asset": "/speaker-caricatures/maud-olofsson.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Maud_Olofsson.JPG",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Maud_Olofsson.JPG/1280px-Maud_Olofsson.JPG",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Henrik Ishihara (Wikimedia Commons user Globaljuggler)",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "native-alpha",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
       "speaker": "Magdalena Andersson",
       "party": "S",
       "asset": "/speaker-caricatures/magdalena-andersson.webp",
