@@ -1785,77 +1785,6 @@ summary:focus-visible {
   box-shadow: 0 0 8px white, 0 0 16px #44dcff, inset 0 0 6px white;
 }
 
-.jack-fray {
-  position: absolute;
-  z-index: 5;
-  bottom: -30px;
-  left: 50%;
-  display: block;
-  width: 48px;
-  height: 38px;
-  transform: translateX(-50%);
-  pointer-events: none;
-}
-
-.jack-fray::before {
-  content: '';
-  position: absolute;
-  z-index: 3;
-  top: -2px;
-  left: 50%;
-  width: 23px;
-  height: 13px;
-  transform: translateX(-50%);
-  border: 2px solid #432100;
-  border-radius: 3px 3px 9px 9px;
-  background: repeating-linear-gradient(135deg, #ffd333 0 5px, #b16a05 5px 8px);
-  box-shadow: 0 3px 0 rgb(0 0 0 / .35), 0 0 9px #ffd33d;
-}
-
-.jack-fray i {
-  position: absolute;
-  z-index: 2;
-  top: 6px;
-  left: 50%;
-  display: block;
-  width: 7px;
-  height: 23px;
-  transform-origin: 50% 0;
-  border: 1px solid rgb(45 18 0 / .8);
-  border-radius: 2px 2px 6px 6px;
-  box-shadow: 0 2px 3px rgb(0 0 0 / .5), 0 0 8px currentColor;
-}
-
-.jack-fray i::after {
-  content: '';
-  position: absolute;
-  bottom: -9px;
-  left: 1px;
-  width: 3px;
-  height: 11px;
-  border-radius: 0 0 4px 4px;
-  background: repeating-linear-gradient(90deg, #7f3300 0 1px, #ffb452 1px 2px, #a64c08 2px 3px);
-  box-shadow: 0 0 4px white, 0 0 9px #ffb534;
-}
-
-.jack-fray i:nth-child(1) {
-  color: #ff6648;
-  background: linear-gradient(90deg, #481207, #e74426 42%, #ff8b5c 62%, #711506);
-  transform: translateX(-4px) rotate(-22deg);
-}
-
-.jack-fray i:nth-child(2) {
-  color: #53dfff;
-  background: linear-gradient(90deg, #003d74, #138bd8 42%, #75e6ff 62%, #064986);
-  transform: translateX(-50%) rotate(1deg);
-}
-
-.jack-fray i:nth-child(3) {
-  color: #d9f23d;
-  background: repeating-linear-gradient(90deg, #1f8a35 0 3px, #f4e732 3px 6px);
-  transform: translateX(-3px) rotate(22deg);
-}
-
 .cable-jack.is-dragging {
   cursor: grabbing;
   transform: translateX(-50%) scale(1.12);
@@ -1950,11 +1879,6 @@ summary:focus-visible {
   width: 5px;
   height: 24px;
   animation-duration: .32s;
-}
-
-.cable-jack:is(.is-dragging, .is-connected, .is-previewing) .jack-fray i {
-  filter: brightness(1.35) saturate(1.25);
-  animation: jack-fray-twitch .24s steps(2, end) infinite alternate;
 }
 
 .drag-callout {
@@ -3372,6 +3296,63 @@ summary:focus-visible {
   animation: plug-throb .2s steps(2, end) infinite alternate;
 }
 
+.cable-frayed-end {
+  pointer-events: none;
+  filter:
+    drop-shadow(0 3px 2px rgb(0 0 0 / .72))
+    drop-shadow(0 0 5px #fff4b0)
+    drop-shadow(0 0 10px #ffbd2e);
+}
+
+.cable-end-collar {
+  fill: #f2a70f;
+  stroke: #552900;
+  stroke-width: 3;
+  filter: drop-shadow(0 0 4px #fff3a0);
+}
+
+.frayed-wire,
+.copper-tip {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.frayed-wire {
+  stroke-width: 7;
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+}
+
+.wire-red {
+  stroke: #ee4a2f;
+  animation: cable-wire-red .72s ease-in-out infinite alternate;
+}
+
+.wire-blue {
+  stroke: #36bde9;
+  animation: cable-wire-blue .66s -.19s ease-in-out infinite alternate;
+}
+
+.wire-earth {
+  stroke: #bcd62f;
+  stroke-dasharray: 5 3;
+  animation: cable-wire-earth .76s -.35s ease-in-out infinite alternate;
+}
+
+.copper-tip {
+  stroke: #ffb75b;
+  stroke-width: 3.5;
+  filter: drop-shadow(0 0 3px white) drop-shadow(0 0 7px #ff9d22);
+}
+
+.cable-frayed-end.is-dragging {
+  filter:
+    drop-shadow(0 3px 2px rgb(0 0 0 / .72))
+    drop-shadow(0 0 7px white)
+    drop-shadow(0 0 15px #3edfff)
+    drop-shadow(0 0 22px #ffcb32);
+}
+
 .electric-halo {
   fill: rgb(51 224 255 / .16);
   stroke: rgb(255 255 255 / .46);
@@ -4198,9 +4179,19 @@ summary:focus-visible {
   }
 }
 
-@keyframes jack-fray-twitch {
-  from { margin-top: 0; }
-  to { margin-top: 2px; }
+@keyframes cable-wire-red {
+  from { transform: rotate(-2deg); }
+  to { transform: rotate(4deg); }
+}
+
+@keyframes cable-wire-blue {
+  from { transform: translateX(-1px) rotate(2deg); }
+  to { transform: translateX(1px) rotate(-2deg); }
+}
+
+@keyframes cable-wire-earth {
+  from { transform: rotate(2deg); }
+  to { transform: rotate(-4deg); }
 }
 
 @keyframes drag-callout-bob {
@@ -5157,12 +5148,6 @@ summary:focus-visible {
     bottom: -31px;
   }
 
-  .jack-fray {
-    bottom: -25px;
-    transform: translateX(-50%) scale(.82);
-    transform-origin: 50% 0;
-  }
-
   .drag-callout {
     left: calc(100% + 16px);
     gap: .3rem;
@@ -5589,11 +5574,6 @@ summary:focus-visible {
     bottom: -27px;
     width: 52px;
     height: 52px;
-  }
-
-  .jack-fray {
-    bottom: -22px;
-    transform: translateX(-50%) scale(.7);
   }
 
   .drag-callout {

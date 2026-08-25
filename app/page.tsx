@@ -2163,11 +2163,6 @@ export default function Home() {
             onLostPointerCapture={cancelCable}
           >
             <span className="jack-grip" />
-            <span className="jack-fray" aria-hidden="true">
-              <i />
-              <i />
-              <i />
-            </span>
             <span className="jack-sparks" aria-hidden="true">
               {Array.from({ length: 8 }, (_, index) => <i key={index} />)}
             </span>
@@ -2409,6 +2404,20 @@ export default function Home() {
                   <circle cx="-4" cy="-42" r="2.2" />
                 </g>
               </>
+            )}
+            {selected === null && !isCablePreview && (
+              <g
+                className={`cable-frayed-end ${dragging ? 'is-dragging' : ''}`}
+                transform={`translate(${cable.end.x} ${cable.end.y})`}
+              >
+                <rect className="cable-end-collar" x="-14" y="-9" width="28" height="17" rx="5" />
+                <path className="frayed-wire wire-red" d="M -7 5 C -9 12, -14 17, -17 25" />
+                <path className="frayed-wire wire-blue" d="M 0 5 C -1 13, 1 19, 0 28" />
+                <path className="frayed-wire wire-earth" d="M 7 5 C 10 12, 14 17, 17 25" />
+                <path className="copper-tip tip-red" d="M -17 24 L -20 31" />
+                <path className="copper-tip tip-blue" d="M 0 27 L 0 35" />
+                <path className="copper-tip tip-earth" d="M 17 24 L 20 31" />
+              </g>
             )}
           </>
         )}
