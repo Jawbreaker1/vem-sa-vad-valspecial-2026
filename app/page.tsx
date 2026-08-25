@@ -2084,6 +2084,26 @@ export default function Home() {
         <p className="intro-note" id="intro-note">
           Ett fristående spel utan koppling till partierna. Källor visas efter varje svar. Historiska citat behöver inte motsvara partiernas politik i dag.
         </p>
+        <details className="intro-about">
+          <summary>
+            <span>Designed by</span>
+            <strong>Bird Disk Studios</strong>
+            <i aria-hidden="true">+</i>
+          </summary>
+          <div className="intro-about-card">
+            <small>Om spelet</small>
+            <p>Designed by <strong>Bird Disk Studios</strong></p>
+            <b>Johan Engwall</b>
+            <a href="mailto:johan.engwall@gmail.com">johan.engwall@gmail.com</a>
+            <a
+              href="https://www.linkedin.com/in/johan-engwall-89604a5/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              LinkedIn <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </details>
         {soundButton}
       </main>
     );
