@@ -6,6 +6,7 @@ import {
   CSSProperties,
   PointerEvent,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -595,6 +596,38 @@ export default function Home() {
       ? 'suspense'
       : 'roam';
 
+  useLayoutEffect(() => {
+    const shouldResetScroll = screen !== 'question' || phase === 'choosing';
+    if (!shouldResetScroll) return;
+
+    const resetScroll = () => {
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
+
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement && activeElement !== document.body) {
+      activeElement.blur();
+    }
+
+    if (
+      screen === 'question'
+      && phase === 'choosing'
+      && !window.matchMedia('(pointer: coarse)').matches
+    ) {
+      instructionRef.current?.focus({ preventScroll: true });
+    }
+
+    resetScroll();
+    const frame = window.requestAnimationFrame(resetScroll);
+    const settleTimer = window.setTimeout(resetScroll, 120);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(settleTimer);
+    };
+  }, [screen, currentIndex, phase]);
+
   useEffect(() => {
     if (screen !== 'question') return;
     const measure = () => {
@@ -642,16 +675,6 @@ export default function Home() {
     });
     return () => window.cancelAnimationFrame(frame);
   }, [screen, phase, selected]);
-
-  useEffect(() => {
-    if (screen !== 'question' || phase !== 'choosing') return;
-    const frame = window.requestAnimationFrame(() => {
-      if (document.activeElement === document.body) {
-        instructionRef.current?.focus({ preventScroll: true });
-      }
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, [screen, phase, currentIndex]);
 
   useEffect(() => {
     screenRef.current = screen;
@@ -1501,7 +1524,6 @@ export default function Home() {
     setSharePending(false);
     resultRevealFinishedRef.current = false;
     setTimeLeft(QUESTION_SECONDS);
-    window.scrollTo({ top: 0, behavior: 'auto' });
     setScreen('question');
     playCue('start');
     switchMusic('game', false, true);
@@ -1674,7 +1696,6 @@ export default function Home() {
       setManualShareText('');
       sharePendingRef.current = false;
       setSharePending(false);
-      window.scrollTo({ top: 0, behavior: 'auto' });
       setScreen('results');
       switchMusic('intro', false, true);
       return;
@@ -1692,7 +1713,6 @@ export default function Home() {
       setTimedOut(false);
       setAutoLocked(false);
       setTimeLeft(QUESTION_SECONDS);
-      window.scrollTo({ top: 0, behavior: 'auto' });
       setPhase('choosing');
       switchMusicActionRef.current('game', false, true);
       playCue('question');
@@ -1724,7 +1744,6 @@ export default function Home() {
     setSharePending(false);
     resultRevealFinishedRef.current = false;
     setTimeLeft(QUESTION_SECONDS);
-    window.scrollTo({ top: 0, behavior: 'auto' });
     switchMusic('intro', false, true);
   }
 

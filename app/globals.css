@@ -4777,6 +4777,11 @@ summary:focus-visible {
     min-height: 100dvh;
   }
 
+  .game-screen {
+    overflow: clip;
+    overflow-anchor: none;
+  }
+
   .intro-confetti i:nth-child(n + 19) {
     display: none;
   }
@@ -4871,6 +4876,9 @@ summary:focus-visible {
   }
 
   .game-header {
+    position: sticky;
+    top: 0;
+    z-index: 35;
     grid-template-columns: 1fr auto;
     column-gap: .45rem;
     padding:
@@ -4878,6 +4886,11 @@ summary:focus-visible {
       max(.75rem, env(safe-area-inset-right))
       .8rem
       max(.75rem, env(safe-area-inset-left));
+    border-bottom: 1px solid rgb(255 207 56 / .28);
+    background: linear-gradient(180deg, rgb(2 10 31 / .98), rgb(4 39 91 / .94));
+    box-shadow: 0 8px 24px rgb(0 4 20 / .44);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
   }
 
   .question-entry-burst {
@@ -5285,6 +5298,7 @@ summary:focus-visible {
     gap: .7rem;
     margin-top: 1.35rem;
     padding: .7rem;
+    scroll-margin-top: calc(5.25rem + env(safe-area-inset-top));
     border-width: 4px;
     border-radius: 18px;
   }
