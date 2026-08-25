@@ -4708,6 +4708,14 @@ summary:focus-visible {
   }
 }
 
+@media (max-width: 600px) and (orientation: portrait) {
+  .intro-image,
+  .intro-figure-layer {
+    background-position: center bottom;
+    background-size: 100% auto;
+  }
+}
+
 @media (max-height: 760px) and (min-width: 601px) {
   .intro-console {
     top: 1.25rem;
