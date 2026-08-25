@@ -1766,13 +1766,15 @@ export default function Home() {
   if (screen === 'intro') {
     return (
       <main className="intro-screen">
-        <div className="intro-image" aria-hidden="true" />
-        <div className="intro-depth-wash" aria-hidden="true" />
-        <IntroConfetti />
-        <div className="intro-figure-layer" aria-hidden="true" />
-        <div className="intro-floor-shine" aria-hidden="true" />
-        <div className="sweep sweep-one" aria-hidden="true" />
-        <div className="sweep sweep-two" aria-hidden="true" />
+        <div className="intro-stage" aria-hidden="true">
+          <div className="intro-stage-backdrop" />
+          <div className="intro-stage-depth" />
+          <div className="sweep sweep-one" />
+          <div className="sweep sweep-two" />
+          <IntroConfetti />
+          <div className="intro-stage-lineup" />
+          <div className="intro-floor-shine" />
+        </div>
         <section className="intro-console" aria-labelledby="intro-title">
           <h1 className="intro-logo" id="intro-title">
             <span className="intro-crown" aria-hidden="true">

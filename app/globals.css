@@ -67,18 +67,18 @@ summary:focus-visible {
   background: #041638;
 }
 
-.intro-image {
+.intro-stage {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background: url('/start-stage-clean.webp') center / cover no-repeat;
-  filter: saturate(.9) brightness(.8) contrast(.97);
-  transform-origin: 50% 42%;
-  animation: intro-breathe 10s ease-in-out infinite alternate;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
 }
 
-.intro-depth-wash,
-.intro-figure-layer,
+.intro-stage-backdrop,
+.intro-stage-depth,
+.intro-stage-lineup,
 .intro-floor-shine,
 .intro-confetti {
   position: absolute;
@@ -86,35 +86,50 @@ summary:focus-visible {
   pointer-events: none;
 }
 
-.intro-depth-wash {
+.intro-stage-backdrop {
+  z-index: 0;
+  background: url('/start-stage-background-v2.webp') center top / cover no-repeat;
+  filter: saturate(.96) brightness(.84) contrast(1.03);
+  transform-origin: 50% 26%;
+  will-change: transform, filter;
+  animation: intro-stage-breathe 11s ease-in-out infinite alternate;
+}
+
+.intro-stage-depth {
   z-index: 1;
   background:
-    radial-gradient(ellipse 48% 38% at 50% 62%, rgb(0 4 27 / .7), transparent 72%),
-    radial-gradient(ellipse 78% 44% at 50% 78%, rgb(16 111 255 / .28), transparent 70%),
-    linear-gradient(90deg, rgb(0 5 24 / .18), transparent 19% 81%, rgb(0 5 24 / .18));
+    radial-gradient(circle at 18% 1%, rgb(255 255 255 / .3), transparent 8%),
+    radial-gradient(circle at 50% 0, rgb(98 194 255 / .25), transparent 13%),
+    radial-gradient(circle at 82% 1%, rgb(255 255 255 / .3), transparent 8%),
+    radial-gradient(ellipse 48% 36% at 50% 62%, rgb(0 4 27 / .62), transparent 72%),
+    radial-gradient(ellipse 78% 44% at 50% 80%, rgb(16 111 255 / .26), transparent 70%),
+    linear-gradient(90deg, rgb(0 5 24 / .16), transparent 19% 81%, rgb(0 5 24 / .16));
   animation: intro-depth-pulse 5.8s ease-in-out infinite alternate;
 }
 
-.intro-figure-layer {
-  z-index: 3;
+.intro-stage-lineup {
+  z-index: 4;
   background: url('/start-stage-clean.webp') center / cover no-repeat;
-  filter: saturate(1.12) brightness(1.08) contrast(1.045);
-  transform-origin: 50% 42%;
+  background-position: center bottom;
+  filter:
+    saturate(1.1)
+    brightness(1.06)
+    contrast(1.045)
+    drop-shadow(0 -12px 24px rgb(0 2 22 / .38));
   -webkit-mask-image: linear-gradient(
     to bottom,
-    transparent 25%,
-    rgb(0 0 0 / .18) 32%,
+    transparent 22%,
+    rgb(0 0 0 / .12) 30%,
     rgb(0 0 0 / .82) 43%,
-    #000 54%
+    #000 52%
   );
   mask-image: linear-gradient(
     to bottom,
-    transparent 25%,
-    rgb(0 0 0 / .18) 32%,
+    transparent 22%,
+    rgb(0 0 0 / .12) 30%,
     rgb(0 0 0 / .82) 43%,
-    #000 54%
+    #000 52%
   );
-  animation: intro-breathe 10s ease-in-out infinite alternate;
 }
 
 .intro-floor-shine {
@@ -140,7 +155,7 @@ summary:focus-visible {
 }
 
 .intro-confetti {
-  z-index: 2;
+  z-index: 3;
   overflow: hidden;
   -webkit-mask-image: linear-gradient(to bottom, #000 0 68%, transparent 91%);
   mask-image: linear-gradient(to bottom, #000 0 68%, transparent 91%);
@@ -3972,12 +3987,14 @@ summary:focus-visible {
   resize: vertical;
 }
 
-@keyframes intro-breathe {
+@keyframes intro-stage-breathe {
   from {
-    transform: scale(1.008) translateY(0);
+    transform: scale(1.012) translateY(0);
+    filter: saturate(.96) brightness(.84) contrast(1.03);
   }
   to {
-    transform: scale(1.017) translateY(-.18%);
+    transform: scale(1.035) translateY(-.35%);
+    filter: saturate(1.04) brightness(.91) contrast(1.045);
   }
 }
 
@@ -4604,11 +4621,6 @@ summary:focus-visible {
 }
 
 @media (max-width: 900px) {
-  .intro-image,
-  .intro-figure-layer {
-    background-size: auto 100%;
-  }
-
   .intro-confetti i:nth-child(n + 31) {
     display: none;
   }
@@ -4708,11 +4720,28 @@ summary:focus-visible {
   }
 }
 
-@media (max-width: 600px) and (orientation: portrait) {
-  .intro-image,
-  .intro-figure-layer {
-    background-position: center bottom;
+@media (max-aspect-ratio: 16 / 9) {
+  .intro-stage-lineup {
     background-size: 100% auto;
+  }
+}
+
+@media (max-width: 600px) and (orientation: portrait) {
+  .intro-stage-lineup {
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      transparent 69%,
+      rgb(0 0 0 / .18) 74%,
+      rgb(0 0 0 / .86) 81%,
+      #000 85%
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 69%,
+      rgb(0 0 0 / .18) 74%,
+      rgb(0 0 0 / .86) 81%,
+      #000 85%
+    );
   }
 }
 
@@ -4787,7 +4816,7 @@ summary:focus-visible {
   }
 
   .intro-console {
-    top: 2.1rem;
+    top: max(2.1rem, calc(env(safe-area-inset-top) + 1rem));
     width: 95vw;
   }
 
@@ -5962,8 +5991,9 @@ summary:focus-visible {
     display: none !important;
   }
 
-  .intro-image,
-  .intro-figure-layer {
+  .intro-stage-backdrop,
+  .intro-stage-depth,
+  .sweep {
     animation: none !important;
     transform: none !important;
   }
