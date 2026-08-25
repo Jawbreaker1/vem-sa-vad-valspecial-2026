@@ -58,7 +58,7 @@ type Answer = {
 
 type Point = { x: number; y: number };
 type Screen = 'intro' | 'question' | 'results';
-type Phase = 'choosing' | 'locking' | 'reveal' | 'transition';
+type Phase = 'category' | 'choosing' | 'locking' | 'reveal' | 'transition';
 type ResultStage = 'countdown' | 'opening' | 'counting' | 'final';
 type ShareStatus = 'idle' | 'shared' | 'copied' | 'manual';
 type LeaderGalleryState = 'roam' | 'suspense' | 'cheer' | 'boo' | 'laugh';
@@ -197,12 +197,48 @@ const introConfetti = Array.from({ length: 42 }, (_, index) => ({
 }));
 
 const QUESTION_SECONDS = 20;
+const QUESTION_CATEGORY_MS = 900;
 const QUESTIONS_PER_PARTY = 3;
 const BASE_POINTS = 1000;
 const POINTS_PER_SECOND = 25;
 const STREAK_STEP_POINTS = 125;
 const MAX_STREAK_BONUS_STEPS = 4;
 const MUSIC_VOLUMES: Record<MusicCue, number> = { intro: .15, game: .12 };
+const OPENING_QUOTE_GROUPS = [
+  [
+    'mp-bolund-2022-fingret-at-putin',
+    'v-dadgostar-2025-mp3-celine-dion',
+    'sd-akesson-2021-pippi',
+    'kd-hagglund-2009-overraskningskaniner',
+    's-lofven-2020-pannkaka',
+    'm-kinberg-batra-2017-valjarna',
+  ],
+  [
+    'm-reinfeldt-2014-oppna-hjartan',
+    's-persson-1995-skuld',
+  ],
+  [
+    'c-loof-2013-ikea-loning',
+    'c-thand-ringqvist-2026-trad-tonaringar',
+    'v-dadgostar-2025-tapetsera-skane',
+    'kd-hagglund-2004-snigel-racerbil',
+  ],
+  [
+    'mp-fridolin-2019-pizza-akesson',
+    'kd-busch-2025-vard-efter-behov',
+    'sd-akesson-2018-svenska-folkhemmet',
+    'l-bjorklund-2017-socialt-ansvar',
+    'm-reinfeldt-2011-arbetarparti',
+  ],
+  [
+    'c-demirok-2024-arbetslos',
+    'kd-busch-2025-dikt-logn',
+    'sd-akesson-2012-tokyo',
+    'sd-akesson-2017-battre-parti',
+    'v-sjostedt-2018-horselkapor',
+    'm-reinfeldt-2014-ofarliga',
+  ],
+] as const;
 const leaderGallerySlots = [
   [{ id: 'magdalena-andersson', name: 'Magdalena Andersson' }],
   [{ id: 'ulf-kristersson', name: 'Ulf Kristersson' }],
@@ -255,7 +291,7 @@ const questionThemes: Record<QuoteThemeId, QuestionTheme> = {
   },
 };
 
-function shuffle<T>(items: T[]) {
+function shuffle<T>(items: readonly T[]) {
   const copy = [...items];
   for (let index = copy.length - 1; index > 0; index -= 1) {
     const swap = Math.floor(Math.random() * (index + 1));
@@ -298,16 +334,38 @@ function weightedSample(items: Quote[], count: number, required: Quote[] = []) {
   return selected;
 }
 
-function orderByTheme(items: Quote[]) {
+function buildOpeningSequence(approved: Quote[]) {
+  const approvedById = new Map(approved.map((quote) => [quote.id, quote]));
+  const usedParties = new Set<PartyId>();
+  const selected: Quote[] = [];
+
+  for (const group of OPENING_QUOTE_GROUPS) {
+    const candidates = shuffle(group)
+      .map((id) => approvedById.get(id))
+      .filter((quote): quote is Quote => Boolean(quote));
+    const chosen = candidates.find((quote) => !usedParties.has(quote.party)) ?? candidates[0];
+    if (!chosen) continue;
+    selected.push(chosen);
+    usedParties.add(chosen.party);
+  }
+
+  return selected;
+}
+
+function uniqueQuotes(items: Quote[]) {
+  return [...new Map(items.map((quote) => [quote.id, quote])).values()];
+}
+
+function orderByTheme(items: Quote[], preceding?: Quote) {
   const pool = shuffle(items);
   const ordered: Quote[] = [];
 
   while (pool.length) {
-    const last = ordered.at(-1);
+    const last = ordered.at(-1) ?? preceding;
     let candidates = pool.filter((quote) => quote.theme !== last?.theme);
     if (!candidates.length) candidates = [...pool];
 
-    if (!ordered.length) {
+    if (!ordered.length && !preceding) {
       const showOpeners = candidates.filter(
         (quote) => quote.theme === 'classic' || quote.theme === 'grodcircus',
       );
@@ -332,6 +390,7 @@ function orderByTheme(items: Quote[]) {
 
 function buildRound(bank: Quote[]) {
   const approved = bank.filter((quote) => quote.reviewStatus === 'approved');
+  const openingQuotes = buildOpeningSequence(approved);
   const themeCounts = new Map<QuoteThemeId, number>();
   for (const quote of approved) {
     themeCounts.set(quote.theme, (themeCounts.get(quote.theme) ?? 0) + 1);
@@ -347,7 +406,12 @@ function buildRound(bank: Quote[]) {
         throw new Error(`${party.name} saknar tillräckligt många godkända citat.`);
       }
       const uniqueThemeQuotes = candidates.filter((quote) => themeCounts.get(quote.theme) === 1);
-      return weightedSample(candidates, QUESTIONS_PER_PARTY, uniqueThemeQuotes);
+      const partyOpeners = openingQuotes.filter((quote) => quote.party === party.id);
+      return weightedSample(
+        candidates,
+        QUESTIONS_PER_PARTY,
+        uniqueQuotes([...partyOpeners, ...uniqueThemeQuotes]),
+      );
     });
     const coverage = new Set(selection.map((quote) => quote.theme)).size;
     if (coverage > bestThemeCoverage) {
@@ -357,7 +421,14 @@ function buildRound(bank: Quote[]) {
     if (coverage === themeCounts.size) break;
   }
 
-  return orderByTheme(bestSelection);
+  const selectedIds = new Set(bestSelection.map((quote) => quote.id));
+  const selectedOpeners = openingQuotes.filter((quote) => selectedIds.has(quote.id));
+  const openingIds = new Set(selectedOpeners.map((quote) => quote.id));
+  const orderedTail = orderByTheme(
+    bestSelection.filter((quote) => !openingIds.has(quote.id)),
+    selectedOpeners.at(-1),
+  );
+  return [...selectedOpeners, ...orderedTail];
 }
 
 function formatDate(isoDate: string) {
@@ -597,7 +668,7 @@ export default function Home() {
       : 'roam';
 
   useLayoutEffect(() => {
-    const shouldResetScroll = screen !== 'question' || phase === 'choosing';
+    const shouldResetScroll = screen !== 'question' || phase === 'category' || phase === 'choosing';
     if (!shouldResetScroll) return;
 
     const resetScroll = () => {
@@ -840,6 +911,15 @@ export default function Home() {
     resultRevealActionRef.current = completeResultReveal;
     resultCueActionRef.current = playCue;
   });
+
+  useEffect(() => {
+    if (screen !== 'question' || phase !== 'category') return;
+    const timer = window.setTimeout(() => {
+      setPhase('choosing');
+      resultCueActionRef.current('question');
+    }, QUESTION_CATEGORY_MS);
+    return () => window.clearTimeout(timer);
+  }, [screen, phase, current.id]);
 
   useEffect(() => {
     if (screen !== 'question' || phase !== 'choosing') return;
@@ -1512,7 +1592,7 @@ export default function Home() {
     setSelected(null);
     setPointer(null);
     setDragging(false);
-    setPhase('choosing');
+    setPhase('category');
     setTimedOut(false);
     setAutoLocked(false);
     setResultStage('countdown');
@@ -1713,9 +1793,8 @@ export default function Home() {
       setTimedOut(false);
       setAutoLocked(false);
       setTimeLeft(QUESTION_SECONDS);
-      setPhase('choosing');
+      setPhase('category');
       switchMusicActionRef.current('game', false, true);
-      playCue('question');
     }, motionDelay(260));
   }
 
@@ -1796,7 +1875,7 @@ export default function Home() {
             <small>Koppla citaten till rätt parti</small>
           </button>
           <div className="intro-kicker">
-            8 partier · {Object.keys(questionThemes).length} teman · {quotes.filter((quote) => quote.reviewStatus === 'approved').length} verifierade citat
+            8 partier · en himla massa citat
           </div>
         </section>
         <p className="intro-note" id="intro-note">
@@ -1992,11 +2071,12 @@ export default function Home() {
     ].filter(Boolean).join(' ')}>
       <div className="stage-lights" aria-hidden="true" />
       <div className="urgency-vignette" aria-hidden="true" />
-      {phase === 'choosing' && (
+      {phase === 'category' && (
         <QuestionEntryBurst
           key={`entry-${current.id}`}
           number={currentIndex + 1}
           theme={currentTheme.label}
+          description={currentTheme.description}
         />
       )}
       {phase === 'reveal' && lastAnswer?.quoteId === current.id && (
@@ -2023,7 +2103,7 @@ export default function Home() {
             : ''}
       </p>
       <p className="sr-only" aria-live="polite" aria-atomic="true">
-        {phase === 'choosing' && timeLeft === QUESTION_SECONDS
+        {phase === 'category'
           ? `Tema: ${currentTheme.label}. ${currentTheme.description}.`
           : phase === 'choosing' && (timeLeft === 7 || timeLeft === 3)
             ? `${timeLeft} sekunder kvar.`
@@ -2073,7 +2153,7 @@ export default function Home() {
               '--timer-shell-scale': timerShellScale,
             } as CSSProperties}
             role="timer"
-            aria-label={phase === 'choosing' ? `${timeLeft} sekunder kvar` : `Tiden stannade på ${timeLeft} sekunder`}
+            aria-label={phase === 'category' ? 'Frågan börjar snart' : phase === 'choosing' ? `${timeLeft} sekunder kvar` : `Tiden stannade på ${timeLeft} sekunder`}
           >
             <span className="timer-number" aria-hidden="true">
               <strong><i key={timeLeft}>{timeLeft}</i></strong>
@@ -2086,7 +2166,7 @@ export default function Home() {
                   <i className="fuse-flame" />
                 </span>
               </span>
-              <b>{phase === 'choosing' ? 'TID KVAR' : 'STOPP'}</b>
+              <b>{phase === 'category' ? 'REDO' : phase === 'choosing' ? 'TID KVAR' : 'STOPP'}</b>
             </span>
           </div>
         </div>
@@ -2095,6 +2175,7 @@ export default function Home() {
 
       <div
         className="round-progress"
+        aria-hidden={phase === 'category'}
         role="progressbar"
         aria-label={`${visibleAnswers.length} av ${roundQuotes.length} frågor besvarade`}
         aria-valuemin={0}
@@ -2124,10 +2205,16 @@ export default function Home() {
         })}
       </div>
 
-      <section className="game-content" aria-labelledby="instruction">
+      <section
+        className="game-content"
+        aria-labelledby="instruction"
+        aria-hidden={phase === 'category'}
+      >
         <div className="question-meta">
           <p ref={instructionRef} className="eyebrow" id="instruction" tabIndex={-1}>
-            {phase === 'choosing'
+            {phase === 'category'
+              ? 'Temat presenteras'
+              : phase === 'choosing'
               ? 'Koppla citatet till ett parti'
               : phase === 'locking'
                 ? 'Svaret låses'
@@ -2253,7 +2340,7 @@ export default function Home() {
 
         <LeaderGallery state={leaderGalleryState} />
 
-        {phase === 'choosing' || phase === 'locking' ? (
+        {phase === 'category' || phase === 'choosing' || phase === 'locking' ? (
           <div className={`selection-console ${selectedParty ? 'is-armed' : ''} ${phase === 'locking' ? 'is-locking' : ''}`}>
             {selectedParty ? (
               <>
@@ -2699,12 +2786,24 @@ function RevealShowcard({
   );
 }
 
-function QuestionEntryBurst({ number, theme }: { number: number; theme: string }) {
+function QuestionEntryBurst({
+  number,
+  theme,
+  description,
+}: {
+  number: number;
+  theme: string;
+  description: string;
+}) {
   return (
-    <div className="question-entry-burst" aria-hidden="true">
-      <span>Fråga {number}</span>
-      <strong>{theme}</strong>
-    </div>
+    <>
+      <div className="question-entry-backdrop" aria-hidden="true" />
+      <div className="question-entry-burst" aria-hidden="true">
+        <span>Fråga {number}</span>
+        <strong>{theme}</strong>
+        <small>{description}</small>
+      </div>
+    </>
   );
 }
 

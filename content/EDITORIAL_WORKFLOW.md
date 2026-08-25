@@ -66,7 +66,7 @@ Varje citat får ett tydligt huvudtema som visas innan spelaren svarar. En vanli
 ## Urval till rundor
 
 - Banken ska först balanseras per parti; kvalitet avgör inom varje parti.
-- En normal runda bör börja med ett välkänt eller tydligt roligt citat.
+- De fem första frågorna dras ur kuraterade premiumpooler: först en rolig groda, sedan fyra starka kort från olika teman och helst olika partier.
 - Därefter blandas svårighetsgraden: några rättvisa, några luriga och högst ett verkligt obskyrt kort i följd.
 - Samma talare bör normalt inte förekomma mer än en gång per runda.
 - Historiska citat fördelas över perioden så att spelet inte blir en nutida partiledardebatt med några enstaka arkivkort.

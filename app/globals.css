@@ -661,6 +661,17 @@ summary:focus-visible {
   text-transform: uppercase;
 }
 
+.question-entry-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 44;
+  background:
+    radial-gradient(circle at 50% 43%, rgb(13 91 190 / .55), transparent 34%),
+    rgb(1 10 34 / .86);
+  pointer-events: none;
+  animation: question-entry-backdrop-life .9s linear both;
+}
+
 .question-entry-burst {
   top: 42%;
   gap: .18rem;
@@ -671,7 +682,7 @@ summary:focus-visible {
     #063a89;
   box-shadow: 0 0 42px #24b8ff, 0 10px 30px rgb(0 0 0 / .55);
   clip-path: polygon(5% 0, 100% 0, 95% 100%, 0 100%);
-  animation: question-entry-hit .72s cubic-bezier(.16, .85, .28, 1) both;
+  animation: question-entry-hit .9s cubic-bezier(.16, .85, .28, 1) both;
 }
 
 .question-entry-burst::before,
@@ -712,6 +723,13 @@ summary:focus-visible {
   letter-spacing: -.02em;
   text-shadow: 0 5px 0 #001945, 0 0 15px #fff, 0 0 31px #39bfff;
   text-wrap: balance;
+}
+
+.question-entry-burst small {
+  color: white;
+  font: 900 clamp(.72rem, 1.65vw, 1.05rem)/1.1 system-ui, sans-serif;
+  letter-spacing: .12em;
+  text-shadow: 0 2px 0 #001945, 0 0 12px #39bfff;
 }
 
 .feedback-burst {
@@ -1392,6 +1410,20 @@ summary:focus-visible {
   width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
   text-align: center;
+}
+
+.phase-category .round-progress {
+  opacity: 0;
+}
+
+.phase-category .game-content {
+  opacity: 0;
+  transform: translateY(10px) scale(.985);
+  pointer-events: none;
+}
+
+.phase-choosing .game-content {
+  animation: question-stage-arrive .18s ease-out both;
 }
 
 .phase-choosing .quote-card {
@@ -4701,9 +4733,19 @@ summary:focus-visible {
 
 @keyframes question-entry-hit {
   0% { opacity: 0; transform: translate(-50%, -50%) scaleX(.12) scaleY(1.35) rotate(-3deg); }
-  18% { opacity: 1; transform: translate(-50%, -50%) scaleX(1.08) scaleY(.96) rotate(1deg); }
-  34%, 63% { opacity: 1; transform: translate(-50%, -50%) scale(1) rotate(0); }
+  11% { opacity: 1; transform: translate(-50%, -50%) scaleX(1.08) scaleY(.96) rotate(1deg); }
+  18%, 83% { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1) rotate(0); }
   100% { opacity: 0; visibility: hidden; transform: translate(-50%, -58%) scale(.96); }
+}
+
+@keyframes question-entry-backdrop-life {
+  0%, 100% { opacity: 0; }
+  11%, 83% { opacity: 1; }
+}
+
+@keyframes question-stage-arrive {
+  from { opacity: 0; transform: translateY(10px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 @keyframes feedback-impact {
@@ -6190,6 +6232,17 @@ summary:focus-visible {
   .next-button,
   .next-button > b {
     animation: none !important;
+  }
+
+  .question-entry-backdrop,
+  .question-entry-burst {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: none !important;
+  }
+
+  .question-entry-burst {
+    transform: translate(-50%, -50%) !important;
   }
 
   .intro-confetti,
