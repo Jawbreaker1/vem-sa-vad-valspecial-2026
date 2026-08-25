@@ -2324,27 +2324,40 @@ export default function Home() {
                 Detta sades {current.date.slice(0, 4)} och behöver inte motsvara partiets politik i dag.
               </p>
               {current.aftermath && (
-                <section className="aftermath-card" aria-label="Vad hände sedan?">
-                  <span>Men sedan…</span>
-                  <strong>{current.aftermath.headline}</strong>
-                  <time dateTime={current.aftermath.date}>{formatDate(current.aftermath.date)}</time>
-                  <p>{current.aftermath.summary}</p>
-                  <a
-                    href={current.aftermath.source.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Öppna belägget ${current.aftermath.source.title} hos ${current.aftermath.source.publisher} i en ny flik`}
-                  >
-                    Se belägget hos {current.aftermath.source.publisher}
-                    <span aria-hidden="true"> ↗</span>
-                  </a>
-                  <small>
-                    {current.aftermath.source.title} · {current.aftermath.source.locator}
-                  </small>
-                </section>
+                <details className="aftermath-card">
+                  <summary>
+                    <span className="aftermath-kicker">Vad hände sen?</span>
+                    <strong>{current.aftermath.headline}</strong>
+                    <span className="aftermath-toggle" aria-hidden="true">
+                      <b>Öppna</b>
+                      <i>+</i>
+                    </span>
+                  </summary>
+                  <div className="aftermath-body">
+                    <time dateTime={current.aftermath.date}>{formatDate(current.aftermath.date)}</time>
+                    <p>{current.aftermath.summary}</p>
+                    <div className="aftermath-sources" aria-label="Källor till vad som hände sedan">
+                      {current.aftermath.sources.map((source, index) => (
+                        <div className="aftermath-source" key={source.url}>
+                          <a
+                            href={source.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Öppna belägg ${index + 1}, ${source.title} hos ${source.publisher}, i en ny flik`}
+                          >
+                            <b>Belägg {index + 1}</b>
+                            {source.publisher}
+                            <span aria-hidden="true"> ↗</span>
+                          </a>
+                          <small>{source.title} · {source.locator}</small>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </details>
               )}
               {current.editorialNote && (
-                <details>
+                <details className="editorial-note">
                   <summary>Redaktionell precisering</summary>
                   <p>{current.editorialNote}</p>
                 </details>

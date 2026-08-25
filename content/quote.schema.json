@@ -35,9 +35,12 @@
           "type": {
             "enum": [
               "riksdag-protocol",
+              "riksdag-document",
               "official-speech",
               "official-party-page",
               "government-page",
+              "official-agency-page",
+              "official-institution-page",
               "official-audio-video",
               "public-service-recording",
               "secondary-lead"
@@ -50,31 +53,65 @@
       "aftermath": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["kind", "date", "headline", "summary", "source"],
+        "required": ["kind", "date", "headline", "summary", "sources", "verification"],
         "properties": {
-          "kind": { "enum": ["apology", "retraction", "policy-change", "later-contradiction"] },
+          "kind": {
+            "enum": [
+              "apology",
+              "retraction",
+              "policy-change",
+              "later-contradiction",
+              "policy-outcome",
+              "political-consequence",
+              "leadership-change",
+              "career-turn",
+              "became-catchphrase",
+              "later-development"
+            ]
+          },
           "date": { "type": "string", "format": "date" },
           "headline": { "type": "string", "minLength": 10 },
           "summary": { "type": "string", "minLength": 40 },
-          "source": {
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["title", "publisher", "url", "type", "locator"],
+              "properties": {
+                "title": { "type": "string" },
+                "publisher": { "type": "string" },
+                "url": { "type": "string", "format": "uri" },
+                "type": {
+                  "enum": [
+                    "riksdag-protocol",
+                    "riksdag-document",
+                    "official-speech",
+                    "official-party-page",
+                    "government-page",
+                    "official-agency-page",
+                    "official-institution-page",
+                    "official-audio-video",
+                    "public-service-recording"
+                  ]
+                },
+                "locator": { "type": "string", "minLength": 8 }
+              }
+            }
+          },
+          "verification": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["title", "publisher", "url", "type", "locator"],
+            "required": ["claim", "date", "context", "primarySource", "lastChecked"],
             "properties": {
-              "title": { "type": "string" },
-              "publisher": { "type": "string" },
-              "url": { "type": "string", "format": "uri" },
-              "type": {
-                "enum": [
-                  "riksdag-protocol",
-                  "official-speech",
-                  "official-party-page",
-                  "government-page",
-                  "official-audio-video",
-                  "public-service-recording"
-                ]
-              },
-              "locator": { "type": "string", "minLength": 8 }
+              "claim": { "const": true },
+              "date": { "const": true },
+              "context": { "const": true },
+              "primarySource": { "const": true },
+              "lastChecked": { "type": "string", "format": "date" }
             }
           }
         }

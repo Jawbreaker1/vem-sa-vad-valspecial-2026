@@ -129,12 +129,21 @@
       "date": "2015-12-19",
       "headline": "Tre månader senare lades flyktingpolitiken om",
       "summary": "I sitt jultal sade Löfven att regeringen hade lagt om flyktingpolitiken för att få fler att söka sig till andra EU-länder.",
-      "source": {
-        "title": "Jultal 2015",
-        "publisher": "Socialdemokraterna",
-        "url": "https://www.socialdemokraterna.se/vart-parti/vara-politiker/stefan-lofvens-tal/jultal-2015",
-        "type": "official-speech",
-        "locator": "Stycket som börjar ”När den globala flyktingkrisen tilltog”"
+      "sources": [
+        {
+          "title": "Jultal 2015",
+          "publisher": "Socialdemokraterna",
+          "url": "https://www.socialdemokraterna.se/vart-parti/vara-politiker/stefan-lofvens-tal/jultal-2015",
+          "type": "official-speech",
+          "locator": "Stycket som börjar ”När den globala flyktingkrisen tilltog”"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
       }
     },
     "editorial": {
@@ -239,6 +248,28 @@
       "locator": "45-minutersinspelningen och det utskrivna citatet i artikeltexten"
     },
     "editorialNote": "Spelcitatet är ett ordagrant, sammanhängande utdrag ur en längre mening som fortsätter med en beskrivning av människor på flykt.",
+    "aftermath": {
+      "kind": "policy-change",
+      "date": "2015-10-06",
+      "headline": "Fjorton månader senare ville Moderaterna byta huvudregel",
+      "summary": "Det var inte Reinfeldt själv som tog tillbaka orden. Men under efterträdaren Anna Kinberg Batra föreslog Moderaterna att tillfälliga, inte permanenta, uppehållstillstånd skulle bli ny huvudregel för många som sökte asyl.",
+      "sources": [
+        {
+          "title": "En förnyad integrations- och migrationspolitik",
+          "publisher": "Sveriges riksdag",
+          "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/motion/en-fornyad-integrations-och-migrationspolitik_h3023241/html/",
+          "type": "riksdag-document",
+          "locator": "Avsnittet ”Permanenta och tillfälliga uppehållstillstånd”, styckena 102–107"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
+      }
+    },
     "editorial": {
       "tags": [
         "famous",

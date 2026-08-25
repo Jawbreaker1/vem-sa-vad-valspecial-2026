@@ -27,9 +27,12 @@ export const quoteThemes = [
 
 const primarySourceTypes = new Set([
   'riksdag-protocol',
+  'riksdag-document',
   'official-speech',
   'official-party-page',
   'government-page',
+  'official-agency-page',
+  'official-institution-page',
   'official-audio-video',
   'public-service-recording',
 ]);
@@ -89,10 +92,12 @@ export function approvalGateFailures(quote) {
     if (!aftermath) {
       failures.push('temat ”Det där åldrades… sådär” saknar en senare belagd händelse');
     } else {
-      if (!primarySourceTypes.has(aftermath?.source?.type)) {
+      if (!Array.isArray(aftermath?.sources) || !aftermath.sources.length) {
+        failures.push('den senare händelsen saknar källor');
+      } else if (aftermath.sources.some((source) => !primarySourceTypes.has(source?.type))) {
         failures.push('den senare händelsen saknar godkänd primärkälla');
       }
-      if (!aftermath?.source?.locator) {
+      if (aftermath?.sources?.some((source) => !source?.locator)) {
         failures.push('den senare källan saknar en tydlig locator');
       }
       if (!aftermath?.date || aftermath.date <= quote.date) {

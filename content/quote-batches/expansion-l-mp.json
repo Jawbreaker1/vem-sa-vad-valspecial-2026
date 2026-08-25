@@ -415,6 +415,28 @@
       "locator": "Avsnittet om laddning, meningen efter förslaget om tre miljarder till fler laddplatser"
     },
     "editorialNote": "Citatet börjar efter ett tankstreck mitt i originalmeningen. ”Ge fingret” är en provokativ bild för att välja bort Putinanknuten fossil energi efter Rysslands invasion av Ukraina.",
+    "aftermath": {
+      "kind": "policy-change",
+      "date": "2022-11-08",
+      "headline": "Fem månader senare drogs bonusen ur kontakten",
+      "summary": "Efter regeringsskiftet avskaffades klimatbonusen för nya beställningar av bonusbilar från och med den 8 november. Det var den nya regeringens beslut – inte att Bolund eller Miljöpartiet hade ändrat linje.",
+      "sources": [
+        {
+          "title": "Klimatbonusen upphör den 8 november",
+          "publisher": "Regeringskansliet",
+          "url": "https://www.regeringen.se/pressmeddelanden/2022/11/klimatbonusen-upphor-den-8-november/",
+          "type": "government-page",
+          "locator": "Ingressen och avsnittet ”Om klimatbonus”"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
+      }
+    },
     "editorial": {
       "tags": ["funny", "surprising", "misdirection", "historical", "policy"],
       "riskFlags": ["context-dependent", "sensitive"],

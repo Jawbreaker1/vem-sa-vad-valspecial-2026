@@ -20,15 +20,29 @@ const reviewStates = [
 const speakerTiers = ['party-leader', 'prime-minister', 'minister', 'official-spokesperson'];
 const sourceTypes = [
   'riksdag-protocol',
+  'riksdag-document',
   'official-speech',
   'official-party-page',
   'government-page',
+  'official-agency-page',
+  'official-institution-page',
   'official-audio-video',
   'public-service-recording',
   'secondary-lead',
 ];
 const directRiksdagSpeechPattern = /^https:\/\/data\.riksdagen\.se\/anforande\/[a-z0-9]+-(\d+)\/html$/i;
-const aftermathKinds = ['apology', 'retraction', 'policy-change', 'later-contradiction'];
+const aftermathKinds = [
+  'apology',
+  'retraction',
+  'policy-change',
+  'later-contradiction',
+  'policy-outcome',
+  'political-consequence',
+  'leadership-change',
+  'career-turn',
+  'became-catchphrase',
+  'later-development',
+];
 const allowedTags = new Set([
   'famous',
   'funny',
@@ -167,20 +181,42 @@ for (const [index, quote] of quotes.entries()) {
     }
     if ((aftermath?.headline ?? '').length < 10) errors.push(`${label}: rubriken för senare händelse är för tunn.`);
     if ((aftermath?.summary ?? '').length < 40) errors.push(`${label}: sammanfattningen av senare händelse är för tunn.`);
-    if (!aftermath?.source?.title || !aftermath?.source?.publisher) {
-      errors.push(`${label}: källmetadata för senare händelse saknas.`);
+    if (!Array.isArray(aftermath?.sources) || aftermath.sources.length < 1 || aftermath.sources.length > 3) {
+      errors.push(`${label}: senare händelse måste ha 1–3 primärkällor.`);
+    } else {
+      const aftermathUrls = new Set();
+      for (const [sourceIndex, source] of aftermath.sources.entries()) {
+        const sourceLabel = `${label}: senare källa ${sourceIndex + 1}`;
+        if (!source?.title || !source?.publisher) errors.push(`${sourceLabel}: källmetadata saknas.`);
+        if (!sourceTypes.includes(source?.type) || source?.type === 'secondary-lead') {
+          errors.push(`${sourceLabel}: källtypen är inte godkänd som primärkälla.`);
+        }
+        if ((source?.locator ?? '').length < 8) errors.push(`${sourceLabel}: en tydlig locator krävs.`);
+        try {
+          const sourceUrl = new URL(source?.url);
+          if (sourceUrl.protocol !== 'https:') errors.push(`${sourceLabel}: URL måste använda HTTPS.`);
+          if (aftermathUrls.has(sourceUrl.href)) errors.push(`${sourceLabel}: samma URL förekommer flera gånger.`);
+          aftermathUrls.add(sourceUrl.href);
+        } catch {
+          errors.push(`${sourceLabel}: URL är ogiltig.`);
+        }
+        if (source?.type === 'riksdag-protocol') {
+          const directSpeech = source.url?.match(directRiksdagSpeechPattern);
+          const locatedSpeech = source.locator?.match(/Anförande\s+(\d+)/i);
+          if (!directSpeech || !locatedSpeech || directSpeech[1] !== locatedSpeech[1]) {
+            errors.push(`${sourceLabel}: riksdagskällan måste länka till samma anförande som locatorn anger.`);
+          }
+        }
+      }
     }
-    if (!sourceTypes.includes(aftermath?.source?.type) || aftermath?.source?.type === 'secondary-lead') {
-      errors.push(`${label}: senare händelse måste ha en godkänd primärkälla.`);
+    const aftermathVerification = aftermath?.verification;
+    for (const key of ['claim', 'date', 'context', 'primarySource']) {
+      if (aftermathVerification?.[key] !== true) {
+        errors.push(`${label}: aftermath.verification.${key} måste vara godkänd.`);
+      }
     }
-    if ((aftermath?.source?.locator ?? '').length < 8) {
-      errors.push(`${label}: senare händelse behöver en tydlig locator i källan.`);
-    }
-    try {
-      const source = new URL(aftermath?.source?.url);
-      if (source.protocol !== 'https:') errors.push(`${label}: senare källa måste använda HTTPS.`);
-    } catch {
-      errors.push(`${label}: URL för senare källa är ogiltig.`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(aftermathVerification?.lastChecked ?? '')) {
+      errors.push(`${label}: aftermath.verification.lastChecked måste vara ISO-datum.`);
     }
   }
 

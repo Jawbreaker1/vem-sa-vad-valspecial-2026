@@ -8,7 +8,7 @@ const mediaEvidence = JSON.parse(readFileSync(
 const sources = [
   ...loadQuotes().flatMap((quote) => [
     quote.source,
-    ...(quote.aftermath?.source ? [quote.aftermath.source] : []),
+    ...(quote.aftermath?.sources ?? []),
   ]),
   ...mediaEvidence.map((evidence) => ({
     publisher: `${evidence.publisher} (ordalydelsebevis)`,

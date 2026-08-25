@@ -19,6 +19,28 @@
       "locator": "Brödtexten, stycket som börjar ”Hon riktade skarp kritik”."
     },
     "editorialNote": "Klassamhälle och arbetsledare är medvetet socialdemokratiskt laddade ord som Lööf riktar tillbaka mot Socialdemokraterna.",
+    "aftermath": {
+      "kind": "later-development",
+      "date": "2019-01-18",
+      "headline": "”Arbetsledaren” blev avtalspartner",
+      "summary": "Centerpartiet gick inte in i regeringen, men släppte fram Stefan Löfven efter januariavtalet. Lööf beskrev partiet som ett liberalt oppositionsparti som skulle påverka politiken och avstod i statsministeromröstningen.",
+      "sources": [
+        {
+          "title": "Prövning av förslag till statsminister",
+          "publisher": "Sveriges riksdag",
+          "url": "https://www.riksdagen.se/sv/webb-tv/video/ovrigt-kammaren/provning-av-forslag-till-statsminister_h6c120190118zz/",
+          "type": "official-audio-video",
+          "locator": "Annie Lööfs anförande från 32:26 samt voteringsresultatet"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
+      }
+    },
     "editorial": {
       "tags": [
         "funny",
@@ -69,6 +91,28 @@
       "locator": "Anförande 18"
     },
     "editorialNote": "Demirok uttalade men uppfann inte meningen: den var Moderaternas valslogan 2022, som han citerade för att vända den mot regeringen.",
+    "aftermath": {
+      "kind": "leadership-change",
+      "date": "2025-02-24",
+      "headline": "Fem månader senare lämnade han partiledarjobbet",
+      "summary": "Centerpartiet meddelade att Demirok skulle lämna uppdraget som partiledare och att någon annan skulle leda partiet genom valet 2026. Det finns inget belagt orsakssamband med citatet – bara en svårmotståndlig efterhandsordlek.",
+      "sources": [
+        {
+          "title": "Muharrem Demirok lämnar som partiledare",
+          "publisher": "Centerpartiet",
+          "url": "https://www.centerpartiet.se/nyheter/2024/2025-02-24-muharrem-demirok-lamnar-som-partiledare",
+          "type": "official-party-page",
+          "locator": "Ingressen och Demiroks uttalande om nästa valrörelse"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
+      }
+    },
     "editorial": {
       "tags": [
         "funny",

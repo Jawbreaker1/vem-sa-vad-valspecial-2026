@@ -19,6 +19,28 @@
       "locator": "Anförande 37"
     },
     "editorialNote": "Frågan avslutar ett resonemang om hushållstjänster, låglönejobb, invandrare och kvinnor; den är inte ett fristående förslag om yrkesroller.",
+    "aftermath": {
+      "kind": "policy-outcome",
+      "date": "2007-07-01",
+      "headline": "Fem år senare blev ”pigan” RUT",
+      "summary": "Den 1 juli 2007 började en ny lag om skattereduktion för hushållsarbete att gälla. Den gav 50 procents skattereduktion för bland annat städning, klädvård, matlagning och barnpassning i hemmet.",
+      "sources": [
+        {
+          "title": "Lag (2007:346) om skattereduktion för hushållsarbete",
+          "publisher": "Sveriges riksdag",
+          "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/svensk-forfattningssamling/lag-2007346-om-skattereduktion-for_sfs-2007-346/",
+          "type": "riksdag-document",
+          "locator": "4 och 7 §§ samt övergångsbestämmelsen för 2007:346"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
+      }
+    },
     "editorial": {
       "tags": [
         "funny",
@@ -71,6 +93,35 @@
       "locator": "Anförande 12"
     },
     "editorialNote": "Nakenheten och kostymen är en bild för att Reinfeldts framtoning enligt Ohly inte höll när EU-konstitutionens innehåll diskuterades.",
+    "aftermath": {
+      "kind": "later-development",
+      "date": "2009-12-01",
+      "headline": "Kostymen föll – men EU-idén bytte kläder",
+      "summary": "Konstitutionsfördraget föll efter nej i Frankrike och Nederländerna 2005. Många av reformerna räddades senare i Lissabonfördraget, som trädde i kraft den 1 december 2009.",
+      "sources": [
+        {
+          "title": "The Treaty of Nice and the Convention on the Future of Europe",
+          "publisher": "Europaparlamentet",
+          "url": "https://www.europarl.europa.eu/factsheets/en/sheet/4/the-european-union-in-brief",
+          "type": "official-institution-page",
+          "locator": "Avsnitt C, raderna om folkomröstningarna och Lissabonfördraget"
+        },
+        {
+          "title": "History of the European Union – 2000–09",
+          "publisher": "Europeiska unionen",
+          "url": "https://european-union.europa.eu/principles-countries-history/history-eu/2000-09_en",
+          "type": "official-institution-page",
+          "locator": "Datumpunkterna ”29 May–1 June 2005” och ”13 December 2007”"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
+      }
+    },
     "editorial": {
       "tags": [
         "funny",

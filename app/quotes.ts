@@ -21,8 +21,23 @@ export type QuoteSource = {
   title: string;
   publisher: string;
   url: string;
-  type: 'riksdag-protocol' | 'official-speech' | 'official-party-page' | 'government-page' | 'official-audio-video' | 'public-service-recording' | 'secondary-lead';
+  type:
+    | 'riksdag-protocol'
+    | 'riksdag-document'
+    | 'official-speech'
+    | 'official-party-page'
+    | 'government-page'
+    | 'official-agency-page'
+    | 'official-institution-page'
+    | 'official-audio-video'
+    | 'public-service-recording'
+    | 'secondary-lead';
   locator?: string;
+};
+
+export type PrimaryQuoteSource = Omit<QuoteSource, 'type' | 'locator'> & {
+  type: Exclude<QuoteSource['type'], 'secondary-lead'>;
+  locator: string;
 };
 
 export type Quote = {
@@ -39,11 +54,28 @@ export type Quote = {
   context: string;
   source: QuoteSource;
   aftermath?: {
-    kind: 'apology' | 'retraction' | 'policy-change' | 'later-contradiction';
+    kind:
+      | 'apology'
+      | 'retraction'
+      | 'policy-change'
+      | 'later-contradiction'
+      | 'policy-outcome'
+      | 'political-consequence'
+      | 'leadership-change'
+      | 'career-turn'
+      | 'became-catchphrase'
+      | 'later-development';
     date: string;
     headline: string;
     summary: string;
-    source: QuoteSource & { locator: string };
+    sources: PrimaryQuoteSource[];
+    verification: {
+      claim: boolean;
+      date: boolean;
+      context: boolean;
+      primarySource: boolean;
+      lastChecked: string;
+    };
   };
   editorialNote?: string;
   editorial: {

@@ -190,6 +190,35 @@
       "type": "riksdag-protocol",
       "locator": "Anförande 11"
     },
+    "aftermath": {
+      "kind": "political-consequence",
+      "date": "2006-10-06",
+      "headline": "Tre månader senare svängde makten höger",
+      "summary": "I valet fick allianspartierna tillsammans 178 mandat mot 171 för Socialdemokraterna, Vänsterpartiet och Miljöpartiet. Den 6 oktober tillträdde Fredrik Reinfeldts borgerliga regering och Perssons statsministertid tog slut.",
+      "sources": [
+        {
+          "title": "Tidigare valresultat i riksdags-, region- och kommunval",
+          "publisher": "Valmyndigheten",
+          "url": "https://www.val.se/valresultat-och-statistik/riksdags--region--och-kommunval/tidigare-valresultat",
+          "type": "official-agency-page",
+          "locator": "Avsnittet ”Valresultat 2006”, mandatfördelningen"
+        },
+        {
+          "title": "Regeringsförklaringen 6 oktober 2006",
+          "publisher": "Regeringskansliet",
+          "url": "https://www.regeringen.se/tal/2006/10/regeringsforklaringen-6-oktober-2006/",
+          "type": "government-page",
+          "locator": "Publiceringsuppgifterna och Fredrik Reinfeldts regeringsförklaring"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
+      }
+    },
     "editorial": {
       "tags": ["funny", "surprising", "historical", "metaphor", "debate-reply"],
       "riskFlags": ["context-dependent"],
@@ -406,6 +435,28 @@
       "type": "riksdag-protocol",
       "locator": "Anförande 2"
     },
+    "aftermath": {
+      "kind": "policy-outcome",
+      "date": "2019-10-25",
+      "headline": "Fyra månader senare fick brödet ström",
+      "summary": "En kapacitetslösning presenterades för Skåne och Eon sade sig kunna godkänna väntande förfrågningar. Pågens vd uppgav att bageriet nu kunde fördubbla kapaciteten. Det belägger lösningen – inte att citatet orsakade den.",
+      "sources": [
+        {
+          "title": "Så ska skånska företag få mer el",
+          "publisher": "SVT Nyheter Skåne",
+          "url": "https://www.svt.se/nyheter/lokalt/skane/presskonferens-idag-det-skanska-elproblemet-ar-lost",
+          "type": "public-service-recording",
+          "locator": "Avsnitten ”Nu kan EON säga JA” och ”Pågen nöjda med dagens besked”"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
+      }
+    },
     "editorial": {
       "tags": ["funny", "surprising", "metaphor", "policy"],
       "riskFlags": ["context-dependent"],
@@ -448,6 +499,28 @@
       "url": "https://data.riksdagen.se/anforande/H60944-2/html",
       "type": "riksdag-protocol",
       "locator": "Anförande 2"
+    },
+    "aftermath": {
+      "kind": "policy-outcome",
+      "date": "2019-06-04",
+      "headline": "Fyra månader senare blev altanerna faktiskt av",
+      "summary": "Riksdagen sade ja till enklare regler för att bygga altaner utan bygglov. Förslaget byggde på överenskommelsen mellan regeringen, Centerpartiet och Liberalerna och började gälla den 1 juli 2019.",
+      "sources": [
+        {
+          "title": "Större frihet att bygga altaner",
+          "publisher": "Sveriges riksdag",
+          "url": "https://www.riksdagen.se/sv/dokument-och-lagar/dokument/betankande/storre-frihet-att-bygga-altaner_h601cu19/",
+          "type": "riksdag-document",
+          "locator": "”Beslut i korthet” och beslutsdatum 4 juni 2019"
+        }
+      ],
+      "verification": {
+        "claim": true,
+        "date": true,
+        "context": true,
+        "primarySource": true,
+        "lastChecked": "2026-08-25"
+      }
     },
     "editorial": {
       "tags": ["funny", "surprising", "historical", "metaphor", "policy"],
