@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Who Said What POC quote bank",
+  "title": "Vem sa vad? quote bank",
   "type": "array",
   "items": {
     "type": "object",
     "additionalProperties": false,
-    "required": ["id", "theme", "party", "quote", "speaker", "speakerRole", "speakerTier", "date", "context", "source", "editorial", "verification", "reviewStatus"],
+    "required": ["id", "theme", "party", "quote", "speaker", "speakerRole", "speakerTier", "speakerImage", "speakerCaricature", "date", "context", "source", "editorial", "verification", "reviewStatus"],
     "properties": {
       "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
       "theme": { "enum": ["classic", "grodcircus", "aged-poorly", "disguise", "duel", "word-picture"] },
@@ -14,7 +14,14 @@
       "speaker": { "type": "string", "minLength": 1 },
       "speakerRole": { "type": "string", "minLength": 1 },
       "speakerTier": { "enum": ["party-leader", "prime-minister", "minister", "official-spokesperson"] },
-      "speakerImage": { "type": ["string", "null"] },
+      "speakerImage": {
+        "type": ["string", "null"],
+        "pattern": "^/leaders/[a-z0-9-]+\\.webp$"
+      },
+      "speakerCaricature": {
+        "type": ["string", "null"],
+        "pattern": "^/speaker-caricatures/[a-z0-9-]+\\.webp$"
+      },
       "date": { "type": "string", "format": "date" },
       "context": { "type": "string", "minLength": 30 },
       "source": {

@@ -1,0 +1,780 @@
+[
+  {
+    "id": "v-schyman-2002-piga-at-pigan",
+    "theme": "grodcircus",
+    "party": "V",
+    "quote": "Vem ska vara piga åt pigan då?",
+    "speaker": "Gudrun Schyman",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": null,
+    "date": "2002-11-06",
+    "context": "I partiledardebatten kritiserade Schyman idén att köpta hushållstjänster skulle ge större frihet och frågade vilka låglönegrupper som förväntades utföra arbetet.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2002/03:12, anförande 37",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GQ0912-37/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 37"
+    },
+    "editorialNote": "Frågan avslutar ett resonemang om hushållstjänster, låglönejobb, invandrare och kvinnor; den är inte ett fristående förslag om yrkesroller.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "policy"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
+      "rationale": "Den ultrakorta retoriska frågan är dräpande, rytmisk och svår att koppla till ett visst parti utan sammanhanget.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "v-ohly-2005-naken-kostym",
+    "theme": "word-picture",
+    "party": "V",
+    "quote": "Men jag håller med, för Fredrik Reinfeldt stod plötsligt naken trots sin vackra kostym.",
+    "speaker": "Lars Ohly",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/lars-ohly.webp",
+    "date": "2005-04-29",
+    "context": "I en partiledardebatt om EU:s konstitution instämde Ohly i Göran Hägglunds kritik och menade att Fredrik Reinfeldt inte kunde diskutera själva sakfrågan.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2004/05:115, anförande 12",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GS09115-12/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 12"
+    },
+    "editorialNote": "Nakenheten och kostymen är en bild för att Reinfeldts framtoning enligt Ohly inte höll när EU-konstitutionens innehåll diskuterades.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "metaphor",
+        "debate-reply"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
+      "rationale": "Den visuella kostymbilden och det oväntade medhållet till en kristdemokrat ger citatet en stark spelkrok.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "v-ohly-2009-vaxpropp",
+    "theme": "grodcircus",
+    "party": "V",
+    "quote": "Då åkte en vaxpropp ut ur örat.",
+    "speaker": "Lars Ohly",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/lars-ohly.webp",
+    "date": "2009-10-14",
+    "context": "I replik till Jan Björklund berättade Ohly om en lomhörd före detta svärfar vars slag i köksbordet lossade en vaxpropp. Han använde historien för att uppmana Björklund att lyssna bättre.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2009/10:13, anförande 68",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GX0913-68/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 68"
+    },
+    "editorialNote": "Spelcitatet är poängen i en kort anekdot; direkt efteråt föreslår Ohly att Jan Björklund ska undersöka öronen.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "metaphor",
+        "debate-reply"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
+      "rationale": "Den kroppsliga och absurda punchlinen är mycket minnesvärd och låter inte som ett vanligt politiskt citat.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "v-sjostedt-2018-horselkapor",
+    "theme": "duel",
+    "party": "V",
+    "quote": "Kristdemokraternas val är att låtsas som att man satt med hörselkåpor i bänken och inte hörde någonting.",
+    "speaker": "Jonas Sjöstedt",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/jonas-sjostedt.webp",
+    "date": "2018-01-17",
+    "context": "Sjöstedt invände mot att Kristdemokraterna ställde samma fråga som han nyss hade besvarat och använde hörselkåporna som bild för att inte ta in motståndarens svar.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2017/18:56, anförande 120",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H50956-120/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 120"
+    },
+    "editorialNote": "Repliken handlar om debattformen och ett upprepat frågebatteri, inte om Kristdemokraternas sakpolitik.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "metaphor",
+        "debate-reply"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
+      "rationale": "Hörselkåpor i riksdagsbänken ger en omedelbar bild och en tydlig partiledarduells-punchline.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "v-dadgostar-2025-mp3-celine-dion",
+    "theme": "grodcircus",
+    "party": "V",
+    "quote": "I de toppmoderna mp3-spelarna snurrade Céline Dions My heart will go on.",
+    "speaker": "Nooshi Dadgostar",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/nooshi-dadgostar.webp",
+    "speakerCaricature": "/speaker-caricatures/nooshi-dadgostar.webp",
+    "date": "2025-06-11",
+    "context": "I Johan Pehrsons avtackning under partiledardebatten skämtade Dadgostar om hur länge han hade suttit i riksdagen och tidsmarkerade hans inträde med Beckham-paret och Céline Dion.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2024/25:130, anförande 88",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HC09130-88/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 88"
+    },
+    "editorialNote": "Låttiteln är kursiverad i källan; citattexten återger orden utan typografisk markering.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "current",
+        "historical"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
+      "rationale": "Den popkulturella tidsmarkören är varm, rolig och mycket oväntad i ett officiellt riksdagsprotokoll.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "c-olofsson-2007-infrastrukturkulisser",
+    "theme": "word-picture",
+    "party": "C",
+    "quote": "Vi ärvde en infrastrukturplanering som visade sig vara kulisser.",
+    "speaker": "Maud Olofsson",
+    "speakerRole": "partiordförande, vice statsminister och näringsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": null,
+    "date": "2007-10-17",
+    "context": "I partiledardebatten beskrev Olofsson tågförseningar och hävdade att den tidigare regeringen hade lovat järnvägar och vägar utan att tillföra finansiering.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2007/08:11, anförande 31",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GV0911-31/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 31"
+    },
+    "editorialNote": "Kulisserna syftar på enligt Olofsson utlovade men ofinansierade infrastrukturprojekt i den planering som regeringen hade övertagit.",
+    "editorial": {
+      "tags": [
+        "surprising",
+        "misdirection",
+        "historical",
+        "metaphor",
+        "policy"
+      ],
+      "riskFlags": [],
+      "rationale": "Den korta teatermetaforen är lätt att visualisera och kan trovärdigt låta som kritik från flera olika partier.",
+      "scores": {
+        "fame": 2,
+        "humor": 3,
+        "surprise": 4,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "c-olofsson-2011-fine-with-me",
+    "theme": "grodcircus",
+    "party": "C",
+    "quote": "Men är det att skrämmas är det fine with me.",
+    "speaker": "Maud Olofsson",
+    "speakerRole": "partiordförande, vice statsminister samt närings- och energiminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": null,
+    "date": "2011-06-15",
+    "context": "I replik till Håkan Juholt försvarade Olofsson privata företag och kvinnors företagande inom offentligt finansierade verksamheter och accepterade anklagelsen att hon skrämdes.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2010/11:116, anförande 30",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GY09116-30/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 30"
+    },
+    "editorialNote": "Den engelska slutfrasen står ordagrant i det officiella protokollet.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "policy",
+        "debate-reply"
+      ],
+      "riskFlags": [],
+      "rationale": "Den självsäkra svengelskan ger repliken en oväntad ton och gör den lätt att minnas och gestalta.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "c-loof-2012-pang-bom",
+    "theme": "grodcircus",
+    "party": "C",
+    "quote": "Det är förbud för en hel bransch - pang, bom!",
+    "speaker": "Annie Lööf",
+    "speakerRole": "partiordförande och näringsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/annie-loof.webp",
+    "date": "2012-01-18",
+    "context": "I replik till nytillträdde V-ledaren Jonas Sjöstedt kritiserade Lööf Vänsterpartiets vilja att förbjuda bemanningsföretag och hänvisade till branschens arbetstillfällen.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2011/12:57, anförande 113",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GZ0957-113/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 113"
+    },
+    "editorialNote": "Utropet sammanfattar Lööfs beskrivning av Vänsterpartiets dåvarande förslag om bemanningsföretag.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "policy",
+        "debate-reply"
+      ],
+      "riskFlags": [],
+      "rationale": "De två ljudhärmande slutorden skapar en färdig typografisk punchline och snabb, spelvänlig energi.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "c-loof-2013-ikea-loning",
+    "theme": "word-picture",
+    "party": "C",
+    "quote": "Tänk er Ikea en lördag strax efter löning.",
+    "speaker": "Annie Lööf",
+    "speakerRole": "partiordförande och näringsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/annie-loof.webp",
+    "date": "2013-10-16",
+    "context": "Lööf öppnade sitt anförande om behovet av en ekonomisk plan genom att likna läget vid ett välbesökt Ikea där man måste navigera, välja och hålla ordning på plånboken.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2013/14:13, anförande 85",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H10913-85/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 85"
+    },
+    "editorialNote": "I följande meningar utvecklas Ikea-bilden till behovet av en plan för plånbok, navigering och montering.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "metaphor",
+        "policy"
+      ],
+      "riskFlags": [],
+      "rationale": "Den universellt igenkännbara vardagsbilden är rolig, omedelbar och näst intill omöjlig att partibestämma ensam.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "c-demirok-2024-snabbmakaroner",
+    "theme": "word-picture",
+    "party": "C",
+    "quote": "Den är snabbmakaroner och pannkakor med mjölk.",
+    "speaker": "Muharrem Demirok",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/muharrem-demirok.webp",
+    "date": "2024-01-17",
+    "context": "I partiledardebatten sade Demirok att klimatfrågan för Centerpartiet är vardag och konkret, följt av bilden av snabbmakaroner och pannkakor med mjölk.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2023/24:56, anförande 79",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HB0956-79/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 79"
+    },
+    "editorialNote": "Pronomenet ”Den” syftar på klimatfrågan, som Demirok i föregående mening beskriver som vardag.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "current",
+        "metaphor",
+        "policy"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
+      "rationale": "Den vardagliga matbilden döljer ämnet fullständigt utan kontext och ger därför både humor och hög feldirigering.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 3,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-hagglund-2004-snigel-racerbil",
+    "theme": "word-picture",
+    "party": "KD",
+    "quote": "Den omtalade snigeln framstår som en racerbil i det här avseendet.",
+    "speaker": "Göran Hägglund",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/goran-hagglund.webp",
+    "date": "2004-04-22",
+    "context": "I en tillväxtdebatt hävdade Hägglund att regeringen pratade om tillväxt men agerade så långsamt att till och med den omtalade snigeln framstod som snabb.",
+    "source": {
+      "title": "Tillväxtfrämjande åtgärder, protokoll 2003/04:100, anförande 48",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GR09100-48/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 48"
+    },
+    "editorialNote": "Snigeln är en retorisk bild för den långsamhet som Hägglund ansåg präglade regeringens tillväxtpolitik.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "metaphor",
+        "policy"
+      ],
+      "riskFlags": [],
+      "rationale": "Kollisionen mellan snigel och racerbil är en renodlad, visuell och mycket lättbegriplig politisk förolämpning.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-hagglund-2009-overraskningskaniner",
+    "theme": "grodcircus",
+    "party": "KD",
+    "quote": "Hur många gånger har inte små överraskningskaniner hoppat upp ur hatten och glatt sprungit runt i form av stödpaket, bluffprogram och framtidsvisioner?",
+    "speaker": "Göran Hägglund",
+    "speakerRole": "partiordförande och socialminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/goran-hagglund.webp",
+    "date": "2009-06-17",
+    "context": "I partiledardebatten beskrev Hägglund de rödgrönas ekonomiska förslag som pengar ur öron och överraskningskaniner ur en hatt, innan han sade att trollspöet saknades.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2008/09:134, anförande 57",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GW09134-57/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 57"
+    },
+    "editorialNote": "Kaninerna ingår i en längre trollerimetafor om oppositionens ekonomiska förslag och följs av en hänvisning till ett saknat trollspö.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "metaphor",
+        "policy"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
+      "rationale": "Meningen är nästan en färdig animerad gameshow-scen och kombinerar stark humor med en tydlig politisk udd.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-hagglund-2010-spackel-maskeringstejp",
+    "theme": "word-picture",
+    "party": "KD",
+    "quote": "Med spackel och maskeringstejp försöker man kortsiktigt skyla de värsta skavankerna, och man undviker att bygga förråd, skafferi och matkällare.",
+    "speaker": "Göran Hägglund",
+    "speakerRole": "partiordförande och socialminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/goran-hagglund.webp",
+    "date": "2010-06-16",
+    "context": "I partiledardebatten jämförde Hägglund oppositionens ekonomiska politik med fuskbyggeri: snabb yta i stället för stabil grund och planering för dåligt väder.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2009/10:138, anförande 57",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GX09138-57/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 57"
+    },
+    "editorialNote": "Spelmeningen är mitten av en längre byggmetafor där Hägglund också talar om grund, tak och planering för bra väder.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "metaphor",
+        "policy"
+      ],
+      "riskFlags": [],
+      "rationale": "Spackel, tejp och matkällare ger ett ovanligt rikt visuellt språk som passar spelets bildförstärkta presentation.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-hagglund-2011-myspysig-idyll",
+    "theme": "grodcircus",
+    "party": "KD",
+    "quote": "Familjen är mer än en myspysig idyll.",
+    "speaker": "Göran Hägglund",
+    "speakerRole": "partiordförande och socialminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/goran-hagglund.webp",
+    "date": "2011-06-15",
+    "context": "I partiledardebatten argumenterade Hägglund för att ekonomisk utsatthet bland barn också måste diskuteras tillsammans med tillit, stabila relationer och familjens villkor.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2010/11:116, anförande 113",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GY09116-113/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 113"
+    },
+    "editorialNote": "Hägglund följer direkt upp meningen med att familjeliv och föräldraskap också är svårt, inte minst med tonårsbarn.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "policy"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
+      "rationale": "Ordet ”myspysig” är komiskt oväntat i kammaren och citatet får sin fulla KD-ledtråd först vid avslöjandet.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-busch-2019-snigel-ulan-bator",
+    "theme": "grodcircus",
+    "party": "KD",
+    "quote": "Det som möjligtvis saknades var den jordenruntresande snigeln som fikar i Ulan Bator.",
+    "speaker": "Ebba Busch",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/ebba-busch.webp",
+    "speakerCaricature": "/speaker-caricatures/ebba-busch.webp",
+    "date": "2019-05-08",
+    "context": "I EU-partiledardebatten skämtade Busch om att Liberalernas utskottsinitiativ om Ringhals innehöll nästan hela Jan Björklunds politiska arv och bara saknade ännu ett långväga exempel.",
+    "source": {
+      "title": "Partiledardebatt inför Europaparlamentsvalet, protokoll 2018/19:88, anförande 141",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H60988-141/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 141"
+    },
+    "editorialNote": "Källan använder talarens dåvarande namn Ebba Busch Thor; citatbanken normaliserar personnamnet till Ebba Busch. Snigeln anspelar på Jan Björklunds många politiska profilfrågor.",
+    "editorial": {
+      "tags": [
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "metaphor",
+        "debate-reply"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
+      "rationale": "En fikande jordenruntresande snigel är ren surrealism och en av batchens mest överraskande partiledarrepliker.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  }
+]

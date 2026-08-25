@@ -1,0 +1,310 @@
+[
+  {
+    "id": "m-kristersson-2026-halmdocka",
+    "theme": "word-picture",
+    "party": "M",
+    "quote": "Här målas det upp en halmdocka, och sedan skjuter man på halmdockan. Vad ska jag göra åt det?",
+    "speaker": "Ulf Kristersson",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/ulf-kristersson.webp",
+    "speakerCaricature": "/speaker-caricatures/ulf-kristersson.webp",
+    "date": "2026-06-10",
+    "context": "Daniel Helldén hade frågat vilka grupper som kunde hamna i skottlinjen för en fortsatt regeringspolitik och själv räknat upp vårdpersonal, ingenjörer och familjer. Kristersson avfärdade beskrivningen som en halmdocka innan han svarade om migrationspolitiken.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2025/26:136, anförande 26",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HD09136-26/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 26"
+    },
+    "editorialNote": "Spelcitatet är den ordagranna inledningen på Kristerssons replik till Daniel Helldén.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "metaphor", "debate-reply", "current"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den bokstavliga bilden av någon som först bygger och sedan skjuter på en halmdocka är både tydlig, komisk och svår att partibestämma.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "sd-akesson-2026-daliga-minne",
+    "theme": "grodcircus",
+    "party": "SD",
+    "quote": "Jag kommer inte att vädja till svenska folkets dåliga minne, som andra gör i det här sammanhanget.",
+    "speaker": "Jimmie Åkesson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/jimmie-akesson.webp",
+    "speakerCaricature": "/speaker-caricatures/jimmie-akesson.webp",
+    "date": "2026-06-10",
+    "context": "Åkesson öppnade sitt huvudanförande i mandatperiodens sista partiledardebatt med denna sarkastiska markering. Därefter riktade han anförandet mot Vänsterpartiets hantering av kandidater som uppmärksammats för extrema uttalanden.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2025/26:136, anförande 4",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HD09136-4/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 4"
+    },
+    "editorialNote": "Formuleringen syftar på Åkessons påstående att andra debattörer förlitade sig på att väljarna glömt tidigare politik.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "current"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den syrliga öppningsrepliken låter som en fristående förolämpning och har en ovanlig rytm för ett formellt riksdagsanförande.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 3,
+        "relevance": 5,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "v-dadgostar-2026-tjottaballongen",
+    "theme": "grodcircus",
+    "party": "V",
+    "quote": "De kommer att rösta bort Ebba Busch och resten av tjottaballongen i september.",
+    "speaker": "Nooshi Dadgostar",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/nooshi-dadgostar.webp",
+    "speakerCaricature": "/speaker-caricatures/nooshi-dadgostar.webp",
+    "date": "2026-06-10",
+    "context": "Ebba Busch hade försvarat regeringens kömiljard och sagt att Kristdemokraterna hade kunskapen och hjärtat för att styra vården. Dadgostar svarade med kritik mot vårdköerna och avslutade repliken med denna formulering.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2025/26:136, anförande 73",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HD09136-73/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 73"
+    },
+    "editorialNote": "”Tjottaballongen” syftar här på Ebba Busch och de övriga partier som Dadgostar kritiserade för sjukvårdspolitiken.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "debate-reply", "current"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Ordet ”tjottaballongen” är extremt vardagligt i en riksdagsreplik och ger ett tydligt komiskt kort utan att bli ett extremutspel.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "c-thand-ringqvist-2026-mirakelkur",
+    "theme": "disguise",
+    "party": "C",
+    "quote": "Jobben är nämligen något så ovanligt som en ekonomisk mirakelkur.",
+    "speaker": "Elisabeth Thand Ringqvist",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/elisabeth-thand-ringqvist.webp",
+    "speakerCaricature": "/speaker-caricatures/elisabeth-thand-ringqvist.webp",
+    "date": "2026-06-10",
+    "context": "Thand Ringqvist beskrev låg tillväxt och hög arbetslöshet inför nästa mandatperiod. Hon använde mirakelkur-bilden för att argumentera för att fler jobb samtidigt stärker de offentliga finanserna och utrymmet för välfärd.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2025/26:136, anförande 78",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HD09136-78/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 78"
+    },
+    "editorialNote": "”Mirakelkuren” var en metafor för den samhällsekonomiska effekten när människor går från arbetslöshet till arbete.",
+    "editorial": {
+      "tags": ["surprising", "misdirection", "metaphor", "policy", "current"],
+      "riskFlags": [],
+      "rationale": "Arbetslinjen pekar åt flera möjliga borgerliga partier, medan ordet ”mirakelkur” ger formuleringen en oväntad och minnesvärd knorr.",
+      "scores": {
+        "fame": 2,
+        "humor": 3,
+        "surprise": 4,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "kd-busch-2026-tror-hemma",
+    "theme": "grodcircus",
+    "party": "KD",
+    "quote": "Jag tror gärna. Jag tror i kyrkan. Jag tror hemma. Och jag tror mer om Vårdsverige.",
+    "speaker": "Ebba Busch",
+    "speakerRole": "partiordförande, vice statsminister och energi- och näringsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/ebba-busch.webp",
+    "speakerCaricature": "/speaker-caricatures/ebba-busch.webp",
+    "date": "2026-06-10",
+    "context": "Elisabeth Thand Ringqvist hade försvarat regionalt självstyre med att Centerpartiet tror att den lokala nivån vet bäst. Busch svarade med en ordlek om tro innan hon argumenterade för ett mer nationellt ansvar för sjukvården.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2025/26:136, anförande 81",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HD09136-81/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 81"
+    },
+    "editorialNote": "Ordleken byggde på Centerpartiets formulering om vad partiet ”tror” och på Kristdemokraternas religiösa idébakgrund.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "debate-reply", "current"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den rytmiska ordleken om kyrkan och hemmet är skräddarsydd för ett gameshowkort och samtidigt oväntat självironisk.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "l-mohamsson-2026-stureplanscentern",
+    "theme": "word-picture",
+    "party": "L",
+    "quote": "Stureplanscentern är numera död och begraven. Tankar om sänkta skatter på företagande, jobb och sparande är ett minne blott.",
+    "speaker": "Simona Mohamsson",
+    "speakerRole": "partiordförande samt utbildnings- och integrationsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/simona-mohamsson.webp",
+    "speakerCaricature": "/speaker-caricatures/simona-mohamsson.webp",
+    "date": "2026-06-10",
+    "context": "Mohamsson kritiserade Centerpartiets besked om regeringsalternativ och menade att partiet hade lämnat sin marknadsliberala profil. Bilden av den döda och begravda Stureplanscentern inledde hennes replik till Elisabeth Thand Ringqvist.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2025/26:136, anförande 83",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HD09136-83/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 83"
+    },
+    "editorialNote": "”Stureplanscentern” var ett etablerat smeknamn för en urban och marknadsliberal strömning inom Centerpartiet.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "metaphor", "debate-reply", "current"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Begravningsbilden och det interna borgerliga grälet gör citatet spetsigt, visuellt och svårt att placera utan partikunskap.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "mp-hellden-2026-hjarta-byraladan",
+    "theme": "word-picture",
+    "party": "MP",
+    "quote": "Statsministern har kanske tillfälligt hittat ett hjärta någonstans i byrålådan.",
+    "speaker": "Daniel Helldén",
+    "speakerRole": "språkrör och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/daniel-hellden.webp",
+    "speakerCaricature": null,
+    "date": "2026-06-10",
+    "context": "Kristersson hade sagt att regeringen skulle ändra regler så att skötsamma unga inte tvingas lämna landet på grund av föräldrarnas tillstånd. Helldén gav honom ett begränsat erkännande med hjärtmetaforen men fortsatte kritisera migrationspolitiken.",
+    "source": {
+      "title": "Partiledardebatt, protokoll 2025/26:136, anförande 25",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HD09136-25/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 25"
+    },
+    "editorialNote": "Det upphittade hjärtat var en sarkastisk metafor för att Helldén såg ett tillfälligt mer medkännande besked från statsministern.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "metaphor", "debate-reply", "current"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Hjärtat i byrålådan är en stark och lättvisualiserad bild som kan låta både vänsterpartistisk, socialdemokratisk eller miljöpartistisk.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  }
+]

@@ -96,6 +96,14 @@
     "note": "Tillfälliga porträttreferenser för privat teknikprov. Fullständig källa och licens ska dokumenteras eller bilderna ersättas före offentlig eller kommersiell lansering."
   },
   {
+    "asset": "/speaker-caricatures/*.webp",
+    "party": null,
+    "sourcePage": null,
+    "sourceFile": "web/content/speaker-caricatures.json",
+    "retrieved": "2026-08-25",
+    "note": "AI-genererade, redaktionella karikatyrer för det privata teknikprovet. Identitetsreferens, attribuering och licensstatus per person finns i speaker-caricatures.json. Referenskällans licens klarerar inte automatiskt porträtt-, varumärkes- eller publiceringsrätt för en offentlig eller kommersiell lansering."
+  },
+  {
     "asset": "/sounds/crowd-cheer.mp3",
     "party": null,
     "sourcePage": "https://mixkit.co/free-sound-effects/crowd/",

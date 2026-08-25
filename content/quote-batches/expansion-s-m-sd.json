@@ -1,0 +1,693 @@
+[
+  {
+    "id": "s-andersson-2022-pratkvarnar",
+    "theme": "word-picture",
+    "party": "S",
+    "quote": "Men svenska hushåll kan inte värma upp sitt boende med pratkvarnar.",
+    "speaker": "Magdalena Andersson",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/magdalena-andersson.webp",
+    "speakerCaricature": "/speaker-caricatures/magdalena-andersson.webp",
+    "date": "2022-01-12",
+    "context": "Under partiledardebatten svarade Andersson på högerpartiernas krav på ny kärnkraft. Hon efterlyste en konkret plan för vem som skulle bygga och finansiera den och argumenterade för snabbare utbyggnad av vindkraft.",
+    "source": {
+      "title": "Riksdagens protokoll 2021/22:51, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H90951-33/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 33"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "metaphor", "policy", "debate-reply"],
+      "riskFlags": [],
+      "rationale": "Pratkvarnar som alternativ energikälla är en omedelbar och visuellt tacksam formulering som inte tydligt avslöjar partiet.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "s-lofven-2016-blindbock",
+    "theme": "word-picture",
+    "party": "S",
+    "quote": "Ni är som fyra som leker blindbock.",
+    "speaker": "Stefan Löfven",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/stefan-lofven.webp",
+    "date": "2016-10-12",
+    "context": "I en replik till Anna Kinberg Batra kritiserade Löfven Alliansens förslag om lägre ingångslöner. De fyra borgerliga partierna liknades vid personer med ögonbindel som chansade om följderna.",
+    "source": {
+      "title": "Riksdagens protokoll 2016/17:13, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H40913-22/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 22"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "metaphor", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Kort, barnsligt konkret och lätt att illustrera; formuleringen skulle trovärdigt kunna komma från flera partiledare.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "s-lofven-2016-dorrmatta",
+    "theme": "duel",
+    "party": "S",
+    "quote": "Ni tänker dessutom låta vinstjakten fortsätta, bara för att du nu lagt dig som en dörrmatta framför Anna Kinberg Batra.",
+    "speaker": "Stefan Löfven",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/stefan-lofven.webp",
+    "date": "2016-06-15",
+    "context": "Löfven svarade Jimmie Åkesson om Sverigedemokraternas budget och vinster i skolan. Han hävdade att SD hade övergett rollen som självständigt block och närmat sig Moderaterna.",
+    "source": {
+      "title": "Riksdagens protokoll 2015/16:120, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H309120-54/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 54"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "metaphor", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En ovanligt fysisk och teatralisk förolämpning från en statsminister, med stark bildpotential i spelets avslöjande.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "s-lofven-2020-pannkaka",
+    "theme": "grodcircus",
+    "party": "S",
+    "quote": "Om det är pannkaka och ärtsoppa är jag lättflörtad, men det har vi också i Regeringskansliet.",
+    "speaker": "Stefan Löfven",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/stefan-lofven.webp",
+    "date": "2020-09-09",
+    "context": "Ulf Kristersson hade bjudit in Löfven till lunch med Ebba Busch och en tidigare dansk justitieminister för samtal om gängbrottslighet. Löfven svarade på själva lunchinviten innan han gick vidare till sakfrågan.",
+    "source": {
+      "title": "Riksdagens protokoll 2020/21:4, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H8094-11/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 11"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En vardaglig lunchreplik mitt i en tung kriminalpolitisk debatt; hög humor och mycket svag partisignal.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "s-persson-2006-blinka",
+    "theme": "word-picture",
+    "party": "S",
+    "quote": "Det farligaste som finns i trafiken är att blinka åt vänster och sedan svänga åt höger. Det är vad ni gör.",
+    "speaker": "Göran Persson",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/goran-persson.webp",
+    "date": "2006-06-15",
+    "context": "I en replik till Kristdemokraternas Göran Hägglund fortsatte Persson en trafikmetafor som Hägglund hade introducerat. Poängen var att KD signalerade vänster men förde högerpolitik.",
+    "source": {
+      "title": "Riksdagens protokoll 2005/06:142, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GT09142-11/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 11"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "historical", "metaphor", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Tydlig ordlek där vänster och höger fungerar både politiskt och bokstavligt; mycket lätt att gestalta grafiskt.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "s-persson-2000-knakade",
+    "theme": "word-picture",
+    "party": "S",
+    "quote": "När moderaterna styrde knakade det utan att det växte.",
+    "speaker": "Göran Persson",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/goran-persson.webp",
+    "date": "2000-06-15",
+    "context": "Persson försvarade regeringens ekonomiska resultat mot Moderatledaren Bo Lundgrens kritik. Han utgick från uttrycket att ekonomin växte så att det knakade och vände ordleken mot den tidigare borgerliga regeringen.",
+    "source": {
+      "title": "Riksdagens snabbprotokoll 1999/2000:128, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GN09128-2/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 2"
+    },
+    "editorial": {
+      "tags": ["funny", "historical", "metaphor", "debate-reply"],
+      "riskFlags": [],
+      "rationale": "Kompakt Perssonsk ordlek med bra rytm och tillräcklig tvetydighet för att fungera som snabbt spelkort.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 3,
+        "misdirection": 3,
+        "relevance": 2,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "m-reinfeldt-2014-barnmatsburkar",
+    "theme": "duel",
+    "party": "M",
+    "quote": "Jag kan slå fast att jag tror att alla riksdagspartier är emot att det finns gift i barnmatsburkar.",
+    "speaker": "Fredrik Reinfeldt",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/fredrik-reinfeldt.webp",
+    "date": "2014-05-07",
+    "context": "I EU-valets partiledardebatt avvisade Reinfeldt slutsatsen att den som inte röstade på gröna förslag därmed stödde gifter i barnmat. Repliken gällde på vilken politisk nivå kemikalieregler skulle beslutas.",
+    "source": {
+      "title": "Riksdagens snabbprotokoll 2013/14:108, Partiledardebatt inför Europaparlamentsvalet",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H109108-7/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 7"
+    },
+    "editorialNote": "Reinfeldt argumenterade inte för en ny barnmatspolitik utan avvisade ironiskt slutsatsen att den som inte röstade grönt därmed var för gifter i barnmatsburkar.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "policy", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Formuleringen låter nästan som en banal trygghetsdeklaration men är egentligen en ironisk invändning mot motståndarens argument.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "m-reinfeldt-2014-ofarliga",
+    "theme": "duel",
+    "party": "M",
+    "quote": "Det farligaste med oss är alltså att vi är ofarliga - vi föreslår ingenting.",
+    "speaker": "Fredrik Reinfeldt",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/fredrik-reinfeldt.webp",
+    "date": "2014-06-18",
+    "context": "Jonas Sjöstedt hade kritiserat Alliansen för att sakna politiska ambitioner inför valet. Reinfeldt återgav kritiken som en paradox och fortsatte sedan med att räkna upp regeringens förslag.",
+    "source": {
+      "title": "Riksdagens snabbprotokoll 2013/14:128, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H109128-101/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 101"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En elegant självmotsägelse med oväntad självironisk yta; spelaren måste förstå att Reinfeldt parafraserar en motståndare.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "m-kristersson-2025-raddat-er",
+    "theme": "duel",
+    "party": "M",
+    "quote": "Vi har räddat er från er själva.",
+    "speaker": "Ulf Kristersson",
+    "speakerRole": "statsminister och partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/ulf-kristersson.webp",
+    "speakerCaricature": "/speaker-caricatures/ulf-kristersson.webp",
+    "date": "2025-09-10",
+    "context": "Kristersson svarade Magdalena Andersson att hans regering nu genomförde politik som Socialdemokraterna inte hade kunnat få stöd för under sina regeringsår. Därefter välkomnade han S som stödparti till regeringens förslag.",
+    "source": {
+      "title": "Riksdagens protokoll 2025/26:3, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/HD093-12/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 12"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "current", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Mycket kort triumfreplik med gameshow-energi och hög möjlighet till felgissning mellan flera regeringsbärande partier.",
+      "scores": {
+        "fame": 2,
+        "humor": 3,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "m-kristersson-2019-el-brod",
+    "theme": "word-picture",
+    "party": "M",
+    "quote": "Socialism brukar leda till två saker: brist på el och brist på bröd.",
+    "speaker": "Ulf Kristersson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/ulf-kristersson.webp",
+    "speakerCaricature": "/speaker-caricatures/ulf-kristersson.webp",
+    "date": "2019-06-12",
+    "context": "Kristersson kritiserade regeringens energipolitik och hänvisade till bageriföretaget Pågens svårigheter att få tillgång till el för en utbyggnad i Malmö. Direkt efter citatet knöt han ihop el och bröd med företaget.",
+    "source": {
+      "title": "Riksdagens protokoll 2018/19:103, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H609103-2/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 2"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "metaphor", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En hård ideologisk one-liner med nästan reklammässig rytm och ett konkret ordpar som lämpar sig väl för grafisk förstärkning.",
+      "scores": {
+        "fame": 3,
+        "humor": 4,
+        "surprise": 3,
+        "misdirection": 3,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "m-kristersson-2019-altaner",
+    "theme": "word-picture",
+    "party": "M",
+    "quote": "Januariöverenskommelsen har skarpare förslag för att bygga fler altaner än för att bekämpa fler brott.",
+    "speaker": "Ulf Kristersson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/ulf-kristersson.webp",
+    "speakerCaricature": "/speaker-caricatures/ulf-kristersson.webp",
+    "date": "2019-01-30",
+    "context": "Efter den långa regeringsbildningen kritiserade Kristersson januariöverenskommelsens prioriteringar. Han ställde dess förslag om förenklade byggregler för altaner mot vad han ansåg vara otillräcklig kriminalpolitik.",
+    "source": {
+      "title": "Riksdagens protokoll 2018/19:44, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H60944-2/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 2"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "historical", "metaphor", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Altaner mot brottsbekämpning skapar en absurd och omedelbart begriplig kontrast med hög komisk bildpotential.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 3,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "sd-akesson-2012-tokyo",
+    "theme": "duel",
+    "party": "SD",
+    "quote": "Fru talman! Om jag åker tunnelbana i Tokyo, är jag då japan?",
+    "speaker": "Jimmie Åkesson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/jimmie-akesson.webp",
+    "speakerCaricature": "/speaker-caricatures/jimmie-akesson.webp",
+    "date": "2012-10-17",
+    "context": "Åkesson svarade Åsa Romson, som i debatten hade sagt att alla som åkte i Stockholms tunnelbana var svenskar. Repliken användes för att invända mot hennes sätt att beskriva nationell identitet och tillhörighet.",
+    "source": {
+      "title": "Riksdagens snabbprotokoll 2012/13:11, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H00911-63/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 63"
+    },
+    "editorial": {
+      "tags": ["famous", "funny", "surprising", "historical", "debate-reply"],
+      "riskFlags": ["context-dependent", "sensitive"],
+      "rationale": "En välkänd, kort och retoriskt tydlig replik som fungerar starkt som citatkort men måste återges med identitetsdebatten i avslöjandet.",
+      "fameNote": "Tokyo-repliken har återkommande citerats i diskussioner om Åkessons och Romsons syn på svenskhet.",
+      "scores": {
+        "fame": 5,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 3,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "sd-akesson-2017-battre-parti",
+    "theme": "duel",
+    "party": "SD",
+    "quote": "Själva skälet till att vi finns är för att ni andra partier är dåliga. Vi behövde ett bättre.",
+    "speaker": "Jimmie Åkesson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/jimmie-akesson.webp",
+    "speakerCaricature": "/speaker-caricatures/jimmie-akesson.webp",
+    "date": "2017-10-11",
+    "context": "Jan Björklund hade framhållit att Sverigedemokraterna inte var ett parti som andra. Åkesson accepterade beskrivningen, sade att han var glad för skillnaden och vände sedan kritiken mot de övriga partierna.",
+    "source": {
+      "title": "Riksdagens protokoll 2017/18:15, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H50915-72/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 72"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En ovanligt kaxig och nästan barnsligt rak formulering med perfekt uppbyggnad och slutpoäng.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "sd-akesson-2015-sandlada",
+    "theme": "word-picture",
+    "party": "SD",
+    "quote": "I stället sitter du där i din sandlåda med hink och spade och pekar finger.",
+    "speaker": "Jimmie Åkesson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/jimmie-akesson.webp",
+    "speakerCaricature": "/speaker-caricatures/jimmie-akesson.webp",
+    "date": "2015-06-10",
+    "context": "Åkesson svarade Jonas Sjöstedt i en diskussion om a-kassa och pensionärsskatt. Han hävdade att Vänsterpartiet hade kunnat samarbeta med SD i sak men i stället valt att isolera partiet.",
+    "source": {
+      "title": "Riksdagens protokoll 2014/15:113, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H209113-57/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 57"
+    },
+    "editorial": {
+      "tags": ["funny", "surprising", "metaphor", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En fullt utbyggd barnkammarmetafor med hink, spade och pekfinger; stark både auditivt och visuellt.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "sd-akesson-2015-battre-vader",
+    "theme": "grodcircus",
+    "party": "SD",
+    "quote": "Jag vet inte om vi har sett särskilt mycket bättre väder ännu. Den här sommaren var inte fantastisk. Den förra var mycket bättre.",
+    "speaker": "Jimmie Åkesson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/jimmie-akesson.webp",
+    "speakerCaricature": "/speaker-caricatures/jimmie-akesson.webp",
+    "date": "2015-10-14",
+    "context": "Åkesson svarade Gustav Fridolin i en klimatpolitisk debatt och skämtade först om att Miljöpartiet i valrörelsen hade lovat bättre väder. Därefter erkände han uttryckligen att det fanns ett förändrat globalt klimat.",
+    "source": {
+      "title": "Riksdagens protokoll 2015/16:13, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H30913-53/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 53"
+    },
+    "editorialNote": "Skämtet följs i samma anförande av att Åkesson uttryckligen säger att det finns en global situation med ett förändrat klimat. Den preciseringen ska alltid visas i avslöjandet.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "policy", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Låter mer som kallprat än riksdagsdebatt och ger ett perfekt komiskt avslöjande; efterföljande klimatmedgivande måste framgå.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 4,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "sd-akesson-2021-pippi",
+    "theme": "grodcircus",
+    "party": "SD",
+    "quote": "För att nästan citera Pippi Långstrump: Det var trevligt och roligt att du kom, men det var roligare när du gick.",
+    "speaker": "Jimmie Åkesson",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": "/leaders/jimmie-akesson.webp",
+    "speakerCaricature": "/speaker-caricatures/jimmie-akesson.webp",
+    "date": "2021-09-15",
+    "context": "I Stefan Löfvens sista partiledardebatt tackade Åkesson honom för åren av debatter. Efter ett skämtsamt resonemang om deras gemensamma intresse för korv avslutade han avskedet med Pippi-parafrasen.",
+    "source": {
+      "title": "Riksdagens protokoll 2021/22:3, Partiledardebatt",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/H9093-12/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 12"
+    },
+    "editorial": {
+      "tags": ["famous", "funny", "surprising", "misdirection", "debate-reply"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En folklig barnboksreferens som fungerar som politisk avskedsreplik och har mycket stark humor och rytm.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  }
+]

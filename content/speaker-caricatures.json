@@ -1,0 +1,385 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-25",
+  "generator": "OpenAI built-in ImageGen",
+  "styleVersion": "speaker-caricature-v1",
+  "promptSummary": "Recognizable, respectful and equally exaggerated premium 2.5D editorial caricature; waist-up gameshow pose; theatrical blue-and-gold rim light; no text, logos, party symbols, microphones, extra people or watermarks.",
+  "postProcessing": "Generated pale backgrounds are removed with edge-connected alpha keying that never seeds from the character-touching bottom edge, then the verified cutouts are encoded as transparent WebP.",
+  "rightsNote": "Private technical proof only. A documented identity reference does not by itself clear likeness, trademark or publication rights for a public/commercial release.",
+  "entries": [
+    {
+      "speaker": "Alf Svensson",
+      "party": "KD",
+      "asset": "/speaker-caricatures/alf-svensson.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Alf_Svensson_2003-08-25_001_(cropped).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/8/87/Alf_Svensson_2003-08-25_001_%28cropped%29.jpg",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Vara Konserthus",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Anna Kinberg Batra",
+      "party": "M",
+      "asset": "/speaker-caricatures/anna-kinberg-batra.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Anna_Kinberg_Batra.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Anna_Kinberg_Batra.jpg",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Esquilo",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Annie Lööf",
+      "party": "C",
+      "asset": "/speaker-caricatures/annie-loof.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Annie_L%C3%B6%C3%B6f_2019_(cropped).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Annie_L%C3%B6%C3%B6f_2019_%28cropped%29.jpg",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "attribution": "Centerpartiet (official)",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Ebba Busch",
+      "party": "KD",
+      "asset": "/speaker-caricatures/ebba-busch.webp",
+      "identityReference": {
+        "kind": "local-temporary-reference",
+        "sourcePage": null,
+        "sourceFile": "/leaders/ebba-busch.webp",
+        "license": null,
+        "licenseUrl": null,
+        "attribution": null,
+        "rightsStatus": "source-and-license-pending"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Elisabeth Thand Ringqvist",
+      "party": "C",
+      "asset": "/speaker-caricatures/elisabeth-thand-ringqvist.webp",
+      "identityReference": {
+        "kind": "local-temporary-reference",
+        "sourcePage": null,
+        "sourceFile": "/leaders/elisabeth-thand-ringqvist.webp",
+        "license": null,
+        "licenseUrl": null,
+        "attribution": null,
+        "rightsStatus": "source-and-license-pending"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Fredrik Reinfeldt",
+      "party": "M",
+      "asset": "/speaker-caricatures/fredrik-reinfeldt.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Fredrik_Reinfeldt_-_Sveriges_statsminister_2006-2014.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Fredrik_Reinfeldt_-_Sveriges_statsminister_2006-2014.jpg",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "attribution": "Joakim Berndes",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Gustav Fridolin",
+      "party": "MP",
+      "asset": "/speaker-caricatures/gustav-fridolin.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Gustav_fridolin.riksmotet2016.16d759.1340322.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Gustav_fridolin.riksmotet2016.16d759.1340322.jpg",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "politik.in2pic.com",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Göran Hägglund",
+      "party": "KD",
+      "asset": "/speaker-caricatures/goran-hagglund.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:G%C3%B6ran_H%C3%A4gglund_12_Sept_2014.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/6/60/G%C3%B6ran_H%C3%A4gglund_12_Sept_2014.jpg",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Frankie Fouganthin",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Göran Persson",
+      "party": "S",
+      "asset": "/speaker-caricatures/goran-persson.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Kransnedl%C3%A4ggning_vid_Olof_Palmes_grav_2026-3_(G%C3%B6ran_Persson_cropped).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Kransnedl%C3%A4ggning_vid_Olof_Palmes_grav_2026-3_%28G%C3%B6ran_Persson_cropped%29.jpg",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Frankie Fouganthin (Wikimedia Commons user DIFFswe)",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Jan Björklund",
+      "party": "L",
+      "asset": "/speaker-caricatures/jan-bjorklund.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Jan_Bj%C3%B6rklund_EM1B1199_(35112115936).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/3/35/Jan_Bj%C3%B6rklund_EM1B1199_%2835112115936%29.jpg",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "attribution": "Bengt Nyman",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Jimmie Åkesson",
+      "party": "SD",
+      "asset": "/speaker-caricatures/jimmie-akesson.webp",
+      "identityReference": {
+        "kind": "local-temporary-reference",
+        "sourcePage": null,
+        "sourceFile": "/leaders/jimmie-akesson.webp",
+        "license": null,
+        "licenseUrl": null,
+        "attribution": null,
+        "rightsStatus": "source-and-license-pending"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Johan Pehrson",
+      "party": "L",
+      "asset": "/speaker-caricatures/johan-pehrson.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Johan_PEHRSON_Minister_for_Employment_and_Integration,_Sweden.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/6/60/Johan_PEHRSON_Minister_for_Employment_and_Integration%2C_Sweden.jpg",
+        "license": "Attribution",
+        "licenseUrl": null,
+        "attribution": "© European Union, 1998–2026",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Jonas Sjöstedt",
+      "party": "V",
+      "asset": "/speaker-caricatures/jonas-sjostedt.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:1718281340317_20240612_SJOSTEDT_Jonas_SE_002.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/9/98/1718281340317_20240612_SJOSTEDT_Jonas_SE_002.jpg",
+        "license": "European Parliament",
+        "licenseUrl": "https://www.europarl.europa.eu/legal-notice/",
+        "attribution": "European Union 2024 — Source: European Parliament",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Lars Ohly",
+      "party": "V",
+      "asset": "/speaker-caricatures/lars-ohly.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Lars_Ohly_2.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Lars_Ohly_2.jpg",
+        "license": "CC BY 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+        "attribution": "Gabriel Liljevall",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Magdalena Andersson",
+      "party": "S",
+      "asset": "/speaker-caricatures/magdalena-andersson.webp",
+      "identityReference": {
+        "kind": "local-temporary-reference",
+        "sourcePage": null,
+        "sourceFile": "/leaders/magdalena-andersson.webp",
+        "license": null,
+        "licenseUrl": null,
+        "attribution": null,
+        "rightsStatus": "source-and-license-pending"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Muharrem Demirok",
+      "party": "C",
+      "asset": "/speaker-caricatures/muharrem-demirok.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Muharrem_Demirok_Almedalen_2024.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/9/97/Muharrem_Demirok_Almedalen_2024.jpg",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Bene Riobó",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Nooshi Dadgostar",
+      "party": "V",
+      "asset": "/speaker-caricatures/nooshi-dadgostar.webp",
+      "identityReference": {
+        "kind": "local-temporary-reference",
+        "sourcePage": null,
+        "sourceFile": "/leaders/nooshi-dadgostar.webp",
+        "license": null,
+        "licenseUrl": null,
+        "attribution": null,
+        "rightsStatus": "source-and-license-pending"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Per Bolund",
+      "party": "MP",
+      "asset": "/speaker-caricatures/per-bolund.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:20190630_Almedalsveckan_Miljopartiet_Per_Bolund_0214_(48176918061)_(cropped).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/0/0e/20190630_Almedalsveckan_Miljopartiet_Per_Bolund_0214_%2848176918061%29_%28cropped%29.jpg",
+        "license": "CC BY 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+        "attribution": "Johan Wessman / News Oresund",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Simona Mohamsson",
+      "party": "L",
+      "asset": "/speaker-caricatures/simona-mohamsson.webp",
+      "identityReference": {
+        "kind": "local-temporary-reference",
+        "sourcePage": null,
+        "sourceFile": "/leaders/simona-mohamsson.webp",
+        "license": null,
+        "licenseUrl": null,
+        "attribution": null,
+        "rightsStatus": "source-and-license-pending"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Stefan Löfven",
+      "party": "S",
+      "asset": "/speaker-caricatures/stefan-lofven.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Kransnedl%C3%A4ggning_vid_Olof_Palmes_grav_2026-3_(cropped).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/6/65/Kransnedl%C3%A4ggning_vid_Olof_Palmes_grav_2026-3_%28cropped%29.jpg",
+        "license": "CC BY 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+        "attribution": "Frankie Fouganthin (Wikimedia Commons user DIFFswe)",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Ulf Kristersson",
+      "party": "M",
+      "asset": "/speaker-caricatures/ulf-kristersson.webp",
+      "identityReference": {
+        "kind": "local-temporary-reference",
+        "sourcePage": null,
+        "sourceFile": "/leaders/ulf-kristersson.webp",
+        "license": null,
+        "licenseUrl": null,
+        "attribution": null,
+        "rightsStatus": "source-and-license-pending"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Åsa Romson",
+      "party": "MP",
+      "asset": "/speaker-caricatures/asa-romson.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Asa_Romson.1c447_3179.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/a/a0/Asa_Romson.1c447_3179.jpg",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "politik.in2pic.com",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    }
+  ]
+}

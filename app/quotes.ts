@@ -2,6 +2,11 @@ import rawQuotes from '@/content/quotes.json';
 import centerLiberalChristianDemocratQuotes from '@/content/quote-batches/c-l-kd.json';
 import socialDemocratModerateQuotes from '@/content/quote-batches/s-m.json';
 import leftGreenSwedenDemocratQuotes from '@/content/quote-batches/v-mp-sd.json';
+import expansion2026Quotes from '@/content/quote-batches/expansion-2026.json';
+import expansionLiberalGreenQuotes from '@/content/quote-batches/expansion-l-mp.json';
+import expansionLeftCenterChristianDemocratQuotes from '@/content/quote-batches/expansion-v-c-kd.json';
+import expansionSocialDemocratModerateSwedenDemocratQuotes from '@/content/quote-batches/expansion-s-m-sd.json';
+import speakerCaricatureManifest from '@/content/speaker-caricatures.json';
 
 export type PartyId = 'S' | 'M' | 'SD' | 'V' | 'C' | 'KD' | 'L' | 'MP';
 export type QuoteThemeId =
@@ -29,6 +34,7 @@ export type Quote = {
   speakerRole: string;
   speakerTier: 'party-leader' | 'prime-minister' | 'minister' | 'official-spokesperson';
   speakerImage: string | null;
+  speakerCaricature: string | null;
   date: string;
   context: string;
   source: QuoteSource;
@@ -71,7 +77,17 @@ export const quotes = [
   ...centerLiberalChristianDemocratQuotes,
   ...socialDemocratModerateQuotes,
   ...leftGreenSwedenDemocratQuotes,
+  ...expansion2026Quotes,
+  ...expansionLiberalGreenQuotes,
+  ...expansionLeftCenterChristianDemocratQuotes,
+  ...expansionSocialDemocratModerateSwedenDemocratQuotes,
 ] as Quote[];
+
+export const verifiedSpeakerCaricatures = new Set<string>(
+  speakerCaricatureManifest.entries
+    .filter((entry) => entry.identityChecked)
+    .map((entry) => entry.asset),
+);
 
 const contribution = (rating: number, weight: number) => (rating / 5) * weight;
 

@@ -1,10 +1,13 @@
 export type QuoteVisualId =
+  | 'baby-food'
   | 'book'
+  | 'bread'
   | 'care'
   | 'clock'
   | 'cocktail'
   | 'crowd'
   | 'cucumber'
+  | 'ear'
   | 'eye'
   | 'family'
   | 'globe'
@@ -14,14 +17,22 @@ export type QuoteVisualId =
   | 'meatballs'
   | 'microphone'
   | 'money'
+  | 'pancake'
   | 'pizza'
+  | 'pasta'
+  | 'rabbit'
   | 'scale'
+  | 'sandbox'
   | 'skis'
+  | 'snail'
+  | 'stage'
   | 'stairs'
   | 'tools'
   | 'tree'
+  | 'turn'
   | 'wall'
   | 'wallpaper'
+  | 'weather'
   | 'worker';
 
 export type QuotePresentation = {
@@ -31,12 +42,15 @@ export type QuotePresentation = {
 };
 
 export const quoteVisualGlyphs: Record<QuoteVisualId, string> = {
+  'baby-food': '🍼',
   book: '▤',
+  bread: '🍞',
   care: '✚',
   clock: '⏱',
   cocktail: '🍸',
   crowd: '✦✦✦',
   cucumber: '🥒',
+  ear: '👂',
   eye: '◉',
   family: '♥',
   globe: '◎',
@@ -46,14 +60,22 @@ export const quoteVisualGlyphs: Record<QuoteVisualId, string> = {
   meatballs: '● ● ●',
   microphone: '🎙',
   money: 'kr',
+  pancake: '🥞',
   pizza: '🍕',
+  pasta: '🍝',
+  rabbit: '🐇',
   scale: '⚖',
+  sandbox: '🏖',
   skis: '⛷',
+  snail: '🐌',
+  stage: '🎭',
   stairs: '▰',
   tools: '🧰',
   tree: '♣',
+  turn: '↔',
   wall: '▦',
   wallpaper: '▧',
+  weather: '☔',
   worker: '⚒',
 };
 
@@ -127,7 +149,7 @@ export const quotePresentations: Record<string, QuotePresentation> = {
     visual: 'globe',
   },
   'v-sjostedt-2013-tyko-jonsson': {
-    impact: 'Det var Tyko Jonsson',
+    impact: 'men det är Tyko Jonsson',
     soft: 'en liten stund',
   },
   'v-sjostedt-2019-kommunismen-bakom-oss': {
@@ -200,7 +222,7 @@ export const quotePresentations: Record<string, QuotePresentation> = {
   },
   'kd-svensson-1997-svarsstund': {
     impact: 'frågestund och ingen svarsstund',
-    soft: 'Det är alldeles signifikativt att',
+    soft: 'Men det är alldeles signifikativt att',
     visual: 'microphone',
   },
   'kd-busch-2025-dikt-logn': {
@@ -217,5 +239,236 @@ export const quotePresentations: Record<string, QuotePresentation> = {
     impact: 'hästlasagne-politiker',
     soft: 'herr talman',
     visual: 'horse',
+  },
+  'm-kristersson-2026-halmdocka': {
+    impact: 'målas det upp en halmdocka',
+    soft: 'Vad ska jag göra åt det',
+  },
+  'sd-akesson-2026-daliga-minne': {
+    impact: 'svenska folkets dåliga minne',
+    soft: 'i det här sammanhanget',
+    visual: 'eye',
+  },
+  'v-dadgostar-2026-tjottaballongen': {
+    impact: 'resten av tjottaballongen',
+    visual: 'crowd',
+  },
+  'c-thand-ringqvist-2026-mirakelkur': {
+    impact: 'ekonomisk mirakelkur',
+    visual: 'money',
+  },
+  'kd-busch-2026-tror-hemma': {
+    impact: 'Jag tror i kyrkan. Jag tror hemma.',
+    soft: 'Jag tror gärna.',
+    visual: 'house',
+  },
+  'l-mohamsson-2026-stureplanscentern': {
+    impact: 'död och begraven',
+    soft: 'är ett minne blott',
+  },
+  'mp-hellden-2026-hjarta-byraladan': {
+    impact: 'ett hjärta någonstans i byrålådan',
+    soft: 'kanske tillfälligt',
+    visual: 'heart',
+  },
+  'l-leijonborg-1997-sluta-arbeta': {
+    impact: 'slutar arbeta',
+    soft: 'Då föreslår jag',
+    visual: 'worker',
+  },
+  'l-bjorklund-2017-nyliberal-sogs-med': {
+    impact: 'jag sögs med',
+    soft: 'Då blåste vindarna i nyliberal riktning',
+    visual: 'crowd',
+  },
+  'l-sabuni-2019-snall-storasyster': {
+    impact: 'den där storasystern lite på avstånd',
+    soft: 'när friheten saknas',
+    visual: 'family',
+  },
+  'l-pehrson-2022-mauro-plura': {
+    impact: 'Inte som Mauro utan kanske mer som Plura',
+    soft: 'med tanke på skägget',
+    visual: 'microphone',
+  },
+  'l-pehrson-2022-sluthanat-medelklassen': {
+    impact: 'sluthånat om medelklassen',
+    visual: 'crowd',
+  },
+  'mp-fridolin-2015-trefikat': {
+    impact: 'trefikat som helig',
+    soft: 'en av de mest effektiva statsförvaltningarna',
+    visual: 'clock',
+  },
+  'mp-lovin-2018-planeten-soptipp': {
+    impact: 'vår planet som en soptipp',
+    soft: 'vårt enda hem',
+    visual: 'globe',
+  },
+  'mp-eriksson-2020-stigen': {
+    impact: 'inte så långt före att stigen hinner växa igen',
+    soft: 'Vi ska gå före',
+    visual: 'tree',
+  },
+  'mp-stenevi-2022-en-kvart-implodera': {
+    impact: 'en kvart innan klimat- och miljöpolitiken började implodera',
+    soft: 'efter att vi lämnat regeringen',
+    visual: 'clock',
+  },
+  'mp-bolund-2022-fingret-at-putin': {
+    impact: 'ge fingret åt Putin och fossilindustrin',
+    soft: 'möjligheten att',
+    visual: 'globe',
+  },
+  'v-schyman-2002-piga-at-pigan': {
+    impact: 'piga åt pigan',
+    soft: 'Vem ska vara',
+    visual: 'worker',
+  },
+  'v-ohly-2005-naken-kostym': {
+    impact: 'plötsligt naken trots sin vackra kostym',
+    soft: 'Men jag håller med',
+    visual: 'stage',
+  },
+  'v-ohly-2009-vaxpropp': {
+    impact: 'en vaxpropp ut ur örat',
+    visual: 'ear',
+  },
+  'v-sjostedt-2018-horselkapor': {
+    impact: 'satt med hörselkåpor i bänken',
+    soft: 'Kristdemokraternas val är att låtsas',
+    visual: 'ear',
+  },
+  'v-dadgostar-2025-mp3-celine-dion': {
+    impact: 'Céline Dions My heart will go on',
+    soft: 'I de toppmoderna mp3-spelarna',
+    visual: 'stage',
+  },
+  'c-olofsson-2007-infrastrukturkulisser': {
+    impact: 'infrastrukturplanering som visade sig vara kulisser',
+    soft: 'Vi ärvde en',
+    visual: 'stage',
+  },
+  'c-olofsson-2011-fine-with-me': {
+    impact: 'fine with me',
+    soft: 'Men är det att skrämmas',
+  },
+  'c-loof-2012-pang-bom': {
+    impact: 'pang, bom!',
+    soft: 'Det är förbud för en hel bransch',
+  },
+  'c-loof-2013-ikea-loning': {
+    impact: 'Ikea en lördag strax efter löning',
+    soft: 'Tänk er',
+    visual: 'crowd',
+  },
+  'c-demirok-2024-snabbmakaroner': {
+    impact: 'snabbmakaroner och pannkakor med mjölk',
+    soft: 'Den är',
+    visual: 'pasta',
+  },
+  'kd-hagglund-2004-snigel-racerbil': {
+    impact: 'snigeln framstår som en racerbil',
+    soft: 'Den omtalade',
+    visual: 'snail',
+  },
+  'kd-hagglund-2009-overraskningskaniner': {
+    impact: 'små överraskningskaniner hoppat upp ur hatten',
+    soft: 'Hur många gånger har inte',
+    visual: 'rabbit',
+  },
+  'kd-hagglund-2010-spackel-maskeringstejp': {
+    impact: 'spackel och maskeringstejp',
+    soft: 'försöker man kortsiktigt',
+    visual: 'tools',
+  },
+  'kd-hagglund-2011-myspysig-idyll': {
+    impact: 'mer än en myspysig idyll',
+    soft: 'Familjen är',
+    visual: 'family',
+  },
+  'kd-busch-2019-snigel-ulan-bator': {
+    impact: 'jordenruntresande snigeln som fikar i Ulan Bator',
+    soft: 'Det som möjligtvis saknades var den',
+    visual: 'snail',
+  },
+  's-andersson-2022-pratkvarnar': {
+    impact: 'värma upp sitt boende med pratkvarnar',
+    soft: 'Men svenska hushåll kan inte',
+    visual: 'microphone',
+  },
+  's-lofven-2016-blindbock': {
+    impact: 'fyra som leker blindbock',
+    soft: 'Ni är som',
+    visual: 'eye',
+  },
+  's-lofven-2016-dorrmatta': {
+    impact: 'lagt dig som en dörrmatta',
+    soft: 'Ni tänker dessutom låta vinstjakten fortsätta',
+    visual: 'house',
+  },
+  's-lofven-2020-pannkaka': {
+    impact: 'pannkaka och ärtsoppa',
+    soft: 'är jag lättflörtad',
+    visual: 'pancake',
+  },
+  's-persson-2006-blinka': {
+    impact: 'blinka åt vänster och sedan svänga åt höger',
+    soft: 'Det farligaste som finns i trafiken är att',
+    visual: 'turn',
+  },
+  's-persson-2000-knakade': {
+    impact: 'knakade det utan att det växte',
+    soft: 'När moderaterna styrde',
+    visual: 'tree',
+  },
+  'm-reinfeldt-2014-barnmatsburkar': {
+    impact: 'gift i barnmatsburkar',
+    soft: 'Jag kan slå fast att jag tror',
+    visual: 'baby-food',
+  },
+  'm-reinfeldt-2014-ofarliga': {
+    impact: 'farligaste med oss är alltså att vi är ofarliga',
+    soft: 'vi föreslår ingenting',
+  },
+  'm-kristersson-2025-raddat-er': {
+    impact: 'räddat er från er själva',
+    soft: 'Vi har',
+    visual: 'care',
+  },
+  'm-kristersson-2019-el-brod': {
+    impact: 'brist på el och brist på bröd',
+    soft: 'Socialism brukar leda till två saker',
+    visual: 'bread',
+  },
+  'm-kristersson-2019-altaner': {
+    impact: 'fler altaner än för att bekämpa fler brott',
+    soft: 'Januariöverenskommelsen har skarpare förslag för att bygga',
+    visual: 'house',
+  },
+  'sd-akesson-2012-tokyo': {
+    impact: 'tunnelbana i Tokyo',
+    soft: 'Fru talman!',
+    visual: 'globe',
+  },
+  'sd-akesson-2017-battre-parti': {
+    impact: 'ni andra partier är dåliga',
+    soft: 'Själva skälet till att vi finns är',
+    visual: 'crowd',
+  },
+  'sd-akesson-2015-sandlada': {
+    impact: 'sandlåda med hink och spade och pekar finger',
+    soft: 'I stället sitter du där i din',
+    visual: 'sandbox',
+  },
+  'sd-akesson-2015-battre-vader': {
+    impact: 'Den här sommaren var inte fantastisk',
+    soft: 'Jag vet inte om vi har sett särskilt mycket bättre väder ännu',
+    visual: 'weather',
+  },
+  'sd-akesson-2021-pippi': {
+    impact: 'trevligt och roligt att du kom, men det var roligare när du gick',
+    soft: 'För att nästan citera Pippi Långstrump',
+    visual: 'book',
   },
 };

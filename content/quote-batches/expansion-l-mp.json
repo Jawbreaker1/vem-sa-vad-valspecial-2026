@@ -1,0 +1,442 @@
+[
+  {
+    "id": "l-leijonborg-1997-sluta-arbeta",
+    "theme": "grodcircus",
+    "party": "L",
+    "quote": "Då föreslår jag att vi slutar arbeta. Då kan vi avskaffa skatterna helt och hållet.",
+    "speaker": "Lars Leijonborg",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": null,
+    "date": "1997-05-14",
+    "context": "Birger Schlaug hade hävdat att 20 miljarder i skattesänkningar kunde finansieras genom kortare arbetstid. Leijonborg drog resonemanget till sin spets i en sarkastisk replik innan han återgick till företagsklimatet.",
+    "source": {
+      "title": "Aktuell debatt om villkoren för företag med internationell verksamhet, snabbprotokoll 1996/97:102, anförande 17",
+      "publisher": "Sveriges riksdag",
+      "url": "https://data.riksdagen.se/anforande/GK09102-17/html",
+      "type": "riksdag-protocol",
+      "locator": "Anförande 17"
+    },
+    "editorialNote": "Förslaget att sluta arbeta var en ironisk reductio av Birger Schlaugs resonemang, inte Liberalernas sakpolitiska förslag.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical", "debate-reply", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En liberal partiledare tycks vilja avskaffa både arbete och skatt, vilket ger en omedelbar komisk fälla när ironin döljs.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 5
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "l-bjorklund-2017-nyliberal-sogs-med",
+    "theme": "disguise",
+    "party": "L",
+    "quote": "Då blåste vindarna i nyliberal riktning och jag sögs med, på samma sätt som de unga 10 år tidigare sögs med i vänstervågen.",
+    "speaker": "Jan Björklund",
+    "speakerRole": "partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/jan-bjorklund.webp",
+    "date": "2017-07-03",
+    "context": "Björklund berättade om sin ideologiska resa från en ungdomlig nyliberal motreaktion till socialliberalism. Han jämförde sin generation med dem som hade dragits med av vänstervågen tio år tidigare.",
+    "source": {
+      "title": "Jan Björklunds tal i Almedalen",
+      "publisher": "Liberalerna",
+      "url": "https://www.liberalerna.se/nyheter/jan-bjorklunds-tal-almedalen",
+      "type": "official-speech",
+      "locator": "Talets värderingsavsnitt, stycket som börjar ”Jag var ung”"
+    },
+    "editorialNote": "Citatet beskriver Björklunds politiska utveckling under 1980-talet; nästa stycke förklarar hur livserfarenheten senare slipade av de kategoriska värderingarna.",
+    "editorial": {
+      "tags": ["surprising", "misdirection", "historical", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "En liberal ledare som säger att han sögs med av nyliberalismen låter både självkritisk och ideologiskt svårplacerad.",
+      "scores": {
+        "fame": 3,
+        "humor": 3,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "l-sabuni-2019-snall-storasyster",
+    "theme": "word-picture",
+    "party": "L",
+    "quote": "Samhället ska finnas med reformer när friheten saknas, men annars vill man ju ha den där storasystern lite på avstånd, eller hur?",
+    "speaker": "Nyamko Sabuni",
+    "speakerRole": "partiordförande",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": null,
+    "date": "2019-06-28",
+    "context": "På Liberalernas extra landsmöte valdes Sabuni till partiordförande och beskrev i sitt tal den liberala staten som en snäll storasyster: närvarande när människors frihet saknas men annars på avstånd.",
+    "source": {
+      "title": "Nyamko Sabuni ny partiledare för Liberalerna",
+      "publisher": "Liberalerna",
+      "url": "https://www.liberalerna.se/nyheter/nyamko-sabuni-ny-partiledare-for-liberalerna",
+      "type": "official-party-page",
+      "locator": "Det direkt återgivna talcitatet i stycket som börjar ”För mig”"
+    },
+    "editorialNote": "Storasystern är Sabunis bild för statens roll i liberalismen och följer direkt efter formuleringen ”en snäll storasyster” i samma återgivna uttalande.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "metaphor", "historical", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den familjära bilden av staten som en storasyster är varm, lätt att visualisera och kan trovärdigt tillskrivas flera partier.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "l-pehrson-2022-mauro-plura",
+    "theme": "grodcircus",
+    "party": "L",
+    "quote": "Men den här gången så ska jag själv hålla talet. Inte som Mauro utan kanske mer som Plura med tanke på skägget.",
+    "speaker": "Johan Pehrson",
+    "speakerRole": "tillförordnad partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/johan-pehrson.webp",
+    "date": "2022-07-05",
+    "context": "Pehrson öppnade sitt första Almedalstal som tillförordnad partiledare med att minnas hur han tidigare hade varit förband åt Lars Leijonborg. Nu jämförde han sig skämtsamt med Mauro Scocco och Plura Jonsson.",
+    "source": {
+      "title": "Johan Pehrsons tal i Almedalen",
+      "publisher": "Liberalerna",
+      "url": "https://www.liberalerna.se/nyheter/johan-pehrsons-tal-i-almedalen",
+      "type": "official-speech",
+      "locator": "Talets inledning, stycket som börjar ”Men den här gången”"
+    },
+    "editorialNote": "Mauro syftar på Mauro Scocco och Plura på Plura Jonsson; Pehrson byggde skämtet på sin nya huvudroll och sitt skägg.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Popmusikreferensen och skäggskämtet är oväntat lättsamma för ett partiledartal och avslöjar nästan ingenting om avsändarpartiet.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 4,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 4,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "l-pehrson-2022-sluthanat-medelklassen",
+    "theme": "disguise",
+    "party": "L",
+    "quote": "Det måste vara sluthånat om medelklassen.",
+    "speaker": "Johan Pehrson",
+    "speakerRole": "tillförordnad partiordförande och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/johan-pehrson.webp",
+    "date": "2022-07-05",
+    "context": "I samma Almedalstal argumenterade Pehrson för att den breda medelklassen skulle öppnas för fler. Han invände mot att den reducerades till grilltips och varumärkeshets och lyfte i stället yrken som håller samhället igång.",
+    "source": {
+      "title": "Johan Pehrsons tal i Almedalen",
+      "publisher": "Liberalerna",
+      "url": "https://www.liberalerna.se/nyheter/johan-pehrsons-tal-i-almedalen",
+      "type": "official-speech",
+      "locator": "Talets avsnitt om medelklassen, stycket som börjar ”Det måste”"
+    },
+    "editorialNote": "”Sluthånat” betyder här att Pehrson ville få slut på karikatyren av medelklassen, inte att han ville avskaffa eller angripa gruppen.",
+    "editorial": {
+      "tags": ["surprising", "misdirection", "historical", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Det egenartade ordet ”sluthånat” låter som en spontan groda, medan försvaret av medelklassen kan komma från flera olika partier.",
+      "scores": {
+        "fame": 2,
+        "humor": 4,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "mp-fridolin-2015-trefikat",
+    "theme": "grodcircus",
+    "party": "MP",
+    "quote": "Vi är landet med en av de mest effektiva statsförvaltningarna. Och vi är landet som håller trefikat som helig.",
+    "speaker": "Gustav Fridolin",
+    "speakerRole": "språkrör och utbildningsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/gustav-fridolin.webp",
+    "date": "2015-07-01",
+    "context": "Fridolin inledde sitt Almedalstal med att förkasta bilden av Sverige som landet lagom. I en rad kontraster ställde han internationella framgångar och välfärdsinstitutioner bredvid vardagligt svenska vanor.",
+    "source": {
+      "title": "Gustav Fridolins tal i Almedalen 2015",
+      "publisher": "Miljöpartiet de gröna",
+      "url": "https://www.mp.se/just-nu/gustav-fridolins-tal-i-almedalen-2015/",
+      "type": "official-speech",
+      "locator": "Talets inledning, stycket som börjar ”Vi är landet med”"
+    },
+    "editorialNote": "Partiets sida är ett officiellt talmanus och anger att det talade ordet gäller. Ordalydelsen är kontrollerad mot den publicerade primärtexten, inte separat mot inspelningen.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical"],
+      "riskFlags": [],
+      "rationale": "Krocken mellan effektiv statsförvaltning och heligt trefika är rytmisk, varmt absurd och nästan helt fri från tydlig partifärg.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "mp-lovin-2018-planeten-soptipp",
+    "theme": "word-picture",
+    "party": "MP",
+    "quote": "Jorden är vårt enda hem i en kall och livlös rymd. Ändå behandlar vi vår planet som en soptipp.",
+    "speaker": "Isabella Lövin",
+    "speakerRole": "språkrör, vice statsminister samt klimat- och biståndsminister",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": null,
+    "date": "2018-05-31",
+    "context": "I talet ”Mitt Sverige 2028” berättade Lövin om en död val som hade 29 kilo plast i magen och om plasten i haven. Därefter vidgade hon bilden till mänsklighetens behandling av hela planeten.",
+    "source": {
+      "title": "Mitt Sverige 2028 – Isabella Lövin",
+      "publisher": "Miljöpartiet de gröna",
+      "url": "https://www.mp.se/just-nu/mitt-sverige-2028-isabella-lovin/",
+      "type": "official-speech",
+      "locator": "Inledningen, styckena ”Jorden är vårt enda hem” och ”Ändå behandlar vi”"
+    },
+    "editorialNote": "Soptippen är en sammanfattande miljömetafor efter talets konkreta exempel om plast i havet, utsläpp och kemikalier.",
+    "editorial": {
+      "tags": ["surprising", "misdirection", "metaphor", "historical", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den filmiska kontrasten mellan livlös rymd och en planet som soptipp ger ett starkt visuellt kort med högt känslotryck.",
+      "scores": {
+        "fame": 3,
+        "humor": 3,
+        "surprise": 4,
+        "misdirection": 4,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "mp-eriksson-2020-stigen",
+    "theme": "word-picture",
+    "party": "MP",
+    "quote": "Vi ska gå före, men inte så långt före att stigen hinner växa igen.",
+    "speaker": "Peter Eriksson",
+    "speakerRole": "minister för internationellt utvecklingssamarbete",
+    "speakerTier": "minister",
+    "speakerImage": null,
+    "speakerCaricature": null,
+    "date": "2020-12-17",
+    "context": "När Eriksson meddelade att han lämnade regeringen blickade han tillbaka på tre decennier i grön politik. Han återgav sin gamla bild av Miljöpartiet som stigfinnare och betonade att förändring kräver att människor följer med.",
+    "source": {
+      "title": "Peter Eriksson: Tack för mig!",
+      "publisher": "Miljöpartiet de gröna",
+      "url": "https://www.mp.se/just-nu/peter-eriksson-tack-for-mig/",
+      "type": "official-party-page",
+      "locator": "Peters hälsning, stycket som börjar ”Jag skrev Miljöpartiets första partiprogram”"
+    },
+    "editorialNote": "Eriksson skrev att stigfinnarbilden fanns i Miljöpartiets första partiprogram från början av 1990-talet och riktade den som råd till de nya språkrören.",
+    "editorial": {
+      "tags": ["surprising", "misdirection", "metaphor", "historical", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den igenvuxna stigen gör kompromiss och politiskt ledarskap konkret, samtidigt som naturbilden kan peka mot flera partier.",
+      "scores": {
+        "fame": 2,
+        "humor": 3,
+        "surprise": 4,
+        "misdirection": 5,
+        "relevance": 3,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "mp-stenevi-2022-en-kvart-implodera",
+    "theme": "word-picture",
+    "party": "MP",
+    "quote": "Och efter att vi lämnat regeringen tog det väl ungefär en kvart innan klimat- och miljöpolitiken började implodera.",
+    "speaker": "Märta Stenevi",
+    "speakerRole": "språkrör",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": null,
+    "date": "2022-05-29",
+    "context": "På Miljöpartiets valupptakt kritiserade Stenevi utvecklingen efter att partiet lämnat regeringen hösten 2021. Hon pekade på Socialdemokraternas regerande på oppositionens budget och på beslut om bränslen och gruvor.",
+    "source": {
+      "title": "Märta håller tal på valupptakten",
+      "publisher": "Miljöpartiet de gröna",
+      "url": "https://www.mp.se/just-nu/marta-haller-tal-pa-valupptakten/",
+      "type": "official-speech",
+      "locator": "Talets inledning, stycket som börjar ”Och efter att vi lämnat regeringen”"
+    },
+    "editorialNote": "”En kvart” är en retorisk tidsöverdrift om hur snabbt Stenevi ansåg att klimat- och miljöpolitiken försämrades efter regeringsavhoppet.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "metaphor", "historical", "policy"],
+      "riskFlags": ["context-dependent"],
+      "rationale": "Den exakta kvarten och verbet ”implodera” ger ett snabbt, explosivt och humoristiskt kort med stark bildpotential.",
+      "scores": {
+        "fame": 2,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 4,
+        "relevance": 4,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  },
+  {
+    "id": "mp-bolund-2022-fingret-at-putin",
+    "theme": "grodcircus",
+    "party": "MP",
+    "quote": "varje svensk oavsett var och hur man bor ska ha möjligheten att ge fingret åt Putin och fossilindustrin och köra eldrivet!",
+    "speaker": "Per Bolund",
+    "speakerRole": "språkrör och riksdagsledamot",
+    "speakerTier": "party-leader",
+    "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/per-bolund.webp",
+    "date": "2022-05-28",
+    "context": "Bolund presenterade på Miljöpartiets valupptakt förslag om fler laddstolpar för hyresrätter, bostadsrätter och landsbygd. Han kopplade eldrift till både klimatomställning och minskat beroende av rysk fossil energi.",
+    "source": {
+      "title": "Per håller tal på valupptakten",
+      "publisher": "Miljöpartiet de gröna",
+      "url": "https://www.mp.se/just-nu/per-haller-tal-pa-valupptakten/",
+      "type": "official-speech",
+      "locator": "Avsnittet om laddning, meningen efter förslaget om tre miljarder till fler laddplatser"
+    },
+    "editorialNote": "Citatet börjar efter ett tankstreck mitt i originalmeningen. ”Ge fingret” är en provokativ bild för att välja bort Putinanknuten fossil energi efter Rysslands invasion av Ukraina.",
+    "editorial": {
+      "tags": ["funny", "surprising", "misdirection", "historical", "policy"],
+      "riskFlags": ["context-dependent", "sensitive"],
+      "rationale": "Den frispråkiga gesten från ett språkrör är explosiv gameshowtext, medan elbilsbudskapet ger aktuell och begriplig sakpolitisk botten.",
+      "scores": {
+        "fame": 3,
+        "humor": 5,
+        "surprise": 5,
+        "misdirection": 5,
+        "relevance": 5,
+        "standaloneClarity": 5,
+        "sourceStrength": 4
+      }
+    },
+    "verification": {
+      "exactWording": true,
+      "speakerIdentity": true,
+      "date": true,
+      "context": true,
+      "primarySource": true,
+      "lastChecked": "2026-08-25"
+    },
+    "reviewStatus": "approved"
+  }
+]

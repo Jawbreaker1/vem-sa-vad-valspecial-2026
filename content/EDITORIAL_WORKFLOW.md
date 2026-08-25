@@ -76,7 +76,7 @@ Kör `npm run rank:quotes` för den aktuella prioriteringslistan och återståen
 
 ## Filer och kontroller
 
-- `quotes.json` innehåller teknikprovets ursprungliga kärna.
+- `quotes.json` innehåller citatbankens ursprungliga kärna.
 - `quote-batches/*.json` innehåller redaktionellt granskade utökningar. Granskningsskripten läser katalogen automatiskt; aktuella spelbatcher importeras uttryckligen i `app/quotes.ts`.
 - `npm run check:quotes` kontrollerar bland annat dubbletter, ordlängd, metadata, poäng, granskningsstatus och hårda godkännandekrav.
 - `npm run check:quote-links` gör en separat nätverkskontroll av alla unika källadresser. Den ligger inte i den vanliga byggkontrollen eftersom externa arkiv ibland blockerar automatiska anrop.

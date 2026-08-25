@@ -1,9 +1,20 @@
 import { loadQuotes } from './load-quotes.mjs';
+import { readFileSync } from 'node:fs';
 
-const sources = loadQuotes().flatMap((quote) => [
-  quote.source,
-  ...(quote.aftermath?.source ? [quote.aftermath.source] : []),
-]);
+const mediaEvidence = JSON.parse(readFileSync(
+  new URL('../content/media-quote-verifications.json', import.meta.url),
+  'utf8',
+));
+const sources = [
+  ...loadQuotes().flatMap((quote) => [
+    quote.source,
+    ...(quote.aftermath?.source ? [quote.aftermath.source] : []),
+  ]),
+  ...mediaEvidence.map((evidence) => ({
+    publisher: `${evidence.publisher} (ordalydelsebevis)`,
+    url: evidence.url,
+  })),
+];
 const uniqueSources = [...new Map(sources.map((source) => [source.url, source])).values()];
 const results = [];
 let cursor = 0;

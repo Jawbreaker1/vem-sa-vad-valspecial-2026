@@ -8,18 +8,25 @@
     "speakerRole": "finansminister; senare partiordförande och statsminister",
     "speakerTier": "minister",
     "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/goran-persson.webp",
     "date": "1995-04-05",
     "context": "I en riksdagsdebatt om Sveriges ekonomi kopplade finansminister Göran Persson statens skuldkris till individens förlorade handlingsfrihet. Direkt efter formuleringen sade han att samma villkor gäller för en stat och argumenterade för att återställa statsfinanserna.",
     "source": {
       "title": "Riksdagens protokoll 1994/95:86, 1 § Aktuell debatt: Sveriges ekonomi",
       "publisher": "Sveriges riksdag",
-      "url": "https://data.riksdagen.se/dokument/GI0986",
+      "url": "https://data.riksdagen.se/anforande/GI0986-9/html",
       "type": "riksdag-protocol",
       "locator": "Anförande 9"
     },
     "editorialNote": "Persson var finansminister när orden uttalades men blev Socialdemokraternas partiordförande och Sveriges statsminister året därpå.",
     "editorial": {
-      "tags": ["famous", "surprising", "misdirection", "historical", "policy"],
+      "tags": [
+        "famous",
+        "surprising",
+        "misdirection",
+        "historical",
+        "policy"
+      ],
       "riskFlags": [],
       "rationale": "Den korta maximen är en av Perssons mest kända och låter spontant mer borgerlig än socialdemokratisk, vilket ger mycket stark partimisdirection.",
       "fameNote": "Formuleringen blev ett bestående politiskt slagord för 1990-talets budgetsanering och förknippas starkt med Göran Persson.",
@@ -47,11 +54,12 @@
     "id": "s-lofven-2014-kabbel",
     "theme": "classic",
     "party": "S",
-    "quote": "Det där är bara käbbel, jag har nog läst det där mer än du.",
+    "quote": "Det där är bara käbbel, det är bara käbbel. Behåll den där du, jag har nog läst den fler gånger än du",
     "speaker": "Stefan Löfven",
     "speakerRole": "partiordförande och oppositionsledare",
     "speakerTier": "party-leader",
     "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/stefan-lofven.webp",
     "date": "2014-09-11",
     "context": "Under TV4:s partiledardebatt försökte Annie Lööf räcka över ett kompendium från Energimyndigheten i diskussionen om kärnkraft. Löfven avfärdade både pappersbunten och gesten med repliken, som snabbt blev en av valrörelsens stora snackisar.",
     "source": {
@@ -59,12 +67,21 @@
       "publisher": "TV4 Nyheterna",
       "url": "https://www.tv4.se/klipp/va/20279052/lofven-det-ar-bara-kabbel",
       "type": "official-audio-video",
-      "locator": "TV4:s partiledardebatt, replik till Annie Lööf"
+      "locator": "TV4:s partiledardebatt, klippets inledande replik till Annie Lööf"
     },
-    "editorialNote": "Orden ”det där” syftar på materialet från Energimyndigheten som Annie Lööf försökte lämna över under debatten.",
+    "editorialNote": "Orden ”den där” syftar på materialet från Energimyndigheten. Ordalydelsen är omkontrollerad mot TV4:s originalklipp och TV4:s samtida skriftliga återgivning den 12 september 2014.",
     "editorial": {
-      "tags": ["famous", "funny", "surprising", "misdirection", "historical", "debate-reply"],
-      "riskFlags": ["context-dependent"],
+      "tags": [
+        "famous",
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical",
+        "debate-reply"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
       "rationale": "Repliken är både vardaglig och konfrontativ, har stark komisk rytm och kan utan bild eller sammanhang tillskrivas nästan vilken partiledare som helst.",
       "fameNote": "Ordet ”käbbel” blev omedelbart en valrörelsefras 2014 och har fortsatt att användas som en tydlig referens till Löfven.",
       "scores": {
@@ -96,6 +113,7 @@
     "speakerRole": "statsminister och partiordförande",
     "speakerTier": "party-leader",
     "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/stefan-lofven.webp",
     "date": "2015-09-06",
     "context": "Löfven talade på Medborgarplatsen i Stockholm under flyktingkrisen och krävde ett gemensamt europeiskt ansvar för människor på flykt. Han argumenterade för ett permanent omfördelningssystem inom EU och ett större mottagande av kvotflyktingar.",
     "source": {
@@ -120,7 +138,12 @@
       }
     },
     "editorial": {
-      "tags": ["famous", "surprising", "historical", "policy"],
+      "tags": [
+        "famous",
+        "surprising",
+        "historical",
+        "policy"
+      ],
       "riskFlags": [],
       "rationale": "Den slagkraftiga formuleringen fångar ett historiskt ögonblick och blir överraskande när den ställs mot den senare svenska migrationspolitiska kursändringen.",
       "fameNote": "”Mitt Europa bygger inte murar” blev en av de mest citerade svenska politiska formuleringarna från flyktingkrisens höst 2015.",
@@ -153,18 +176,26 @@
     "speakerRole": "statsminister och partiordförande",
     "speakerTier": "party-leader",
     "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/fredrik-reinfeldt.webp",
     "date": "2011-01-19",
     "context": "I en replik till Lars Ohly förklarade Reinfeldt arbetslinjen som drivkrafter att välja arbete under olika delar av livet. Slutsatsen knöt direkt an till Nya Moderaternas strategiska anspråk på att vara Sveriges nya arbetarparti.",
     "source": {
       "title": "Riksdagens snabbprotokoll 2010/11:43, partiledardebatt",
       "publisher": "Sveriges riksdag",
-      "url": "https://data.riksdagen.se/fil/BE3840F1-8F05-4DC4-9636-6DE89BBEDE54",
+      "url": "https://data.riksdagen.se/anforande/GY0943-15/html",
       "type": "riksdag-protocol",
       "locator": "Anförande 15"
     },
     "editorialNote": "Citatet var en sammanfattning av arbetslinjen och av Nya Moderaternas medvetna ompositionering under Reinfeldt.",
     "editorial": {
-      "tags": ["famous", "surprising", "misdirection", "historical", "policy", "debate-reply"],
+      "tags": [
+        "famous",
+        "surprising",
+        "misdirection",
+        "historical",
+        "policy",
+        "debate-reply"
+      ],
       "riskFlags": [],
       "rationale": "Ordet ”arbetarparti” leder spontant tanken till Socialdemokraterna, samtidigt som citatet är en kärnformulering för Reinfeldts omdaning av Moderaterna.",
       "fameNote": "Formuleringen sammanfattar Nya Moderaternas välkända försök att vinna arbetarväljare och omdefiniera partiets identitet under Reinfeldt.",
@@ -192,11 +223,12 @@
     "id": "m-reinfeldt-2014-oppna-hjartan",
     "theme": "classic",
     "party": "M",
-    "quote": "Nu vädjar jag till det svenska folket om tålamod, om att öppna era hjärtan.",
+    "quote": "Nu vädjar jag till det svenska folket om tålamod, om att öppna era hjärtan",
     "speaker": "Fredrik Reinfeldt",
     "speakerRole": "statsminister och partiordförande",
     "speakerTier": "party-leader",
     "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/fredrik-reinfeldt.webp",
     "date": "2014-08-16",
     "context": "I sitt sommartal på Norrmalmstorg vädjade Reinfeldt om solidaritet med människor som flydde strider och övergrepp i norra Irak. Han sade samtidigt att ett större mottagande skulle medföra betydande kostnader och begränsa utrymmet för andra vallöften.",
     "source": {
@@ -208,8 +240,16 @@
     },
     "editorialNote": "Spelcitatet är ett ordagrant, sammanhängande utdrag ur en längre mening som fortsätter med en beskrivning av människor på flykt.",
     "editorial": {
-      "tags": ["famous", "surprising", "misdirection", "historical", "policy"],
-      "riskFlags": ["context-dependent"],
+      "tags": [
+        "famous",
+        "surprising",
+        "misdirection",
+        "historical",
+        "policy"
+      ],
+      "riskFlags": [
+        "context-dependent"
+      ],
       "rationale": "Den humanitära vädjan kan lätt misstas för ett vänster- eller mittenparti och blir särskilt överraskande mot bakgrund av Moderaternas senare migrationslinje.",
       "fameNote": "Uppmaningen att ”öppna era hjärtan” blev den klart mest ihågkomna formuleringen från Reinfeldts sista valrörelse som statsminister.",
       "scores": {
@@ -236,11 +276,12 @@
     "id": "m-kinberg-batra-2017-valjarna",
     "theme": "grodcircus",
     "party": "M",
-    "quote": "Jag tror inte att väljarna är så imponerade av oss nu.",
+    "quote": "Jag tror inte att väljarna är så imponerade av oss nu",
     "speaker": "Anna Kinberg Batra",
     "speakerRole": "avgående partiordförande",
     "speakerTier": "party-leader",
     "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/anna-kinberg-batra.webp",
     "date": "2017-08-25",
     "context": "Kinberg Batra meddelade sin avgång efter fallande opinionssiffror och krav från en växande grupp moderata partidistrikt. Under presskonferensen riktade hon kritik mot partiets interna agerande och sammanfattade väljarnas sannolika intryck med torr självdistans.",
     "source": {
@@ -252,7 +293,13 @@
     },
     "editorialNote": "Den lakoniska formuleringen fungerar både som självkritik och som kritik mot hur Moderaterna hanterade ledarkrisen.",
     "editorial": {
-      "tags": ["famous", "funny", "surprising", "misdirection", "historical"],
+      "tags": [
+        "famous",
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical"
+      ],
       "riskFlags": [],
       "rationale": "Den torra självkritiken är komisk, helt begriplig fristående och tillräckligt allmän för att kunna tillskrivas vilken pressad partiledare som helst.",
       "fameNote": "Repliken återgavs brett som den mest minnesvärda formuleringen från Kinberg Batras dramatiska avgång som moderatledare.",
@@ -285,6 +332,7 @@
     "speakerRole": "riksdagskandidat; senare partiordförande",
     "speakerTier": "official-spokesperson",
     "speakerImage": null,
+    "speakerCaricature": "/speaker-caricatures/anna-kinberg-batra.webp",
     "date": "1998-07-22",
     "context": "Kinberg Batra uttalade sig under sin personvalskampanj inför riksdagsvalet 1998 och formuleringen kom att följa henne under hela den politiska karriären. Hon har senare beskrivit uttalandet som det dummaste hon har sagt offentligt.",
     "source": {
@@ -296,8 +344,16 @@
     },
     "editorialNote": "Originalklippet är lokaliserat, men den exakta repliken måste tidskodas och avlyssnas innan citatet kan flyttas från kandidat till godkänt.",
     "editorial": {
-      "tags": ["famous", "funny", "surprising", "misdirection", "historical"],
-      "riskFlags": ["clip-needed"],
+      "tags": [
+        "famous",
+        "funny",
+        "surprising",
+        "misdirection",
+        "historical"
+      ],
+      "riskFlags": [
+        "clip-needed"
+      ],
       "rationale": "Det ökända självmålet är extremt kort, roligt och spelbart, men originalupptagningens exakta ordalydelse måste kontrolleras innan publicering.",
       "fameNote": "Citatet har följt Kinberg Batra i decennier och är fortfarande ett av de mest välkända politiska felsägningarna från 1990-talet.",
       "scores": {
