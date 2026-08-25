@@ -2129,7 +2129,6 @@ export default function Home() {
             <small>Om spelet</small>
             <p>Designed by <strong>Bird Disk Studios</strong></p>
             <b>Johan Engwall</b>
-            <a href="mailto:johan.engwall@gmail.com">johan.engwall@gmail.com</a>
             <a
               href="https://www.linkedin.com/in/johan-engwall-89604a5/"
               target="_blank"
