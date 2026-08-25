@@ -8,7 +8,7 @@ Målet är inte att samla flest citat. Målet är en bred bank där varje spelba
 - Ny demokrati ingår inte.
 - Partiledare och språkrör prioriteras. Ministrar eller officiella talespersoner används bara när formuleringen är exceptionellt stark.
 - Ett citat får vara historiskt, men måste presenteras med årtal, talare och sammanhang efter svaret.
-- Citat får inte kapas så att betydelsen förändras. Redaktionell precisering används när en ordlek eller metafor kräver föregående replik.
+- Citat får inte kapas så att betydelsen förändras. En ytterligare förklaring används när en ordlek eller metafor kräver föregående replik.
 - Godkända citat måste kunna beläggas ordagrant i en primärkälla eller originalupptagning.
 
 ## Granskningssteg

@@ -2358,7 +2358,7 @@ export default function Home() {
               )}
               {current.editorialNote && (
                 <details className="editorial-note">
-                  <summary>Redaktionell precisering</summary>
+                  <summary>Ytterligare förklaring</summary>
                   <p>{current.editorialNote}</p>
                 </details>
               )}
