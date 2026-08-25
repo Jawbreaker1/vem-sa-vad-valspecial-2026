@@ -24,6 +24,11 @@ import {
   quoteVisualGlyphs,
   type QuotePresentation,
 } from './quote-presentations';
+import {
+  readLocalHighScore,
+  writeLocalHighScore,
+  type LocalHighScore,
+} from './local-high-score';
 
 type Party = {
   id: PartyId;
@@ -57,9 +62,11 @@ type Answer = {
 };
 
 type Point = { x: number; y: number };
-type Screen = 'intro' | 'question' | 'results';
+type Screen = 'intro' | 'question' | 'wheel' | 'results';
 type Phase = 'category' | 'choosing' | 'locking' | 'reveal' | 'transition';
 type ResultStage = 'countdown' | 'opening' | 'counting' | 'final';
+type WheelStage = 'spinning' | 'landed';
+type RecordOutcome = 'none' | 'new' | 'tied';
 type ShareStatus = 'idle' | 'shared' | 'copied' | 'manual';
 type LeaderGalleryState = 'roam' | 'suspense' | 'cheer' | 'boo' | 'laugh';
 type Cue =
@@ -71,6 +78,8 @@ type Cue =
   | 'countdown'
   | 'lock'
   | 'transition'
+  | 'wheel-spin'
+  | 'wheel-land'
   | 'timeout'
   | 'correct'
   | 'combo'
@@ -198,7 +207,10 @@ const introConfetti = Array.from({ length: 42 }, (_, index) => ({
 
 const QUESTION_SECONDS = 20;
 const QUESTION_CATEGORY_MS = 900;
-const QUESTIONS_PER_PARTY = 3;
+const QUESTIONS_PER_ACT = 3;
+const TOTAL_QUESTIONS = 12;
+const WHEEL_SPIN_MS = 1450;
+const WHEEL_LAND_MS = 720;
 const BASE_POINTS = 1000;
 const POINTS_PER_SECOND = 25;
 const STREAK_STEP_POINTS = 125;
@@ -291,6 +303,13 @@ const questionThemes: Record<QuoteThemeId, QuestionTheme> = {
   },
 };
 
+const WHEEL_THEME_IDS = [
+  'grodcircus',
+  'duel',
+  'disguise',
+  'word-picture',
+] as const satisfies readonly QuoteThemeId[];
+
 function shuffle<T>(items: readonly T[]) {
   const copy = [...items];
   for (let index = copy.length - 1; index > 0; index -= 1) {
@@ -302,36 +321,6 @@ function shuffle<T>(items: readonly T[]) {
 
 function partyById(id: PartyId) {
   return parties.find((party) => party.id === id) ?? parties[0];
-}
-
-function weightedSample(items: Quote[], count: number, required: Quote[] = []) {
-  const requiredIds = new Set(required.map((quote) => quote.id));
-  const pool = items.filter((quote) => !requiredIds.has(quote.id));
-  const selected: Quote[] = [...required].slice(0, count);
-
-  while (pool.length && selected.length < count) {
-    const usedThemes = new Set(selected.map((quote) => quote.theme));
-    const weights = pool.map((quote) => {
-      const qualityWeight = Math.max(1, quotePriority(quote) - 50) ** 2;
-      const themeWeight = usedThemes.has(quote.theme) ? .24 : 1.15;
-      return qualityWeight * themeWeight;
-    });
-    const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
-    let draw = Math.random() * totalWeight;
-    let chosenIndex = pool.length - 1;
-
-    for (let index = 0; index < weights.length; index += 1) {
-      draw -= weights[index];
-      if (draw <= 0) {
-        chosenIndex = index;
-        break;
-      }
-    }
-
-    selected.push(pool.splice(chosenIndex, 1)[0]);
-  }
-
-  return selected;
 }
 
 function buildOpeningSequence(approved: Quote[]) {
@@ -352,83 +341,98 @@ function buildOpeningSequence(approved: Quote[]) {
   return selected;
 }
 
-function uniqueQuotes(items: Quote[]) {
-  return [...new Map(items.map((quote) => [quote.id, quote])).values()];
+function weightedPick(items: Quote[], weightFor: (quote: Quote) => number) {
+  const weights = items.map((quote) => Math.max(.001, weightFor(quote)));
+  const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+  let draw = Math.random() * totalWeight;
+  for (let index = 0; index < items.length; index += 1) {
+    draw -= weights[index];
+    if (draw <= 0) return items[index];
+  }
+  return items.at(-1) as Quote;
 }
 
-function orderByTheme(items: Quote[], preceding?: Quote) {
-  const pool = shuffle(items);
-  const ordered: Quote[] = [];
-
-  while (pool.length) {
-    const last = ordered.at(-1) ?? preceding;
-    let candidates = pool.filter((quote) => quote.theme !== last?.theme);
-    if (!candidates.length) candidates = [...pool];
-
-    if (!ordered.length && !preceding) {
-      const showOpeners = candidates.filter(
-        (quote) => quote.theme === 'classic' || quote.theme === 'grodcircus',
-      );
-      if (showOpeners.length) candidates = showOpeners;
+function buildThemedAct(
+  approved: Quote[],
+  theme: QuoteThemeId,
+  selected: Quote[],
+  partyCounts: Map<PartyId, number>,
+) {
+  const act: Quote[] = [];
+  for (let slot = 0; slot < QUESTIONS_PER_ACT; slot += 1) {
+    const usedIds = new Set([...selected, ...act].map((quote) => quote.id));
+    const previous = act.at(-1) ?? selected.at(-1);
+    let candidates = approved.filter(
+      (quote) => quote.theme === theme
+        && !usedIds.has(quote.id)
+        && (partyCounts.get(quote.party) ?? 0) < 2,
+    );
+    const noPartyRepeat = candidates.filter((quote) => quote.party !== previous?.party);
+    if (noPartyRepeat.length) candidates = noPartyRepeat;
+    const noSpeakerRepeat = candidates.filter((quote) => quote.speaker !== previous?.speaker);
+    if (noSpeakerRepeat.length) candidates = noSpeakerRepeat;
+    if (!candidates.length) {
+      candidates = approved.filter((quote) => quote.theme === theme && !usedIds.has(quote.id));
     }
+    if (!candidates.length) break;
 
-    const counts = new Map<QuoteThemeId, number>();
-    for (const quote of pool) counts.set(quote.theme, (counts.get(quote.theme) ?? 0) + 1);
-    const highestRemaining = Math.max(...candidates.map((quote) => counts.get(quote.theme) ?? 0));
-    candidates = candidates.filter((quote) => counts.get(quote.theme) === highestRemaining);
-
-    const differentParty = candidates.filter((quote) => quote.party !== last?.party);
-    if (differentParty.length) candidates = differentParty;
-
-    const chosen = candidates[Math.floor(Math.random() * candidates.length)];
-    ordered.push(chosen);
-    pool.splice(pool.findIndex((quote) => quote.id === chosen.id), 1);
+    const chosen = weightedPick(candidates, (quote) => {
+      const partyCount = partyCounts.get(quote.party) ?? 0;
+      const unseenPartyBoost = partyCount === 0 ? 13 : partyCount === 1 ? 2.1 : .08;
+      const quality = Math.max(1, quotePriority(quote) - 48);
+      return quality ** 2 * unseenPartyBoost;
+    });
+    act.push(chosen);
+    partyCounts.set(chosen.party, (partyCounts.get(chosen.party) ?? 0) + 1);
   }
+  return act;
+}
 
-  return ordered;
+function roundQuality(items: Quote[]) {
+  const partyCounts = new Map<PartyId, number>();
+  items.forEach((quote) => partyCounts.set(quote.party, (partyCounts.get(quote.party) ?? 0) + 1));
+  const coverage = partyCounts.size;
+  const overflow = [...partyCounts.values()].reduce((sum, count) => sum + Math.max(0, count - 2), 0);
+  const adjacencyPenalty = items.slice(1).reduce((sum, quote, index) => {
+    const previous = items[index];
+    return sum + (quote.party === previous.party ? 2 : 0) + (quote.speaker === previous.speaker ? 1 : 0);
+  }, 0);
+  const fullyBalanced = coverage === parties.length && overflow === 0 && adjacencyPenalty === 0;
+  return (fullyBalanced ? 1_000_000_000 : 0)
+    + coverage * 100_000
+    - overflow * 120_000
+    - adjacencyPenalty * 25_000
+    + items.reduce((sum, quote) => sum + quotePriority(quote), 0);
 }
 
 function buildRound(bank: Quote[]) {
   const approved = bank.filter((quote) => quote.reviewStatus === 'approved');
-  const openingQuotes = buildOpeningSequence(approved);
-  const themeCounts = new Map<QuoteThemeId, number>();
-  for (const quote of approved) {
-    themeCounts.set(quote.theme, (themeCounts.get(quote.theme) ?? 0) + 1);
-  }
-
   let bestSelection: Quote[] = [];
-  let bestThemeCoverage = 0;
+  let bestScore = Number.NEGATIVE_INFINITY;
 
-  for (let attempt = 0; attempt < 40; attempt += 1) {
-    const selection = parties.flatMap((party) => {
-      const candidates = approved.filter((quote) => quote.party === party.id);
-      if (candidates.length < QUESTIONS_PER_PARTY) {
-        throw new Error(`${party.name} saknar tillräckligt många godkända citat.`);
-      }
-      const uniqueThemeQuotes = candidates.filter((quote) => themeCounts.get(quote.theme) === 1);
-      const partyOpeners = openingQuotes.filter((quote) => quote.party === party.id);
-      return weightedSample(
-        candidates,
-        QUESTIONS_PER_PARTY,
-        uniqueQuotes([...partyOpeners, ...uniqueThemeQuotes]),
-      );
+  for (let attempt = 0; attempt < 900; attempt += 1) {
+    const premium = buildOpeningSequence(approved).slice(0, QUESTIONS_PER_ACT);
+    const themes = shuffle(WHEEL_THEME_IDS).slice(0, 3);
+    const selection = [...premium];
+    const partyCounts = new Map<PartyId, number>();
+    selection.forEach((quote) => partyCounts.set(quote.party, (partyCounts.get(quote.party) ?? 0) + 1));
+
+    themes.forEach((theme) => {
+      selection.push(...buildThemedAct(approved, theme, selection, partyCounts));
     });
-    const coverage = new Set(selection.map((quote) => quote.theme)).size;
-    if (coverage > bestThemeCoverage) {
+    if (selection.length !== TOTAL_QUESTIONS) continue;
+
+    const quality = roundQuality(selection);
+    if (quality > bestScore) {
       bestSelection = selection;
-      bestThemeCoverage = coverage;
+      bestScore = quality;
     }
-    if (coverage === themeCounts.size) break;
   }
 
-  const selectedIds = new Set(bestSelection.map((quote) => quote.id));
-  const selectedOpeners = openingQuotes.filter((quote) => selectedIds.has(quote.id));
-  const openingIds = new Set(selectedOpeners.map((quote) => quote.id));
-  const orderedTail = orderByTheme(
-    bestSelection.filter((quote) => !openingIds.has(quote.id)),
-    selectedOpeners.at(-1),
-  );
-  return [...selectedOpeners, ...orderedTail];
+  if (bestSelection.length !== TOTAL_QUESTIONS) {
+    throw new Error('Citatbanken kunde inte skapa en komplett tolvrunda.');
+  }
+  return bestSelection;
 }
 
 function formatDate(isoDate: string) {
@@ -517,10 +521,10 @@ function scoreBreakdown(answer: Answer) {
 }
 
 function milestoneForQuestion(questionNumber: number) {
-  if (questionNumber === 6) return 'Första akten klar!';
-  if (questionNumber === 12) return 'Halvvägs!';
-  if (questionNumber === 18) return 'Slutspurt!';
-  if (questionNumber === 24) return 'Finalen avgjord!';
+  if (questionNumber === 3) return 'Premiumakten klar!';
+  if (questionNumber === 6) return 'Halvvägs!';
+  if (questionNumber === 9) return 'Sista snurran väntar!';
+  if (questionNumber === 12) return 'Finalen avgjord!';
   return null;
 }
 
@@ -559,6 +563,7 @@ export default function Home() {
   const [screen, setScreen] = useState<Screen>('intro');
   const [phase, setPhase] = useState<Phase>('choosing');
   const [roundQuotes, setRoundQuotes] = useState<Quote[]>(quotes);
+  const [wheelStage, setWheelStage] = useState<WheelStage>('spinning');
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [dragging, setDragging] = useState(false);
@@ -577,6 +582,10 @@ export default function Home() {
   const [shareStatus, setShareStatus] = useState<ShareStatus>('idle');
   const [manualShareText, setManualShareText] = useState('');
   const [sharePending, setSharePending] = useState(false);
+  const [localHighScore, setLocalHighScore] = useState<LocalHighScore | null>(null);
+  const [highScoreLoaded, setHighScoreLoaded] = useState(false);
+  const [recordToBeat, setRecordToBeat] = useState<LocalHighScore | null>(null);
+  const [recordOutcome, setRecordOutcome] = useState<RecordOutcome>('none');
   const [geometry, setGeometry] = useState<{
     start: Point;
     targets: Partial<Record<PartyId, Point>>;
@@ -607,6 +616,8 @@ export default function Home() {
   const tickActionRef = useRef<(secondsRemaining: number) => void>(() => undefined);
   const resultRevealActionRef = useRef<() => void>(() => undefined);
   const resultCueActionRef = useRef<(cue: Cue, force?: boolean, value?: number) => void>(() => undefined);
+  const playCrowdActionRef = useRef<(cue: CrowdCue) => void>(() => undefined);
+  const stopCrowdActionRef = useRef<() => void>(() => undefined);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
   const lockAnswerRef = useRef<HTMLButtonElement>(null);
   const revealPanelRef = useRef<HTMLElement>(null);
@@ -623,9 +634,12 @@ export default function Home() {
   const manualShareRef = useRef<HTMLTextAreaElement>(null);
   const sharePendingRef = useRef(false);
   const resultRevealFinishedRef = useRef(false);
+  const recordCommittedRef = useRef(false);
 
   const current = roundQuotes[currentIndex] ?? quotes[0];
   const currentTheme = questionThemes[current.theme];
+  const currentAct = Math.floor(currentIndex / QUESTIONS_PER_ACT) + 1;
+  const questionInAct = (currentIndex % QUESTIONS_PER_ACT) + 1;
   const correctParty = partyById(current.party);
   const selectedParty = selected ? partyById(selected) : null;
   const showingAnswer = phase === 'reveal' || phase === 'transition';
@@ -657,6 +671,12 @@ export default function Home() {
   const timerScale = 1 + Math.pow(timerPressure, 2.2) * .95;
   const timerShellScale = 1 + Math.pow(timerPressure, 3) * .18;
   const needsMusicUnlock = soundOn && !musicReady && !musicAttempted;
+  const hasBeatenRecord = Boolean(recordToBeat && totalPoints > recordToBeat.points);
+  const completedActAnswers = screen === 'wheel'
+    ? answers.slice(Math.max(0, currentIndex - QUESTIONS_PER_ACT), currentIndex)
+    : [];
+  const completedActCorrect = completedActAnswers.filter((answer) => answer.correct).length;
+  const completedActPoints = completedActAnswers.reduce((sum, answer) => sum + answer.points.total, 0);
   const leaderGalleryState: LeaderGalleryState = showingAnswer
     ? timedOut && selected === null
       ? 'laugh'
@@ -666,6 +686,43 @@ export default function Home() {
     : phase === 'locking' || previewing !== null || dragging || selected !== null
       ? 'suspense'
       : 'roam';
+
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      const stored = readLocalHighScore();
+      setLocalHighScore(stored);
+      setRecordToBeat(stored);
+      setHighScoreLoaded(true);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    if (screen !== 'wheel') return;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const gameTrack = musicAudioRef.current.game;
+    if (gameTrack) gameTrack.volume = reduceMotion ? MUSIC_VOLUMES.game : .055;
+    if (!reduceMotion) resultCueActionRef.current('wheel-spin');
+
+    const landingTimer = window.setTimeout(() => {
+      setWheelStage('landed');
+      resultCueActionRef.current('wheel-land');
+      playCrowdActionRef.current('cheer');
+      if (!reduceMotion) navigator.vibrate?.([35, 25, 95]);
+    }, reduceMotion ? 40 : WHEEL_SPIN_MS);
+    const continueTimer = window.setTimeout(() => {
+      stopCrowdActionRef.current();
+      setPhase('choosing');
+      setScreen('question');
+      switchMusicActionRef.current('game', false, true);
+    }, (reduceMotion ? 40 : WHEEL_SPIN_MS) + (reduceMotion ? 650 : WHEEL_LAND_MS));
+
+    return () => {
+      window.clearTimeout(landingTimer);
+      window.clearTimeout(continueTimer);
+      if (gameTrack) gameTrack.volume = MUSIC_VOLUMES.game;
+    };
+  }, [screen, currentIndex]);
 
   useLayoutEffect(() => {
     const shouldResetScroll = screen !== 'question' || phase === 'category' || phase === 'choosing';
@@ -809,7 +866,7 @@ export default function Home() {
   }, [screen, correctParty.victoryImage]);
 
   useEffect(() => {
-    if (screen !== 'question') return;
+    if (screen !== 'question' && screen !== 'wheel') return;
     const revealPreloads = roundQuotes
       .slice(currentIndex, currentIndex + 2)
       .map((quote) => quote.speakerCaricature ?? quote.speakerImage)
@@ -876,7 +933,9 @@ export default function Home() {
     musicAudioRef.current = { intro: introMusic, game: gameMusic };
     musicReadyRef.current = false;
     musicAttemptedRef.current = false;
-    switchMusicActionRef.current(screenRef.current === 'question' ? 'game' : 'intro');
+    switchMusicActionRef.current(
+      screenRef.current === 'question' || screenRef.current === 'wheel' ? 'game' : 'intro',
+    );
 
     return () => {
       introMusic.removeEventListener('pause', recoverIntro);
@@ -923,7 +982,7 @@ export default function Home() {
     const unlockMusic = () => {
       document.removeEventListener('pointerdown', unlockMusic, true);
       document.removeEventListener('keydown', unlockMusic, true);
-      unlockMusicActionRef.current(screen === 'question' ? 'game' : 'intro');
+      unlockMusicActionRef.current(screen === 'question' || screen === 'wheel' ? 'game' : 'intro');
     };
 
     document.addEventListener('pointerdown', unlockMusic, true);
@@ -950,6 +1009,8 @@ export default function Home() {
     tickActionRef.current = (secondsRemaining) => playCue('countdown', false, secondsRemaining);
     resultRevealActionRef.current = completeResultReveal;
     resultCueActionRef.current = playCue;
+    playCrowdActionRef.current = playCrowd;
+    stopCrowdActionRef.current = stopCrowd;
   });
 
   useEffect(() => {
@@ -1241,6 +1302,39 @@ export default function Home() {
       crackle(0, .11, .018);
     }
 
+    if (cue === 'wheel-spin') {
+      let offset = 0;
+      for (let index = 0; index < 18; index += 1) {
+        note(index % 2 ? 1040 : 1320, offset, .035, 'square', .018);
+        offset += .032 + index * .0048;
+      }
+      const whoosh = audio.createOscillator();
+      const whooshGain = audio.createGain();
+      whoosh.type = 'sawtooth';
+      whoosh.frequency.setValueAtTime(78, now);
+      whoosh.frequency.exponentialRampToValueAtTime(240, now + .52);
+      whoosh.frequency.exponentialRampToValueAtTime(92, now + 1.32);
+      whooshGain.gain.setValueAtTime(.0001, now);
+      whooshGain.gain.exponentialRampToValueAtTime(.045, now + .12);
+      whooshGain.gain.exponentialRampToValueAtTime(.0001, now + 1.38);
+      whoosh.connect(whooshGain);
+      whooshGain.connect(destination);
+      whoosh.start(now);
+      whoosh.stop(now + 1.42);
+      crackle(0, .18, .035);
+      crackle(.72, .24, .025);
+    }
+
+    if (cue === 'wheel-land') {
+      note(55, 0, .42, 'sine', .16);
+      note(110, 0, .2, 'square', .07);
+      [392, 523, 659, 784].forEach((frequency, index) => {
+        note(frequency, .06 + index * .055, .38, index % 2 ? 'sine' : 'triangle', .07);
+      });
+      crackle(0, .18, .11);
+      crackle(.2, .2, .045);
+    }
+
     if (cue === 'share') {
       [784, 1047, 1319].forEach((frequency, index) => {
         note(frequency, index * .055, .22, 'sine', .045);
@@ -1480,7 +1574,7 @@ export default function Home() {
     if (soundOn && !musicReadyRef.current) {
       primeCrowdAudio();
       setSynthSound(true);
-      switchMusic(screen === 'question' ? 'game' : 'intro', true, true);
+      switchMusic(screen === 'question' || screen === 'wheel' ? 'game' : 'intro', true, true);
       playCue('connect', true);
       return;
     }
@@ -1499,7 +1593,7 @@ export default function Home() {
     primeCrowdAudio();
     setSynthSound(true);
     playCue('connect', true);
-    switchMusic(screen === 'question' ? 'game' : 'intro', true, true);
+    switchMusic(screen === 'question' || screen === 'wheel' ? 'game' : 'intro', true, true);
   }
 
   function clearActionTimers() {
@@ -1626,9 +1720,15 @@ export default function Home() {
     resolvedRef.current = false;
     selectedRef.current = null;
     resetPartyPreview();
+    const standingRecord = readLocalHighScore() ?? localHighScore;
+    setLocalHighScore(standingRecord);
+    setRecordToBeat(standingRecord);
+    setRecordOutcome('none');
+    recordCommittedRef.current = false;
     setRoundQuotes(buildRound(quotes));
     setAnswers([]);
     setCurrentIndex(0);
+    setWheelStage('spinning');
     setSelected(null);
     setPointer(null);
     setDragging(false);
@@ -1799,6 +1899,35 @@ export default function Home() {
     resetPartyPreview();
   }
 
+  function commitLocalRecord() {
+    if (recordCommittedRef.current || answers.length !== TOTAL_QUESTIONS) return;
+    recordCommittedRef.current = true;
+    const previous = recordToBeat ?? localHighScore;
+    if (previous && totalPoints < previous.points) {
+      setRecordOutcome('none');
+      return;
+    }
+    if (previous && totalPoints === previous.points) {
+      setRecordOutcome('tied');
+      return;
+    }
+
+    const nextRecord: LocalHighScore = {
+      version: 1,
+      format: '12q-wheel',
+      scoring: '1000-25s-125streak-v1',
+      points: totalPoints,
+      correct: score,
+      questions: 12,
+      bestStreak,
+      blitzCount: answers.filter((answer) => answer.correct && answer.secondsLeft >= 15).length,
+      achievedAt: new Date().toISOString(),
+    };
+    writeLocalHighScore(nextRecord);
+    setLocalHighScore(nextRecord);
+    setRecordOutcome('new');
+  }
+
   function nextQuestion() {
     if (phase !== 'reveal' || transitionTimerRef.current !== null) return;
     resetPartyPreview();
@@ -1806,6 +1935,7 @@ export default function Home() {
     stopCrowd();
     stopCableHum();
     if (currentIndex === roundQuotes.length - 1) {
+      commitLocalRecord();
       clearResultRevealTimers();
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       resultRevealFinishedRef.current = reduceMotion;
@@ -1824,17 +1954,24 @@ export default function Home() {
     playCue('transition');
     transitionTimerRef.current = window.setTimeout(() => {
       transitionTimerRef.current = null;
+      const nextIndex = currentIndex + 1;
+      const startsNewAct = nextIndex % QUESTIONS_PER_ACT === 0;
       resolvedRef.current = false;
       selectedRef.current = null;
-      setCurrentIndex((index) => index + 1);
+      setCurrentIndex(nextIndex);
       setSelected(null);
       setPointer(null);
       setDragging(false);
       setTimedOut(false);
       setAutoLocked(false);
       setTimeLeft(QUESTION_SECONDS);
-      setPhase('category');
-      switchMusicActionRef.current('game', false, true);
+      if (startsNewAct) {
+        setWheelStage('spinning');
+        setScreen('wheel');
+      } else {
+        setPhase('category');
+        switchMusicActionRef.current('game', false, true);
+      }
     }, motionDelay(260));
   }
 
@@ -1849,6 +1986,8 @@ export default function Home() {
     resetPartyPreview();
     setScreen('intro');
     setPhase('choosing');
+    setWheelStage('spinning');
+    setRecordOutcome('none');
     setSelected(null);
     setPointer(null);
     setDragging(false);
@@ -1871,6 +2010,7 @@ export default function Home() {
       className={[
         'sound-button',
         screen === 'question' ? 'in-game' : '',
+        screen === 'wheel' ? 'wheel-sound' : '',
         screen === 'results' ? 'results-sound' : '',
         needsMusicUnlock ? 'needs-unlock' : '',
       ].filter(Boolean).join(' ')}
@@ -1933,11 +2073,79 @@ export default function Home() {
           <div className="intro-kicker">
             8 partier · en himla massa citat
           </div>
+          {highScoreLoaded && localHighScore && (
+            <div className="intro-record" aria-label={`Lokalt rekord ${formatPoints(localHighScore.points)} poäng`}>
+              <span aria-hidden="true">🏆</span>
+              <small>Lokalt rekord</small>
+              <strong>{formatPoints(localHighScore.points)}</strong>
+            </div>
+          )}
         </section>
         <p className="intro-note" id="intro-note">
           Ett fristående spel utan koppling till partierna. Källor visas efter varje svar. Historiska citat behöver inte motsvara partiernas politik i dag.
         </p>
         {soundButton}
+      </main>
+    );
+  }
+
+  if (screen === 'wheel') {
+    const usedWheelThemes = roundQuotes
+      .filter((_, index) => index >= QUESTIONS_PER_ACT && index < currentIndex && index % QUESTIONS_PER_ACT === 0)
+      .map((quote) => quote.theme);
+    const wheelHeadline = currentIndex === 3
+      ? 'Akt 1 klar!'
+      : currentIndex === 6
+        ? 'Halvtid!'
+        : 'Sista snurran!';
+
+    return (
+      <main className={`wheel-screen is-${wheelStage}`}>
+        <div className="wheel-rays" aria-hidden="true" />
+        <div className="wheel-flash" aria-hidden="true" />
+        <div className="wheel-curtain is-left" aria-hidden="true" />
+        <div className="wheel-curtain is-right" aria-hidden="true" />
+        {wheelStage === 'landed' && <Confetti intensity="spark" />}
+        {soundButton}
+        <section className="wheel-show" aria-labelledby="wheel-title">
+          <div className="wheel-act-summary">
+            <small>{wheelHeadline}</small>
+            <strong>
+              {completedActCorrect}/{QUESTIONS_PER_ACT} rätt
+              <i aria-hidden="true"> · </i>
+              +{formatPoints(completedActPoints)} poäng
+              {streak >= 2 && <em> · svit ×{streak}</em>}
+            </strong>
+          </div>
+          <p className="wheel-kicker">Hjulet bestämmer</p>
+          <h1 id="wheel-title">Nästa kategori</h1>
+          <ThemeWheel
+            target={current.theme}
+            stage={wheelStage}
+            act={currentAct}
+            usedThemes={usedWheelThemes}
+          />
+          <div className="wheel-landing" role="status" aria-live="assertive" aria-atomic="true">
+            {wheelStage === 'landed' ? (
+              <>
+                <small>Akt {currentAct} av 4</small>
+                <strong>{currentTheme.label}!</strong>
+                <span>{currentTheme.description}</span>
+              </>
+            ) : (
+              <>
+                <small>Snurrar nu</small>
+                <strong>Vem vet?!</strong>
+                <span>Håll i kabeln…</span>
+              </>
+            )}
+          </div>
+          {highScoreLoaded && localHighScore && (
+            <p className="wheel-record">
+              <span aria-hidden="true">🏆</span> Lokalt rekord {formatPoints(localHighScore.points)}
+            </p>
+          )}
+        </section>
       </main>
     );
   }
@@ -1974,6 +2182,7 @@ export default function Home() {
     const shareText = [
       `Jag fick ${formatPoints(totalPoints)} poäng och ${score}/${answers.length} rätt i Vem sa vad? – Valspecial 2026!`,
       `⚡ Bästa svit: ${bestStreak}.`,
+      recordOutcome === 'new' ? '🏆 Nytt lokalt rekord!' : '',
       bestPartyCopy,
       'Kan du slå mig?',
     ].filter(Boolean).join(' ');
@@ -2008,7 +2217,7 @@ export default function Home() {
         {soundButton}
         <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
           {resultStage === 'final'
-            ? `Slutresultat: ${formatPoints(totalPoints)} poäng, ${score} rätt av ${answers.length}. Bästa svit ${bestStreak}.`
+            ? `Slutresultat: ${formatPoints(totalPoints)} poäng, ${score} rätt av ${answers.length}. Bästa svit ${bestStreak}.${recordOutcome === 'new' ? ' Nytt lokalt rekord.' : recordOutcome === 'tied' ? ' Det lokala rekordet tangerades.' : localHighScore ? ` Lokalt rekord ${formatPoints(localHighScore.points)} poäng.` : ''}`
             : 'Resultatet räknas.'}
         </p>
         <section
@@ -2027,6 +2236,19 @@ export default function Home() {
             <strong>{formatPoints(displayedPoints)}</strong>
             <span>poäng</span>
           </div>
+          {resultStage === 'final' && highScoreLoaded && localHighScore && (
+            <div className={`record-result is-${recordOutcome}`}>
+              <span aria-hidden="true">🏆</span>
+              <small>{recordOutcome === 'new' ? 'På den här enheten' : 'Lokalt rekord'}</small>
+              <strong>
+                {recordOutcome === 'new'
+                  ? 'Nytt lokalt rekord!'
+                  : recordOutcome === 'tied'
+                    ? 'Rekordet tangerat!'
+                    : `${formatPoints(localHighScore.points)} poäng`}
+              </strong>
+            </div>
+          )}
           <div className="result-details" aria-hidden={resultStage !== 'final'}>
             <p className="result-energy">
               <span><strong>{score}</strong> / {answers.length} rätt</span>
@@ -2037,7 +2259,7 @@ export default function Home() {
             </p>
             <h1 id="result-title" ref={resultTitleRef} tabIndex={-1}>{resultTitle}</h1>
             <p className="results-copy">
-              Det här mäter din magkänsla för vem som låter som vem — inte vad du själv tycker.
+              Den här omgången mäter din magkänsla för vem som låter som vem — inte vad du själv tycker.
             </p>
 
             <div className="result-parties" aria-label="Resultat per parti">
@@ -2058,7 +2280,7 @@ export default function Home() {
                     <img className={`party-logo logo-${party.id.toLowerCase()}`} src={party.logo} alt="" />
                     <span className="sr-only">{party.name}</span>
                     <b aria-label={`${correct} rätt av ${total}`}>
-                      {total === 1 ? (correct ? '✓' : '×') : `${correct}/${total}`}
+                      {total === 0 ? '—' : total === 1 ? (correct ? '✓' : '×') : `${correct}/${total}`}
                     </b>
                   </div>
                 );
@@ -2067,7 +2289,7 @@ export default function Home() {
 
             <p className="best-read">
               {bestAccuracy > 0
-                ? `Bäst koll hade du på: ${bestParties.map(({ party }) => party.name).join(', ')}.`
+                ? `I den här omgången hade du bäst koll på: ${bestParties.map(({ party }) => party.name).join(', ')}.`
                 : 'Den här gången lyckades samtliga partier maskera sig.'}
             </p>
 
@@ -2130,7 +2352,8 @@ export default function Home() {
       {phase === 'category' && (
         <QuestionEntryBurst
           key={`entry-${current.id}`}
-          number={currentIndex + 1}
+          roundLabel={currentIndex < QUESTIONS_PER_ACT ? 'Premiumcitat' : `Akt ${currentAct}`}
+          number={questionInAct}
           theme={currentTheme.label}
           description={currentTheme.description}
         />
@@ -2173,7 +2396,9 @@ export default function Home() {
         <div className="header-center">
           <div className="progress-pill">
             <span className="question-progress-copy">
-              Fråga <strong>{currentIndex + 1}</strong><i> av {roundQuotes.length}</i>
+              Akt <strong>{currentAct}</strong><i> av 4</i>
+              <b aria-hidden="true"> · </b>
+              Fråga <strong>{questionInAct}</strong><i> av {QUESTIONS_PER_ACT}</i>
             </span>
             <span
               className={`score-inline ${currentPointGain !== null ? 'is-updating' : ''}`}
@@ -2188,6 +2413,13 @@ export default function Home() {
                 </em>
               )}
             </span>
+            {highScoreLoaded && recordToBeat && (
+              <span className={`record-inline ${hasBeatenRecord ? 'is-beaten' : ''}`}>
+                <span aria-hidden="true">🏆</span>
+                <small>{hasBeatenRecord ? 'Nytt rekord' : 'Rekord'}</small>
+                <strong>{formatPoints(hasBeatenRecord ? totalPoints : recordToBeat.points)}</strong>
+              </span>
+            )}
             {streak >= 2 && (
               <span className="streak-inline" key={streak}>
                 ⚡ <strong>{streak}</strong><i> i rad</i>
@@ -2231,6 +2463,7 @@ export default function Home() {
 
       <div
         className="round-progress"
+        style={{ '--question-count': roundQuotes.length } as CSSProperties}
         aria-hidden={phase === 'category'}
         role="progressbar"
         aria-label={`${visibleAnswers.length} av ${roundQuotes.length} frågor besvarade`}
@@ -2253,7 +2486,7 @@ export default function Home() {
                     : answer
                       ? 'is-wrong'
                       : '',
-                (index + 1) % 6 === 0 ? 'is-act' : '',
+                (index + 1) % QUESTIONS_PER_ACT === 0 ? 'is-act' : '',
               ].filter(Boolean).join(' ')}
               aria-hidden="true"
             />
@@ -2536,9 +2769,17 @@ export default function Home() {
                     ? 'Nästa…'
                     : currentIndex === roundQuotes.length - 1
                       ? 'Visa resultatet'
-                      : 'Nästa citat'}
+                      : (currentIndex + 1) % QUESTIONS_PER_ACT === 0
+                        ? 'Till hjulet'
+                        : 'Nästa citat'}
                 </strong>
-                <small>{currentIndex === roundQuotes.length - 1 ? 'Dags för domen' : 'Fortsätt showen'}</small>
+                <small>
+                  {currentIndex === roundQuotes.length - 1
+                    ? 'Dags för domen'
+                    : (currentIndex + 1) % QUESTIONS_PER_ACT === 0
+                      ? 'Nästa kategori'
+                      : 'Fortsätt showen'}
+                </small>
               </span>
               <b aria-hidden="true">→</b>
             </button>
@@ -2843,10 +3084,12 @@ function RevealShowcard({
 }
 
 function QuestionEntryBurst({
+  roundLabel,
   number,
   theme,
   description,
 }: {
+  roundLabel: string;
   number: number;
   theme: string;
   description: string;
@@ -2855,11 +3098,62 @@ function QuestionEntryBurst({
     <>
       <div className="question-entry-backdrop" aria-hidden="true" />
       <div className="question-entry-burst" aria-hidden="true">
-        <span>Fråga {number}</span>
+        <span>{roundLabel} · fråga {number} av {QUESTIONS_PER_ACT}</span>
         <strong>{theme}</strong>
         <small>{description}</small>
       </div>
     </>
+  );
+}
+
+function ThemeWheel({
+  target,
+  stage,
+  act,
+  usedThemes,
+}: {
+  target: QuoteThemeId;
+  stage: WheelStage;
+  act: number;
+  usedThemes: QuoteThemeId[];
+}) {
+  const sectors = [...WHEEL_THEME_IDS, ...WHEEL_THEME_IDS];
+  const baseTargetIndex = Math.max(0, WHEEL_THEME_IDS.indexOf(target as (typeof WHEEL_THEME_IDS)[number]));
+  const targetIndex = baseTargetIndex + (act % 2 === 0 ? WHEEL_THEME_IDS.length : 0);
+  const endRotation = 360 * (4 + act) - targetIndex * 45;
+
+  return (
+    <div className="theme-wheel-machine" aria-hidden="true">
+      <span className="wheel-pointer"><i /></span>
+      <div
+        className={`theme-wheel is-${stage}`}
+        style={{ '--wheel-end': `${endRotation}deg` } as CSSProperties}
+      >
+        <span className="wheel-chase-lights" />
+        <span className="wheel-sector-lines" />
+        {sectors.map((themeId, index) => {
+          const theme = questionThemes[themeId];
+          const isPlayed = usedThemes.includes(themeId);
+          return (
+            <span
+              className={`wheel-sector-label ${isPlayed ? 'is-played' : ''}`}
+              key={`${themeId}-${index}`}
+              style={{
+                '--sector-angle': `${index * 45}deg`,
+                '--sector-inverse': `${index * -45}deg`,
+              } as CSSProperties}
+            >
+              <b>{theme.mark}</b>
+              <small>{theme.label}</small>
+            </span>
+          );
+        })}
+        <span className="wheel-hub">
+          <i>?</i>
+        </span>
+      </div>
+      <span className="wheel-base"><b>Vem sa vad?</b></span>
+    </div>
   );
 }
 

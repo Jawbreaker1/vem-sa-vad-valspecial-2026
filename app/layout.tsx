@@ -10,7 +10,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'Vem sa vad? – Valspecial 2026',
-  description: 'Koppla autentiska politiska citat i sex temakategorier till rätt svenskt riksdagsparti.',
+  description: 'Tolv autentiska politiska citat, fyra snabba akter och ett skoningslöst kategorihjul. Vem sa vad?',
   applicationName: 'Vem sa vad?',
   category: 'spel',
   robots: {
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Vem sa vad? – Valspecial 2026',
-    description: '24 frågor per omgång, slumpade ur en källgranskad citatbank. Kan du koppla dem till rätt parti?',
+    description: '12 citat i fyra snabba akter, slumpade ur en källgranskad citatbank. Kan du koppla dem till rätt parti?',
     siteName: 'Vem sa vad?',
     locale: 'sv_SE',
     type: 'website',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Vem sa vad? – Valspecial 2026',
-    description: '24 frågor per omgång, slumpade ur en källgranskad citatbank. Kan du koppla dem till rätt parti?',
+    description: '12 citat i fyra snabba akter, slumpade ur en källgranskad citatbank. Kan du koppla dem till rätt parti?',
     images: ['/og-v3.jpg'],
   },
 };

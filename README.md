@@ -6,7 +6,7 @@
 
 [**Spela Vem sa vad? →**](https://vem-sa-vad-valspecial-2026.jawbreakerz.chatgpt.site/)
 
-> 24 frågor per runda · 8 partier · 6 teman · 20 sekunder per citat
+> 12 frågor · 4 akter · kategorihjul · lokalt rekord · 20 sekunder per citat
 
 ![Vem sa vad? – den färgsprakande startscenen](docs/screenshots/startscen.webp)
 
@@ -21,9 +21,10 @@
 2. Dra den strömförande kabeln till ett av de åtta partipodierna – eller tryck direkt på ett parti.
 3. Svara innan den 20 sekunder långa stubinen brinner ut.
 4. Se vem som faktiskt sade det, när det sades och i vilket sammanhang.
-5. Bygg svarssviter, samla tidsbonus och dela slutpoängen.
+5. Efter tre frågor avgör ett överproducerat lyckohjul nästa kategori.
+6. Bygg svarssviter, samla tidsbonus, slå ditt lokala rekord och dela slutpoängen.
 
-En runda innehåller tre citat från varje parti. Urvalet viktas mot de mest kända, roliga, oväntade och förrädiskt formulerade citaten.
+En runda består av fyra snabba akter med tre citat vardera. Först kommer tre handplockade premiumcitat; sedan väljer hjulet tre skilda temarundor. Urvalet viktas mot de mest kända, roliga, oväntade och förrädiskt formulerade citaten, samtidigt som samtliga åtta partier får plats en eller två gånger.
 
 ## Sex sorters politisk cirkus
 
