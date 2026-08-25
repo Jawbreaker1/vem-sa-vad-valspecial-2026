@@ -211,6 +211,7 @@ const QUESTIONS_PER_ACT = 3;
 const TOTAL_QUESTIONS = 12;
 const WHEEL_SPIN_MS = 1450;
 const WHEEL_LAND_MS = 1220;
+const VISIT_SESSION_KEY = 'vem-sa-vad:anonymous-visit:v1';
 const BASE_POINTS = 1000;
 const POINTS_PER_SECOND = 25;
 const STREAK_STEP_POINTS = 125;
@@ -695,6 +696,40 @@ export default function Home() {
       setHighScoreLoaded(true);
     });
     return () => window.cancelAnimationFrame(frame);
+  }, []);
+
+  useEffect(() => {
+    let markedInSession = false;
+
+    try {
+      if (window.sessionStorage.getItem(VISIT_SESSION_KEY)) return;
+      window.sessionStorage.setItem(VISIT_SESSION_KEY, 'pending');
+      markedInSession = true;
+    } catch {
+      // Analytics must never affect the game when browser storage is unavailable.
+    }
+
+    void fetch('/api/analytics/page-view', {
+      method: 'POST',
+      cache: 'no-store',
+      keepalive: true,
+    })
+      .then((response) => {
+        if (!markedInSession) return;
+        if (response.ok) {
+          window.sessionStorage.setItem(VISIT_SESSION_KEY, 'recorded');
+        } else {
+          window.sessionStorage.removeItem(VISIT_SESSION_KEY);
+        }
+      })
+      .catch(() => {
+        if (!markedInSession) return;
+        try {
+          window.sessionStorage.removeItem(VISIT_SESSION_KEY);
+        } catch {
+          // A failed analytics request must remain invisible to the player.
+        }
+      });
   }, []);
 
   useEffect(() => {
