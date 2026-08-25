@@ -414,6 +414,100 @@
       "backgroundTreatment": "alpha-cutout",
       "identityChecked": true,
       "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Isabella Lövin",
+      "party": "MP",
+      "asset": "/speaker-caricatures/isabella-lovin.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Isabella_L%C3%B6vin_signing_climate_law_referral_(cropped).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/5/51/Isabella_L%C3%B6vin_signing_climate_law_referral_%28cropped%29.jpg",
+        "license": "CC0 1.0 Universal",
+        "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+        "attribution": "Johan Schiff / Miljöpartiet de gröna",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Lars Leijonborg",
+      "party": "L",
+      "asset": "/speaker-caricatures/lars-leijonborg.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Lars_Leijonborg,_partiledare_Folkpartiet_liberalerna,_Sverige_(Bilden_ar_tagen_vid_Nordiska_radets_session_i_Oslo,_2003)_(cropped).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/d/db/Lars_Leijonborg%2C_partiledare_Folkpartiet_liberalerna%2C_Sverige_%28Bilden_ar_tagen_vid_Nordiska_radets_session_i_Oslo%2C_2003%29_%28cropped%29.jpg",
+        "license": "CC BY 2.5 DK",
+        "licenseUrl": "https://creativecommons.org/licenses/by/2.5/dk/deed.en",
+        "attribution": "Mikael Risedal / norden.org",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Märta Stenevi",
+      "party": "MP",
+      "asset": "/speaker-caricatures/marta-stenevi.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Frihamnsdagarna_2022_Foto_Tommy_Winterski%C3%B6ld_Vestlie_(52362082455).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/8/86/Frihamnsdagarna_2022_Foto_Tommy_Winterski%C3%B6ld_Vestlie_%2852362082455%29.jpg",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "attribution": "Frihamnsdagarna; photo: Tommy Winterskiöld Vestlie",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Nyamko Sabuni",
+      "party": "L",
+      "asset": "/speaker-caricatures/nyamko-sabuni.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Nyamkosabuni5_(cropped).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/6/63/Nyamkosabuni5_%28cropped%29.jpg",
+        "license": "CC BY-SA 4.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+        "attribution": "Wille Öhgren (Wikimedia Commons user Dongopop)",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
+      "speaker": "Peter Eriksson",
+      "party": "MP",
+      "asset": "/speaker-caricatures/peter-eriksson.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Peter_Eriksson.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/2/24/Peter_Eriksson.jpg",
+        "license": "CC BY-SA 3.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+        "attribution": "Miljöpartiet de Gröna / Fredrik Hjerling",
+        "rightsStatus": "documented-reference"
+      },
+      "supportingIdentityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Almedalen_2018_(43201698371).jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Almedalen_2018_%2843201698371%29.jpg",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "attribution": "Politikerveckan Almedalen",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
     }
   ]
 }
