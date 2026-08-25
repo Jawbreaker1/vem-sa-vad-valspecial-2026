@@ -588,6 +588,8 @@ summary:focus-visible {
 .game-screen {
   min-height: 100svh;
   padding-bottom: 3rem;
+  overflow: clip;
+  overflow-anchor: none;
   background:
     radial-gradient(circle at 50% 12%, rgb(31 140 255 / .62), transparent 28%),
     linear-gradient(90deg, transparent 49.7%, rgb(255 255 255 / .07) 50%, transparent 50.3%),
@@ -2568,6 +2570,46 @@ summary:focus-visible {
   text-align: left;
   transform-origin: 50% 18%;
   animation: reveal-panel-hit .48s .04s cubic-bezier(.17, .89, .32, 1.32) both;
+}
+
+/* Desktop facit is a show overlay, so revealing an answer never scrolls the
+   question, winner or header out of view. Narrow screens keep the inline card. */
+@media (min-width: 901px) {
+  .timer-exploded.phase-reveal .game-content {
+    animation: none;
+    filter: none;
+    transform: none;
+  }
+
+  .timer-exploded.phase-reveal .quote-card {
+    animation: timeout-stage-hit .42s ease-out both;
+  }
+
+  .phase-reveal .cable-layer,
+  .phase-transition .cable-layer {
+    z-index: 4;
+  }
+
+  .phase-reveal .reveal-panel,
+  .phase-transition .reveal-panel {
+    position: fixed;
+    z-index: 60;
+    right: auto;
+    bottom: max(1.25rem, env(safe-area-inset-bottom));
+    left: 50%;
+    width: min(1320px, calc(100vw - 2.5rem));
+    max-height: calc(100dvh - 2.5rem);
+    margin: 0;
+    grid-template-columns: minmax(245px, 280px) minmax(0, 1fr) minmax(165px, 190px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    translate: -50% 0;
+  }
+
+  .phase-transition .game-content {
+    animation: desktop-question-leave .26s ease-in both;
+  }
 }
 
 .reveal-panel::before {
@@ -4847,6 +4889,10 @@ summary:focus-visible {
   to { opacity: 0; transform: translateX(-3%) scale(.975); filter: blur(3px) brightness(1.35); }
 }
 
+@keyframes desktop-question-leave {
+  to { opacity: 0; }
+}
+
 @keyframes answer-lock-hit {
   0% { transform: scale(1); filter: brightness(1); }
   45% { transform: scale(.97); filter: brightness(1.7); }
@@ -5035,6 +5081,124 @@ summary:focus-visible {
 
   .result-actions {
     margin-top: .75rem;
+  }
+}
+
+@media (min-width: 901px) and (max-height: 800px) {
+  .game-screen {
+    padding-bottom: 1.25rem;
+  }
+
+  .game-header {
+    padding-block: .42rem;
+  }
+
+  .timer-console {
+    min-height: 64px;
+  }
+
+  .timer-number {
+    width: 52px;
+    height: 52px;
+  }
+
+  .round-progress {
+    margin-bottom: .42rem;
+  }
+
+  .question-meta {
+    margin-bottom: .48rem;
+  }
+
+  .question-meta .eyebrow {
+    padding: .32rem 1rem;
+    font-size: .78rem;
+  }
+
+  .theme-badge {
+    min-width: min(350px, 43vw);
+    border-width: 2px;
+  }
+
+  .theme-mark {
+    min-width: 48px;
+    font-size: 1.25rem;
+  }
+
+  .theme-copy {
+    padding: .27rem .68rem .24rem;
+  }
+
+  .theme-copy strong {
+    font-size: 1.08rem;
+  }
+
+  .theme-copy > span {
+    font-size: .55rem;
+  }
+
+  .quote-card,
+  .phase-choosing.has-selection .quote-card,
+  .phase-locking.has-selection .quote-card {
+    min-height: 150px;
+    margin-bottom: 3.8rem;
+    padding: 1.6rem 3.1rem;
+  }
+
+  .phase-choosing.has-selection .quote-card,
+  .phase-locking.has-selection .quote-card {
+    margin-bottom: 5.8rem;
+  }
+
+  .quote-card blockquote {
+    font-size: clamp(1.55rem, 3.2vw, 3.15rem);
+  }
+
+  .quote-card.quote-length-short blockquote {
+    font-size: clamp(2.15rem, 4.25vw, 4.1rem);
+  }
+
+  .quote-card.quote-length-long blockquote {
+    font-size: clamp(1.22rem, 2.55vw, 2.45rem);
+  }
+
+  .party-podium {
+    min-height: 82px;
+    padding-bottom: .48rem;
+  }
+
+  .party-token {
+    width: clamp(48px, 5vw, 64px);
+    margin-top: -.9rem;
+  }
+
+  .leader-pop {
+    width: clamp(78px, 7.6vw, 104px);
+    height: clamp(96px, 9.5vw, 128px);
+  }
+
+  .leader-pop.is-duo {
+    width: clamp(108px, 10.5vw, 142px);
+  }
+
+  .leader-gallery {
+    height: 92px;
+    margin-top: -.35rem;
+    margin-bottom: -2.1rem;
+  }
+
+  .selection-console {
+    min-height: 48px;
+    margin-top: .55rem;
+  }
+
+  .game-hint {
+    margin-top: .55rem;
+    font-size: .75rem;
+  }
+
+  .selection-console.is-armed {
+    padding-block: .5rem;
   }
 }
 
@@ -5913,7 +6077,7 @@ summary:focus-visible {
   }
 }
 
-@media (min-width: 500px) and (max-height: 520px) {
+@media (min-width: 500px) and (max-width: 932px) and (max-height: 520px) and (orientation: landscape) {
   .intro-screen .sound-button.needs-unlock::after {
     display: none;
   }

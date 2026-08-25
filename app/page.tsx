@@ -672,6 +672,11 @@ export default function Home() {
     if (!shouldResetScroll) return;
 
     const resetScroll = () => {
+      const gameScreen = document.querySelector<HTMLElement>('.game-screen');
+      if (gameScreen) {
+        gameScreen.scrollTop = 0;
+        gameScreen.scrollLeft = 0;
+      }
       window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
       document.documentElement.scrollTop = 0;
       document.body.scrollTop = 0;
@@ -733,8 +738,43 @@ export default function Home() {
   useEffect(() => {
     if (phase !== 'reveal') return;
     const timer = window.setTimeout(() => {
-      revealPanelRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' });
-      revealPanelRef.current?.focus({ preventScroll: true });
+      const panel = revealPanelRef.current;
+      if (!panel) return;
+
+      const gameScreen = panel.closest<HTMLElement>('.game-screen');
+      if (gameScreen) {
+        gameScreen.scrollTop = 0;
+        gameScreen.scrollLeft = 0;
+      }
+
+      const isDesktopOverlay = window.matchMedia('(min-width: 901px)').matches;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (isDesktopOverlay) {
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: reduceMotion ? 'auto' : 'smooth',
+        });
+        panel.focus({ preventScroll: true });
+        return;
+      }
+
+      const isMobile = window.matchMedia('(max-width: 600px)').matches;
+      const rect = panel.getBoundingClientRect();
+      const stickyHeaderHeight = isMobile
+        ? (document.querySelector<HTMLElement>('.game-header')?.getBoundingClientRect().height ?? 0)
+        : 0;
+      const topInset = stickyHeaderHeight + 12;
+      const fullyVisible = rect.top >= topInset && rect.bottom <= window.innerHeight - 12;
+
+      if (!fullyVisible) {
+        panel.scrollIntoView({
+          block: isMobile ? 'start' : 'nearest',
+          behavior: reduceMotion ? 'auto' : 'smooth',
+        });
+      }
+      panel.focus({ preventScroll: true });
     }, 320);
     return () => window.clearTimeout(timer);
   }, [phase]);
