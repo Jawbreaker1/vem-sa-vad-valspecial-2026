@@ -88,6 +88,22 @@
     "note": "AI-genererad social delningsbild med den separata Vem sa vad-identiteten. Avsedd för det privata teknikprovet; inte slutligt rättighetsklarerad för offentlig eller kommersiell lansering."
   },
   {
+    "asset": "/branding/vem-sa-vad-marquee*.webp",
+    "party": null,
+    "sourcePage": null,
+    "sourceFile": "OpenAI ImageGen, med start-stage.png och användarens godkända gameshow-mock som visuell riktning",
+    "retrieved": "2026-08-25",
+    "note": "AI-genererad fristående logotypskylt. Bakgrunden är tekniskt frilagd och bilden exporterad i två responsiva storlekar. Inte slutligt rättighetsklarerad för kommersiell lansering."
+  },
+  {
+    "asset": "/og-v3.jpg",
+    "party": null,
+    "sourcePage": null,
+    "sourceFile": "OpenAI ImageGen, med og.png och den fristående marquee-skylten som visuella referenser",
+    "retrieved": "2026-08-25",
+    "note": "AI-genererad social delningsbild i 1200 × 630-format med den uppdaterade Vem sa vad-identiteten. Inte slutligt rättighetsklarerad för kommersiell lansering."
+  },
+  {
     "asset": "/leaders/*.webp",
     "party": null,
     "sourcePage": null,

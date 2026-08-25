@@ -232,7 +232,6 @@ summary:focus-visible {
   justify-items: center;
   transform: translateX(-50%);
   filter: drop-shadow(0 24px 28px rgb(0 0 0 / .62));
-  animation: logo-hover 4.5s ease-in-out infinite alternate;
 }
 
 .intro-console::before {
@@ -262,6 +261,108 @@ summary:focus-visible {
   text-align: center;
   text-transform: uppercase;
 }
+
+.intro-logo-art {
+  position: relative;
+  display: block;
+  width: min(100%, max(280px, calc(228dvh - 38.75rem)));
+  aspect-ratio: 1893 / 831;
+  isolation: isolate;
+  transform-origin: 50% 62%;
+  animation: intro-logo-float 5.4s ease-in-out infinite alternate;
+}
+
+.intro-logo-art::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 17% 6% 10%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgb(45 190 255 / .72), rgb(24 97 255 / .28) 48%, transparent 74%);
+  opacity: .72;
+  transform: scale(.95);
+  animation: intro-logo-halo 2.2s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.intro-logo-art picture,
+.intro-logo-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.intro-logo-image {
+  position: relative;
+  z-index: 2;
+  object-fit: contain;
+}
+
+.intro-logo-sheen {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  background: linear-gradient(
+    108deg,
+    transparent 35%,
+    rgb(255 255 255 / .08) 43%,
+    rgb(255 255 255 / .88) 49%,
+    rgb(92 222 255 / .3) 53%,
+    transparent 61%
+  ) 145% 0 / 280% 100% no-repeat;
+  -webkit-mask: url('/branding/vem-sa-vad-marquee-960.webp') center / contain no-repeat;
+  mask: url('/branding/vem-sa-vad-marquee-960.webp') center / contain no-repeat;
+  mix-blend-mode: screen;
+  animation: intro-logo-sheen 3.8s cubic-bezier(.34, .08, .22, 1) infinite;
+  pointer-events: none;
+}
+
+.intro-logo-flares {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  pointer-events: none;
+}
+
+.intro-logo-flares i {
+  position: absolute;
+  width: clamp(9px, 1.25vw, 19px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow:
+    0 0 4px 2px #fff,
+    0 0 11px 5px #64dfff,
+    0 0 23px 8px rgb(255 205 36 / .62);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(.18) rotate(0deg);
+  animation: intro-logo-flare 2.35s ease-out infinite;
+}
+
+.intro-logo-flares i::before,
+.intro-logo-flares i::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 360%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, white, transparent);
+  transform: translate(-50%, -50%);
+}
+
+.intro-logo-flares i::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.intro-logo-flares i:nth-child(1) { top: 9%; left: 50.8%; animation-delay: -.2s; }
+.intro-logo-flares i:nth-child(2) { top: 31%; left: 15%; animation-delay: -1.45s; }
+.intro-logo-flares i:nth-child(3) { top: 30%; left: 85.5%; animation-delay: -.78s; }
+.intro-logo-flares i:nth-child(4) { top: 18%; left: 31%; animation-delay: -1.9s; }
+.intro-logo-flares i:nth-child(5) { top: 18%; left: 69%; animation-delay: -1.05s; }
+.intro-logo-flares i:nth-child(6) { top: 75%; left: 24%; animation-delay: -2.18s; }
+.intro-logo-flares i:nth-child(7) { top: 75%; left: 77%; animation-delay: -.45s; }
 
 .intro-logo-main {
   position: relative;
@@ -4264,6 +4365,34 @@ summary:focus-visible {
   }
 }
 
+@keyframes intro-logo-float {
+  from { transform: translate3d(0, 0, 0) rotate(-.16deg); }
+  to { transform: translate3d(0, 3px, 0) rotate(.16deg); }
+}
+
+@keyframes intro-logo-halo {
+  from { opacity: .54; transform: scale(.93); }
+  to { opacity: .86; transform: scale(1.035); }
+}
+
+@keyframes intro-logo-sheen {
+  0%, 18% { background-position: 145% 0; opacity: 0; }
+  29% { opacity: .9; }
+  55%, 100% { background-position: -45% 0; opacity: 0; }
+}
+
+@keyframes intro-logo-flare {
+  0%, 58%, 100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(.18) rotate(0deg);
+  }
+  66% { opacity: 1; }
+  76% {
+    opacity: .22;
+    transform: translate(-50%, -50%) scale(1.2) rotate(24deg);
+  }
+}
+
 @keyframes logo-hover {
   from { transform: translateX(-50%) translateY(0) rotate(-.25deg); }
   to { transform: translateX(-50%) translateY(4px) rotate(.25deg); }
@@ -5036,6 +5165,10 @@ summary:focus-visible {
     width: min(980px, 90vw);
   }
 
+  .intro-logo-art {
+    width: min(100%, max(280px, calc(228dvh - 38.75rem)));
+  }
+
   .intro-logo-main {
     font-size: clamp(3.5rem, 9.5vw, 7.2rem);
   }
@@ -5224,6 +5357,10 @@ summary:focus-visible {
   }
 
   .intro-logo {
+    width: 100%;
+  }
+
+  .intro-logo-art {
     width: 100%;
   }
 
@@ -6078,6 +6215,67 @@ summary:focus-visible {
 }
 
 @media (min-width: 500px) and (max-width: 932px) and (max-height: 520px) and (orientation: landscape) {
+  .intro-console {
+    top: max(.45rem, env(safe-area-inset-top));
+    grid-template-areas:
+      'logo start'
+      'logo kicker';
+    grid-template-columns: minmax(0, 1.65fr) minmax(190px, .92fr);
+    grid-template-rows: auto auto;
+    width: calc(100vw - max(1rem, env(safe-area-inset-left)) - max(1rem, env(safe-area-inset-right)));
+    min-height: calc(100dvh - 3.4rem - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    align-content: center;
+    align-items: center;
+    column-gap: clamp(.5rem, 1.8vw, 1rem);
+    filter: drop-shadow(0 14px 18px rgb(0 0 0 / .58));
+  }
+
+  .intro-logo {
+    grid-area: logo;
+  }
+
+  .intro-logo-art {
+    width: 100%;
+  }
+
+  .intro-console .start-button {
+    grid-area: start;
+    width: 100%;
+    min-height: 74px;
+    margin-top: 0;
+    border-width: 5px;
+    border-radius: 24px 10px 24px 10px;
+  }
+
+  .intro-console .start-button::before {
+    inset: 4px;
+    border-width: 2px;
+  }
+
+  .intro-console .start-button span {
+    font-size: clamp(1.7rem, 5.1vw, 2.65rem);
+  }
+
+  .intro-console .start-button small {
+    font-size: clamp(.42rem, 1.25vw, .62rem);
+  }
+
+  .intro-kicker {
+    grid-area: kicker;
+    width: 100%;
+    max-width: none;
+    margin-top: .5rem;
+    padding-inline: .45rem;
+    font-size: clamp(.5rem, 1.35vw, .68rem);
+    white-space: normal;
+  }
+
+  .intro-note {
+    bottom: max(.2rem, env(safe-area-inset-bottom));
+    width: min(720px, 82vw);
+    font-size: .5rem;
+  }
+
   .intro-screen .sound-button.needs-unlock::after {
     display: none;
   }
@@ -6419,6 +6617,17 @@ summary:focus-visible {
   .sweep {
     animation: none !important;
     transform: none !important;
+  }
+
+  .intro-logo-art,
+  .intro-logo-art::before {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  .intro-logo-sheen,
+  .intro-logo-flares {
+    display: none !important;
   }
 
   .leader-gallery-character,

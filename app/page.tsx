@@ -1896,18 +1896,34 @@ export default function Home() {
         </div>
         <section className="intro-console" aria-labelledby="intro-title">
           <h1 className="intro-logo" id="intro-title">
-            <span className="intro-crown" aria-hidden="true">
-              <i>★</i>
-              <i>★</i>
-              <i>★</i>
-            </span>
-            <span className="intro-logo-main">
-              <span className="intro-title-text">Vem sa vad?</span>
-            </span>
-            <span className="intro-logo-edition">
-              <i aria-hidden="true">★</i>
-              Valspecial 2026
-              <i aria-hidden="true">★</i>
+            <span className="sr-only">Vem sa vad? – Valspecial 2026</span>
+            <span className="intro-logo-art" aria-hidden="true">
+              <picture>
+                <source
+                  media="(max-width: 700px)"
+                  srcSet="/branding/vem-sa-vad-marquee-960.webp"
+                />
+                <img
+                  className="intro-logo-image"
+                  src="/branding/vem-sa-vad-marquee.webp"
+                  width="1893"
+                  height="831"
+                  alt=""
+                  loading="eager"
+                  fetchPriority="high"
+                  decoding="async"
+                />
+              </picture>
+              <span className="intro-logo-sheen" />
+              <span className="intro-logo-flares">
+                <i />
+                <i />
+                <i />
+                <i />
+                <i />
+                <i />
+                <i />
+              </span>
             </span>
           </h1>
           <button className="start-button" onClick={startGame} aria-describedby="intro-note">

@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: '/og-v2.png',
-        width: 1536,
-        height: 1024,
+        url: '/og-v3.jpg',
+        width: 1200,
+        height: 630,
         alt: 'Den färgsprakande gameshow-scenen för Vem sa vad?',
       },
     ],
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Vem sa vad? – Valspecial 2026',
     description: '24 frågor per omgång, slumpade ur en källgranskad citatbank. Kan du koppla dem till rätt parti?',
-    images: ['/og-v2.png'],
+    images: ['/og-v3.jpg'],
   },
 };
 
