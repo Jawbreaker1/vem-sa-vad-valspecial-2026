@@ -536,6 +536,8 @@ export default function Home() {
   const resultRevealActionRef = useRef<() => void>(() => undefined);
   const resultCueActionRef = useRef<(cue: Cue, force?: boolean, value?: number) => void>(() => undefined);
   const nextButtonRef = useRef<HTMLButtonElement>(null);
+  const lockAnswerRef = useRef<HTMLButtonElement>(null);
+  const revealPanelRef = useRef<HTMLElement>(null);
   const instructionRef = useRef<HTMLParagraphElement>(null);
   const revealTimerRef = useRef<number | null>(null);
   const transitionTimerRef = useRef<number | null>(null);
@@ -627,12 +629,19 @@ export default function Home() {
   useEffect(() => {
     if (phase !== 'reveal') return;
     const timer = window.setTimeout(() => {
-      if (document.activeElement === document.body) {
-        nextButtonRef.current?.focus({ preventScroll: true });
-      }
+      revealPanelRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' });
+      revealPanelRef.current?.focus({ preventScroll: true });
     }, 320);
     return () => window.clearTimeout(timer);
   }, [phase]);
+
+  useEffect(() => {
+    if (screen !== 'question' || phase !== 'choosing' || !selected) return;
+    const frame = window.requestAnimationFrame(() => {
+      lockAnswerRef.current?.focus({ preventScroll: true });
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [screen, phase, selected]);
 
   useEffect(() => {
     if (screen !== 'question' || phase !== 'choosing') return;
@@ -656,24 +665,20 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const victoryPreloads = parties.map((party) => {
-      const image = new Image();
-      image.decoding = 'async';
-      image.src = party.victoryImage;
-      return image;
-    });
-
+    if (screen !== 'question') return;
+    const image = new Image();
+    image.decoding = 'async';
+    image.src = correctParty.victoryImage;
     return () => {
-      victoryPreloads.forEach((image) => {
-        image.src = '';
-      });
+      image.src = '';
     };
-  }, []);
+  }, [screen, correctParty.victoryImage]);
 
   useEffect(() => {
+    if (screen !== 'question') return;
     const revealPreloads = roundQuotes
       .slice(currentIndex, currentIndex + 2)
-      .flatMap((quote) => [quote.speakerCaricature, quote.speakerImage])
+      .map((quote) => quote.speakerCaricature ?? quote.speakerImage)
       .filter((source): source is string => Boolean(source))
       .filter((source, index, sources) => sources.indexOf(source) === index)
       .map((source) => {
@@ -688,7 +693,7 @@ export default function Home() {
         image.src = '';
       });
     };
-  }, [currentIndex, roundQuotes]);
+  }, [screen, currentIndex, roundQuotes]);
 
   useEffect(() => {
     const cheer = new Audio('/sounds/crowd-cheer.mp3');
@@ -696,14 +701,14 @@ export default function Home() {
     const laugh = new Audio('/sounds/crowd-laugh.mp3');
     const introMusic = new Audio('/music/intro-show.mp3');
     const gameMusic = new Audio('/music/question-tension.mp3');
-    cheer.preload = 'auto';
-    boo.preload = 'auto';
-    laugh.preload = 'auto';
+    cheer.preload = 'none';
+    boo.preload = 'none';
+    laugh.preload = 'none';
     cheer.volume = .88;
     boo.volume = .92;
     laugh.volume = .92;
-    introMusic.preload = 'auto';
-    gameMusic.preload = 'auto';
+    introMusic.preload = 'metadata';
+    gameMusic.preload = 'none';
     introMusic.loop = true;
     gameMusic.loop = true;
     introMusic.volume = MUSIC_VOLUMES.intro;
@@ -815,9 +820,22 @@ export default function Home() {
 
   useEffect(() => {
     if (screen !== 'question' || phase !== 'choosing') return;
-    const deadline = performance.now() + QUESTION_SECONDS * 1000;
+    let deadline = performance.now() + QUESTION_SECONDS * 1000;
+    let hiddenAt = document.visibilityState === 'hidden' ? performance.now() : null;
     let lastSecond = QUESTION_SECONDS;
+    const handleVisibility = () => {
+      const now = performance.now();
+      if (document.visibilityState === 'hidden') {
+        hiddenAt ??= now;
+        return;
+      }
+      if (hiddenAt !== null) {
+        deadline += now - hiddenAt;
+        hiddenAt = null;
+      }
+    };
     const timer = window.setInterval(() => {
+      if (hiddenAt !== null) return;
       if (resolvedRef.current) {
         window.clearInterval(timer);
         return;
@@ -832,7 +850,11 @@ export default function Home() {
         timeoutActionRef.current();
       }
     }, 100);
-    return () => window.clearInterval(timer);
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
   }, [screen, phase, currentIndex]);
 
   useEffect(() => {
@@ -892,7 +914,8 @@ export default function Home() {
   useEffect(() => {
     if (shareStatus !== 'manual') return;
     const frame = window.requestAnimationFrame(() => {
-      manualShareRef.current?.focus({ preventScroll: true });
+      manualShareRef.current?.focus();
+      manualShareRef.current?.scrollIntoView({ block: 'center', behavior: 'smooth' });
       manualShareRef.current?.select();
     });
     return () => window.cancelAnimationFrame(frame);
@@ -1478,6 +1501,7 @@ export default function Home() {
     setSharePending(false);
     resultRevealFinishedRef.current = false;
     setTimeLeft(QUESTION_SECONDS);
+    window.scrollTo({ top: 0, behavior: 'auto' });
     setScreen('question');
     playCue('start');
     switchMusic('game', false, true);
@@ -1485,6 +1509,10 @@ export default function Home() {
 
   function connectParty(party: PartyId) {
     if (phase !== 'choosing' || resolvedRef.current) return;
+    if (selectedRef.current === party) {
+      revealChoice(party);
+      return;
+    }
     resetPartyPreview();
     selectedRef.current = party;
     setSelected(party);
@@ -1696,6 +1724,7 @@ export default function Home() {
     setSharePending(false);
     resultRevealFinishedRef.current = false;
     setTimeLeft(QUESTION_SECONDS);
+    window.scrollTo({ top: 0, behavior: 'auto' });
     switchMusic('intro', false, true);
   }
 
@@ -2131,6 +2160,7 @@ export default function Home() {
             onPointerMove={moveCable}
             onPointerUp={dropCable}
             onPointerCancel={cancelCable}
+            onLostPointerCapture={cancelCable}
           >
             <span className="jack-grip" />
             <span className="jack-fray" aria-hidden="true">
@@ -2143,7 +2173,10 @@ export default function Home() {
             </span>
             <span className="drag-callout" aria-hidden="true">
               <i>←</i>
-              <b>Klicka &amp; dra</b>
+              <b>
+                <span className="drag-copy-desktop">Klicka &amp; dra</span>
+                <span className="drag-copy-mobile">Tryck &amp; dra</span>
+              </b>
             </span>
           </span>
         </article>
@@ -2196,6 +2229,7 @@ export default function Home() {
                   <img className={`party-logo logo-${party.id.toLowerCase()}`} src={party.logo} alt="" />
                 </span>
                 <span className="party-name">{party.name}</span>
+                <span className="party-short-name" aria-hidden="true">{party.shortName}</span>
               </button>
             );
           })}
@@ -2211,7 +2245,7 @@ export default function Home() {
                   <span className="power-dot" aria-hidden="true" />
                   Kabeln leder till <strong>{selectedParty.name}</strong>
                 </p>
-                <button className="lock-answer" onClick={submitAnswer} disabled={phase === 'locking'}>
+                <button ref={lockAnswerRef} className="lock-answer" onClick={submitAnswer} disabled={phase === 'locking'}>
                   {phase === 'locking' ? 'Låst!' : 'Svara'}
                   <span aria-hidden="true"> {phase === 'locking' ? '✓' : '⚡'}</span>
                 </button>
@@ -2229,8 +2263,10 @@ export default function Home() {
           </div>
         ) : (
           <aside
+            ref={revealPanelRef}
             key={`reveal-${current.id}`}
             className={`reveal-panel ${wasCorrect ? 'panel-correct' : 'panel-wrong'}`}
+            tabIndex={-1}
             style={{
               '--reveal-party': correctParty.color,
               '--reveal-ink': correctParty.ink,
@@ -2428,20 +2464,20 @@ function LeaderGallery({ state }: { state: LeaderGalleryState }) {
           </span>
         ))}
       </span>
-      <span className="leader-gallery-preload">
-        {(['suspense', 'cheer', 'boo', 'laugh'] as const).flatMap((pose) =>
-          leaderGallerySlots.flatMap((slot) => slot.map((leader) => (
+      {state === 'roam' && (
+        <span className="leader-gallery-preload">
+          {leaderGallerySlots.flatMap((slot) => slot.map((leader) => (
             <img
-              key={`${pose}-${leader.id}`}
-              src={spritePath(pose, leader.id)}
+              key={`suspense-${leader.id}`}
+              src={spritePath('suspense', leader.id)}
               alt=""
               width={1}
               height={1}
               decoding="async"
             />
-          ))),
-        )}
-      </span>
+          )))}
+        </span>
+      )}
     </div>
   );
 }

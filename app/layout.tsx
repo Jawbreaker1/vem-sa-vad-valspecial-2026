@@ -1,5 +1,12 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#041638',
+};
 
 export const metadata: Metadata = {
   title: 'Vem sa vad? – Valspecial 2026',
