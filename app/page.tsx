@@ -210,7 +210,7 @@ const QUESTION_CATEGORY_MS = 900;
 const QUESTIONS_PER_ACT = 3;
 const TOTAL_QUESTIONS = 12;
 const WHEEL_SPIN_MS = 1450;
-const WHEEL_LAND_MS = 720;
+const WHEEL_LAND_MS = 1220;
 const BASE_POINTS = 1000;
 const POINTS_PER_SECOND = 25;
 const STREAK_STEP_POINTS = 125;
@@ -715,7 +715,7 @@ export default function Home() {
       setPhase('choosing');
       setScreen('question');
       switchMusicActionRef.current('game', false, true);
-    }, (reduceMotion ? 40 : WHEEL_SPIN_MS) + (reduceMotion ? 650 : WHEEL_LAND_MS));
+    }, (reduceMotion ? 40 : WHEEL_SPIN_MS) + WHEEL_LAND_MS);
 
     return () => {
       window.clearTimeout(landingTimer);
