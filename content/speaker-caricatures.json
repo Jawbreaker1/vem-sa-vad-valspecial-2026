@@ -161,6 +161,23 @@
       "releaseStatus": "private-poc-only"
     },
     {
+      "speaker": "Gudrun Schyman",
+      "party": "V",
+      "asset": "/speaker-caricatures/gudrun-schyman.webp",
+      "identityReference": {
+        "kind": "wikimedia-commons",
+        "sourcePage": "https://commons.wikimedia.org/wiki/File:Gudrun_Schyman_-_16_April_2009_-_1_cropped.jpg",
+        "sourceFile": "https://upload.wikimedia.org/wikipedia/commons/0/05/Gudrun_Schyman_-_16_April_2009_-_1_cropped.jpg",
+        "license": "CC BY-SA 2.0",
+        "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+        "attribution": "Henrik Ström; crop by Wikimedia Commons user Njaelkies Lea",
+        "rightsStatus": "documented-reference"
+      },
+      "backgroundTreatment": "alpha-cutout",
+      "identityChecked": true,
+      "releaseStatus": "private-poc-only"
+    },
+    {
       "speaker": "Jan Björklund",
       "party": "L",
       "asset": "/speaker-caricatures/jan-bjorklund.webp",
