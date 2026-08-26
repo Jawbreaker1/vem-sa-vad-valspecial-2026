@@ -8,6 +8,14 @@
     "note": "Officiellt pressmaterial. Ingen uttrycklig öppen logotyplicens anges; varumärkesrätt kan gälla."
   },
   {
+    "asset": "/party-logos/s-rose.svg",
+    "party": "Socialdemokraterna",
+    "sourcePage": "https://www.socialdemokraterna.se/vart-parti/press",
+    "sourceFile": "/party-logos/s.svg",
+    "retrieved": "2026-08-26",
+    "note": "Fristående ros-symbol beskuren ur partiets officiella liggande SVG för spelets runda och kompakta logotypytor. Vektorformer och färg är oförändrade; varumärkesrätt kan gälla."
+  },
+  {
     "asset": "/party-logos/m.webp",
     "party": "Moderaterna",
     "sourcePage": "https://moderaterna.se/press/",

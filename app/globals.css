@@ -3357,8 +3357,8 @@ summary:focus-visible {
 .party-logo.logo-s {
   width: 72%;
   height: 72%;
-  object-fit: cover;
-  object-position: left center;
+  object-fit: contain;
+  object-position: center;
 }
 
 .party-logo.logo-mp {

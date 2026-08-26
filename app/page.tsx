@@ -104,7 +104,7 @@ const parties: Party[] = [
     id: 'S',
     name: 'Socialdemokraterna',
     shortName: 'S',
-    logo: '/party-logos/s.svg',
+    logo: '/party-logos/s-rose.svg',
     leaders: [{ name: 'Magdalena Andersson', image: '/leaders/magdalena-andersson.webp' }],
     victoryImage: '/victory/s.webp',
     color: '#e52532',
