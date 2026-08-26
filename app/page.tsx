@@ -11,6 +11,7 @@ import {
   useRef,
   useState,
 } from 'react';
+import Link from 'next/link';
 import {
   PartyId,
   Quote,
@@ -2444,6 +2445,9 @@ export default function Home() {
             >
               LinkedIn <span aria-hidden="true">↗</span>
             </a>
+            <Link className="intro-about-details" href="/om">
+              Om spelet och källorna <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </details>
         {soundButton}

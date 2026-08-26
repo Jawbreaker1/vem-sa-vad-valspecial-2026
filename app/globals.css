@@ -1527,6 +1527,16 @@ summary:focus-visible {
   color: #ffdf62;
 }
 
+.intro-about-card .intro-about-details {
+  width: 100%;
+  margin-top: .35rem;
+  padding-top: .65rem;
+  border-top: 1px solid rgb(117 217 255 / .35);
+  color: #ffdf62;
+  font-weight: 900;
+  letter-spacing: .025em;
+}
+
 .sound-button {
   position: absolute;
   z-index: 30;
