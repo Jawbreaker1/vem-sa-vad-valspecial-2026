@@ -873,6 +873,7 @@ export default function Home() {
 
   useEffect(() => {
     if (screen !== 'question' || phase !== 'choosing' || !selected) return;
+    if (window.matchMedia('(max-width: 600px) and (orientation: portrait)').matches) return;
     const frame = window.requestAnimationFrame(() => {
       lockAnswerRef.current?.focus({ preventScroll: true });
     });
