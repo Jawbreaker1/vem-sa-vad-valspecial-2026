@@ -8,7 +8,7 @@
 
 > 12 questions · 4 acts · category wheel · local high score · 20 seconds per quote
 
-![The colourful Vem sa vad? opening stage](docs/screenshots/startscen.webp)
+![The grand Vem sa vad? marquee towers over the Election Special 2026 opening stage](docs/screenshots/startscen.webp)
 
 | Connect the quote | Face the consequences |
 | --- | --- |
