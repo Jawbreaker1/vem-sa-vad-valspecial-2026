@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Limits the AI-cleaned source to the eight inner medallion surfaces. Every
+  pixel outside these softly feathered circles comes from start-stage-clean.png.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1672 941">
+  <defs>
+    <filter id="feather" x="-15%" y="-15%" width="130%" height="130%">
+      <feGaussianBlur stdDeviation="1.4"/>
+    </filter>
+  </defs>
+  <rect width="1672" height="941" fill="#000"/>
+  <g fill="#fff" filter="url(#feather)">
+    <circle cx="141" cy="746" r="58"/>
+    <circle cx="349" cy="747" r="58"/>
+    <circle cx="529" cy="747" r="58"/>
+    <circle cx="714" cy="753" r="66"/>
+    <circle cx="909" cy="752" r="66"/>
+    <circle cx="1115" cy="752" r="66"/>
+    <circle cx="1305" cy="752" r="58"/>
+    <circle cx="1507" cy="752" r="60"/>
+  </g>
+</svg>

@@ -1,10 +1,15 @@
-import { readFileSync, writeFileSync } from 'node:fs';
-import { extname, resolve } from 'node:path';
+import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { extname, join, resolve } from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const projectRoot = resolve(import.meta.dirname, '..');
 const sourcePath = resolve(projectRoot, 'source-art/start-stage-official-logos.svg');
-const outputPath = resolve(projectRoot, 'public/start-stage-official-logos.png');
+const maskSourcePath = resolve(projectRoot, 'source-art/start-stage-medallion-mask.svg');
+const originalStagePath = resolve(projectRoot, 'public/start-stage-clean.png');
+const blankMedallionsPath = resolve(projectRoot, 'source-art/start-stage-blank-medallions.png');
+const logoLayerPath = resolve(projectRoot, 'public/start-stage-official-logos.png');
+const finalStagePath = resolve(projectRoot, 'public/start-stage-official.webp');
 
 const mimeByExtension = {
   '.png': 'image/png',
@@ -22,6 +27,35 @@ const logoAssets = [
   'l.svg',
   'mp.svg',
 ];
+
+const renderSvg = (svg) => {
+  const rendered = spawnSync(
+    'rsvg-convert',
+    ['--width', '1672', '--height', '941', '--format', 'png', '-'],
+    {
+      cwd: projectRoot,
+      input: svg,
+      maxBuffer: 24 * 1024 * 1024,
+    },
+  );
+
+  if (rendered.status !== 0) {
+    throw new Error(rendered.stderr.toString('utf8') || 'Kunde inte rendera SVG-lagret.');
+  }
+
+  return rendered.stdout;
+};
+
+const runFfmpeg = (args, errorMessage) => {
+  const result = spawnSync('ffmpeg', ['-loglevel', 'error', '-y', ...args], {
+    cwd: projectRoot,
+    maxBuffer: 24 * 1024 * 1024,
+  });
+
+  if (result.status !== 0) {
+    throw new Error(result.stderr.toString('utf8') || errorMessage);
+  }
+};
 
 let selfContainedSvg = readFileSync(sourcePath, 'utf8');
 
@@ -41,19 +75,42 @@ for (const asset of logoAssets) {
   );
 }
 
-const rendered = spawnSync(
-  'rsvg-convert',
-  ['--width', '1672', '--height', '941', '--format', 'png', '-'],
-  {
-    cwd: projectRoot,
-    input: selfContainedSvg,
-    maxBuffer: 24 * 1024 * 1024,
-  },
-);
+const tempDir = mkdtempSync(join(tmpdir(), 'vemsavad-stage-'));
+const maskPath = join(tempDir, 'medallion-mask.png');
+const compositedPngPath = join(tempDir, 'start-stage-official.png');
 
-if (rendered.status !== 0) {
-  throw new Error(rendered.stderr.toString('utf8') || 'Kunde inte rendera logolagret.');
+try {
+  writeFileSync(logoLayerPath, renderSvg(selfContainedSvg));
+  writeFileSync(maskPath, renderSvg(readFileSync(maskSourcePath, 'utf8')));
+
+  runFfmpeg(
+    [
+      '-i', originalStagePath,
+      '-i', blankMedallionsPath,
+      '-i', maskPath,
+      '-i', logoLayerPath,
+      '-filter_complex',
+      '[2:v]format=gray[mask];[1:v][mask]alphamerge[blank-patches];[0:v][blank-patches]overlay=0:0[clean];[clean][3:v]overlay=0:0',
+      '-frames:v', '1',
+      compositedPngPath,
+    ],
+    'Kunde inte montera de rena medaljongytorna och logotyperna.',
+  );
+
+  runFfmpeg(
+    [
+      '-i', compositedPngPath,
+      '-frames:v', '1',
+      '-c:v', 'libwebp',
+      '-quality', '90',
+      '-compression_level', '6',
+      '-preset', 'picture',
+      finalStagePath,
+    ],
+    'Kunde inte exportera den färdiga WebP-scenen.',
+  );
+} finally {
+  rmSync(tempDir, { recursive: true, force: true });
 }
 
-writeFileSync(outputPath, rendered.stdout);
-console.log(`Renderade ${outputPath}`);
+console.log(`Renderade ${finalStagePath}`);

@@ -837,7 +837,7 @@ summary:focus-visible {
 
 .intro-stage-lineup {
   z-index: 4;
-  background: url('/start-stage-clean.webp') center / cover no-repeat;
+  background: url('/start-stage-official.webp') center / cover no-repeat;
   background-position: center bottom;
   filter:
     saturate(1.1)
@@ -858,16 +858,6 @@ summary:focus-visible {
     rgb(0 0 0 / .82) 43%,
     #000 52%
   );
-}
-
-.intro-stage-lineup::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-image: url('/start-stage-official-logos.png');
-  background-position: inherit;
-  background-size: inherit;
-  background-repeat: no-repeat;
 }
 
 .intro-floor-shine {

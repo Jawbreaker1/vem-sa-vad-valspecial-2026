@@ -93,7 +93,23 @@
     "sourcePage": null,
     "sourceFile": "source-art/start-stage-official-logos.svg + /party-logos/*",
     "retrieved": "2026-08-26",
-    "note": "Deterministiskt renderat, transparent ersättningslager för startscenens åtta podiumsymboler. Symbolgeometrin kommer från partiernas dokumenterade officiella filer; endast storlek, scenljus, skuggor och medaljongyta har anpassats till illustrationen. S-rosen används som vit negativ variant för läsbarhet. Ingen AI-genererad logotypgeometri ingår."
+    "note": "Deterministiskt renderat bygglager med de åtta podiumsymbolerna. Symbolgeometrin kommer från partiernas dokumenterade officiella filer; endast storlek, en återhållsam scenskugga och vit negativ S-ros har anpassats. Filen laddas inte separat i webbläsaren utan bakas in i den färdiga scenbilden."
+  },
+  {
+    "asset": "source-art/start-stage-blank-medallions.png",
+    "party": null,
+    "sourcePage": null,
+    "sourceFile": "/start-stage-clean.png + OpenAI ImageGen precise-object-edit",
+    "retrieved": "2026-08-26",
+    "note": "AI-redigerad arbetskälla där endast de åtta inre medaljongytorna har tömts på symboler. I slutkompositen används enbart dessa åtta små ytor genom source-art/start-stage-medallion-mask.svg; alla pixlar utanför masken kommer från originalscenen."
+  },
+  {
+    "asset": "/start-stage-official.webp",
+    "party": null,
+    "sourcePage": null,
+    "sourceFile": "/start-stage-clean.png + source-art/start-stage-blank-medallions.png + /start-stage-official-logos.png",
+    "retrieved": "2026-08-26",
+    "note": "Färdig enda startscenbild. Originalscenen bevaras utanför de åtta mjukt maskerade inre medaljongytorna; de tomma ytorna kommer från den avgränsade arbetsredigeringen och symbolgeometrin från partiernas dokumenterade officiella filer. Ingen separat logotyp-overlay används i webbläsaren."
   },
   {
     "asset": "/og-v2.png",
