@@ -221,6 +221,7 @@ const POINTS_PER_SECOND = 25;
 const STREAK_STEP_POINTS = 125;
 const MAX_STREAK_BONUS_STEPS = 4;
 const MUSIC_VOLUMES: Record<MusicCue, number> = { intro: .15, game: .12 };
+const CROWD_VOLUMES: Record<CrowdCue, number> = { cheer: .88, boo: .92, laugh: .92 };
 
 function musicCueForScreen(screen: Screen): MusicCue {
   return screen === 'loading' || screen === 'question' || screen === 'wheel' ? 'game' : 'intro';
@@ -754,6 +755,8 @@ export default function Home() {
   const feedbackGainRef = useRef<GainNode | null>(null);
   const crowdAudioRef = useRef<Partial<Record<CrowdCue, HTMLAudioElement>>>({});
   const activeCrowdRef = useRef<HTMLAudioElement | null>(null);
+  const primingCrowdRef = useRef<Set<CrowdCue>>(new Set());
+  const primedCrowdRef = useRef<Set<CrowdCue>>(new Set());
   const musicAudioRef = useRef<Partial<Record<MusicCue, HTMLAudioElement>>>({});
   const musicReadyRef = useRef(false);
   const musicAttemptedRef = useRef(false);
@@ -1052,7 +1055,6 @@ export default function Home() {
     soundOnRef.current = soundOn;
     switchMusicActionRef.current = switchMusic;
     unlockMusicActionRef.current = (cue) => {
-      primeCrowdAudio();
       setSynthSound(true);
       switchMusic(cue, true, true);
     };
@@ -1090,6 +1092,8 @@ export default function Home() {
   }, [screen, currentIndex, roundQuotes]);
 
   useEffect(() => {
+    const primingCrowd = primingCrowdRef.current;
+    const primedCrowd = primedCrowdRef.current;
     const cheer = new Audio('/sounds/crowd-cheer.mp3');
     const boo = new Audio('/sounds/crowd-boo.mp3');
     const laugh = new Audio('/sounds/crowd-laugh.mp3');
@@ -1098,9 +1102,9 @@ export default function Home() {
     cheer.preload = 'none';
     boo.preload = 'none';
     laugh.preload = 'none';
-    cheer.volume = .88;
-    boo.volume = .92;
-    laugh.volume = .92;
+    cheer.volume = CROWD_VOLUMES.cheer;
+    boo.volume = CROWD_VOLUMES.boo;
+    laugh.volume = CROWD_VOLUMES.laugh;
     introMusic.preload = 'metadata';
     gameMusic.preload = 'none';
     introMusic.loop = true;
@@ -1158,6 +1162,8 @@ export default function Home() {
       cableHumRef.current = null;
       crowdAudioRef.current = {};
       activeCrowdRef.current = null;
+      primingCrowd.clear();
+      primedCrowd.clear();
       musicAudioRef.current = {};
       musicReadyRef.current = false;
       musicAttemptedRef.current = false;
@@ -1594,27 +1600,38 @@ export default function Home() {
   }
 
   function primeCrowdAudio() {
-    Object.values(crowdAudioRef.current).forEach((track) => {
-      if (!track) return;
-      const wasMuted = track.muted;
-      const previousVolume = track.volume;
+    const tracks = Object.entries(crowdAudioRef.current) as Array<[
+      CrowdCue,
+      HTMLAudioElement | undefined,
+    ]>;
+    tracks.forEach(([cue, track]) => {
+      if (
+        !track
+        || primedCrowdRef.current.has(cue)
+        || primingCrowdRef.current.has(cue)
+      ) return;
+
+      primingCrowdRef.current.add(cue);
       track.muted = false;
       track.volume = 0;
       track.currentTime = 0;
       void track.play().then(() => {
+        primedCrowdRef.current.add(cue);
         if (activeCrowdRef.current === track) {
-          track.volume = previousVolume;
+          track.volume = CROWD_VOLUMES[cue];
           return;
         }
         track.pause();
         track.currentTime = 0;
-        track.muted = wasMuted;
-        track.volume = previousVolume;
+        track.muted = false;
+        track.volume = CROWD_VOLUMES[cue];
       }).catch(() => {
         if (activeCrowdRef.current !== track) {
-          track.muted = wasMuted;
-          track.volume = previousVolume;
+          track.muted = false;
+          track.volume = CROWD_VOLUMES[cue];
         }
+      }).finally(() => {
+        primingCrowdRef.current.delete(cue);
       });
     });
   }
@@ -1710,6 +1727,7 @@ export default function Home() {
     if (!track) return;
     activeCrowdRef.current = track;
     track.muted = false;
+    track.volume = CROWD_VOLUMES[cue];
     Object.values(musicAudioRef.current).forEach((music) => {
       if (music && !music.paused) music.volume = cue === 'laugh' ? .035 : .05;
     });

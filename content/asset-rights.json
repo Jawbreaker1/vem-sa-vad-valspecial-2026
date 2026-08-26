@@ -135,7 +135,7 @@
     "sourceFile": "https://assets.mixkit.co/active_storage/sfx/463/463-preview.mp3",
     "licensePage": "https://mixkit.co/license/#sfxFree",
     "retrieved": "2026-08-24",
-    "note": "Mixkit Sound Effects Free License tillåter användning och modifiering i webspel utan krav på attribution. Klippt till 4 sekunder, nedtonad och volymanpassad; får inte återdistribueras fristående."
+    "note": "Mixkit Sound Effects Free License tillåter användning och modifiering i webspel utan krav på attribution. Klippt till 4 sekunder och loudness-normaliserad för spelmixen; får inte återdistribueras fristående."
   },
   {
     "asset": "/sounds/crowd-laugh.mp3",
@@ -145,7 +145,7 @@
     "sourceFile": "https://assets.mixkit.co/active_storage/sfx/424/424-preview.mp3",
     "licensePage": "https://mixkit.co/license/#sfxFree",
     "retrieved": "2026-08-24",
-    "note": "Mixkit-ljudet Crowd laugh (SFX 424). Sound Effects Free License tillåter användning i webspel utan krav på attribution. Omkodat till 128 kbit/s MP3; får inte återdistribueras fristående."
+    "note": "Mixkit-ljudet Crowd laugh (SFX 424). Sound Effects Free License tillåter användning i webspel utan krav på attribution. Omkodat till 128 kbit/s MP3 och loudness-normaliserat för spelmixen; får inte återdistribueras fristående."
   },
   {
     "asset": "/music/intro-show.mp3",
