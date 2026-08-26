@@ -1101,6 +1101,10 @@ summary:focus-visible {
   transition: transform .18s ease, background .18s ease;
 }
 
+.intro-about summary i::before {
+  content: '+';
+}
+
 .intro-about[open] summary i {
   background: #d91d3d;
   transform: rotate(45deg);
@@ -7509,6 +7513,47 @@ summary:focus-visible {
     top: calc(100% + 4px);
     left: 50%;
     transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 900px), (max-height: 650px) {
+  .intro-about summary {
+    width: clamp(44px, 5vw, 50px);
+    min-height: 0;
+    aspect-ratio: 1;
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+  }
+
+  .intro-about summary > span,
+  .intro-about summary > strong {
+    display: none;
+  }
+
+  .intro-about summary i {
+    width: 100%;
+    background: transparent;
+    color: #fff4b5;
+    font: 950 1.2rem/1 system-ui, sans-serif;
+  }
+
+  .intro-about summary i::before {
+    content: 'i';
+  }
+
+  .intro-about[open] summary i {
+    background: transparent;
+    color: white;
+    transform: none;
+  }
+
+  .intro-about[open] summary i::before {
+    content: '\00d7';
+  }
+
+  .intro-screen .sound-button.needs-unlock::after {
+    display: none;
   }
 }
 

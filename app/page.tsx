@@ -2120,10 +2120,10 @@ export default function Home() {
           Ett fristående spel utan koppling till partierna. Källor visas efter varje svar. Historiska citat behöver inte motsvara partiernas politik i dag.
         </p>
         <details className="intro-about">
-          <summary>
+          <summary aria-label="Om spelet" title="Om spelet">
             <span>Designed by</span>
             <strong>Bird Disk Studios</strong>
-            <i aria-hidden="true">+</i>
+            <i aria-hidden="true" />
           </summary>
           <div className="intro-about-card">
             <small>Om spelet</small>
