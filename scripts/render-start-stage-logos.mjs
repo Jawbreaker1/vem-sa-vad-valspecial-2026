@@ -9,7 +9,7 @@ const maskSourcePath = resolve(projectRoot, 'source-art/start-stage-medallion-ma
 const originalStagePath = resolve(projectRoot, 'public/start-stage-clean.png');
 const blankMedallionsPath = resolve(projectRoot, 'source-art/start-stage-blank-medallions.png');
 const logoLayerPath = resolve(projectRoot, 'public/start-stage-official-logos.png');
-const finalStagePath = resolve(projectRoot, 'public/start-stage-official.webp');
+const finalStagePath = resolve(projectRoot, 'public/start-stage-s-rose.webp');
 
 const mimeByExtension = {
   '.png': 'image/png',
@@ -19,13 +19,6 @@ const mimeByExtension = {
 
 const logoAssets = [
   's-rose.svg',
-  'm.webp',
-  'sd.png',
-  'v.svg',
-  'c.png',
-  'kd.svg',
-  'l.svg',
-  'mp.svg',
 ];
 
 const renderSvg = (svg) => {

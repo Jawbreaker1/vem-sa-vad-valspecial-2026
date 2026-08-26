@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Deterministic symbol layer for the eight empty podium medallions in
-  source-art/start-stage-blank-medallions.png. Symbol geometry comes directly
-  from the official-source files in public/party-logos; only scale, a restrained
-  stage shadow and the white negative treatment of the S rose are adapted.
+  Deterministic replacement for Socialdemokraterna's emblem only. The rose
+  geometry comes directly from the official-source file in public/party-logos;
+  only scale, a restrained stage shadow and its official white negative
+  treatment are adapted to the illustrated medallion.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1672 941">
   <defs>
@@ -20,25 +20,4 @@
 
   <!-- Socialdemokraterna -->
   <image x="105" y="710" width="72" height="72" xlink:href="../public/party-logos/s-rose.svg" filter="url(#logo-white-depth)"/>
-
-  <!-- Moderaterna -->
-  <image x="309" y="707" width="80" height="80" xlink:href="../public/party-logos/m.webp" filter="url(#logo-depth)"/>
-
-  <!-- Sverigedemokraterna -->
-  <image x="490" y="706" width="78" height="83" xlink:href="../public/party-logos/sd.png" filter="url(#logo-depth)"/>
-
-  <!-- Vänsterpartiet -->
-  <image x="675" y="714" width="78" height="78" xlink:href="../public/party-logos/v.svg" filter="url(#logo-depth)"/>
-
-  <!-- Centerpartiet -->
-  <image x="870" y="713" width="78" height="78" xlink:href="../public/party-logos/c.png" filter="url(#logo-white-depth)"/>
-
-  <!-- Kristdemokraterna -->
-  <image x="1076" y="713" width="78" height="78" xlink:href="../public/party-logos/kd.svg" filter="url(#logo-depth)"/>
-
-  <!-- Liberalerna -->
-  <image x="1266" y="713" width="78" height="78" xlink:href="../public/party-logos/l.svg" filter="url(#logo-depth)"/>
-
-  <!-- Miljöpartiet de gröna -->
-  <image x="1464" y="715" width="86" height="74" xlink:href="../public/party-logos/mp.svg" filter="url(#logo-depth)"/>
 </svg>

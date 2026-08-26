@@ -837,7 +837,7 @@ summary:focus-visible {
 
 .intro-stage-lineup {
   z-index: 4;
-  background: url('/start-stage-official.webp') center / cover no-repeat;
+  background: url('/start-stage-s-rose.webp') center / cover no-repeat;
   background-position: center bottom;
   filter:
     saturate(1.1)
