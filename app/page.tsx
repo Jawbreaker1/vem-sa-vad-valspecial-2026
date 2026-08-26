@@ -62,7 +62,7 @@ type Answer = {
 };
 
 type Point = { x: number; y: number };
-type Screen = 'intro' | 'question' | 'wheel' | 'results';
+type Screen = 'intro' | 'loading' | 'question' | 'wheel' | 'results';
 type Phase = 'category' | 'choosing' | 'locking' | 'reveal' | 'transition';
 type ResultStage = 'countdown' | 'opening' | 'counting' | 'final';
 type WheelStage = 'spinning' | 'landed';
@@ -211,12 +211,21 @@ const QUESTIONS_PER_ACT = 3;
 const TOTAL_QUESTIONS = 12;
 const WHEEL_SPIN_MS = 1450;
 const WHEEL_LAND_MS = 1220;
+const GAME_LOAD_MIN_MS = 700;
+const GAME_LOAD_MAX_MS = 5200;
+const GAME_LOAD_ROUND_MS = 1800;
+const GAME_LOAD_READY_MS = 240;
 const VISIT_SESSION_KEY = 'vem-sa-vad:anonymous-visit:v1';
 const BASE_POINTS = 1000;
 const POINTS_PER_SECOND = 25;
 const STREAK_STEP_POINTS = 125;
 const MAX_STREAK_BONUS_STEPS = 4;
 const MUSIC_VOLUMES: Record<MusicCue, number> = { intro: .15, game: .12 };
+
+function musicCueForScreen(screen: Screen): MusicCue {
+  return screen === 'loading' || screen === 'question' || screen === 'wheel' ? 'game' : 'intro';
+}
+
 const OPENING_QUOTE_GROUPS = [
   [
     'mp-bolund-2022-fingret-at-putin',
@@ -265,6 +274,11 @@ const leaderGallerySlots = [
     { id: 'daniel-hellden', name: 'Daniel Helldén' },
   ],
 ] as const;
+const leaderGalleryStates: LeaderGalleryState[] = ['roam', 'suspense', 'cheer', 'boo', 'laugh'];
+
+function leaderSpritePath(pose: LeaderGalleryState, leaderId: string) {
+  return `/sprites/leader-gallery/${pose}-${leaderId}.webp${pose === 'cheer' ? '?v=2' : ''}`;
+}
 const questionThemes: Record<QuoteThemeId, QuestionTheme> = {
   classic: {
     id: 'classic',
@@ -436,6 +450,148 @@ function buildRound(bank: Quote[]) {
   return bestSelection;
 }
 
+function waitForMilliseconds(milliseconds: number) {
+  return new Promise<void>((resolve) => window.setTimeout(resolve, milliseconds));
+}
+
+function quoteSpeakerVisual(quote: Quote) {
+  if (quote.speakerCaricature && verifiedSpeakerCaricatures.has(quote.speakerCaricature)) {
+    return quote.speakerCaricature;
+  }
+  if (quote.speakerImage && quote.verification.speakerIdentity) return quote.speakerImage;
+  return null;
+}
+
+function criticalGameImageSources(round: Quote[]) {
+  const galleryLeaders = leaderGallerySlots.flatMap((slot) => slot);
+  return [...new Set([
+    ...parties.flatMap((party) => [
+      party.logo,
+      ...party.leaders.map((leader) => leader.image),
+    ]),
+    ...leaderGalleryStates.flatMap((state) => (
+      galleryLeaders.map((leader) => leaderSpritePath(state, leader.id))
+    )),
+    ...round.slice(0, QUESTIONS_PER_ACT).flatMap((quote) => [
+      quoteSpeakerVisual(quote),
+      partyById(quote.party).victoryImage,
+    ]).filter((source): source is string => Boolean(source)),
+  ])];
+}
+
+function deferredGameImageSources(round: Quote[]) {
+  const critical = new Set(criticalGameImageSources(round));
+  return [...new Set(
+    round.slice(QUESTIONS_PER_ACT).flatMap((quote) => [
+      quoteSpeakerVisual(quote),
+      partyById(quote.party).victoryImage,
+    ]).filter((source): source is string => Boolean(source)),
+  )].filter((source) => !critical.has(source));
+}
+
+function preloadImageSource(source: string) {
+  return new Promise<void>((resolve, reject) => {
+    const image = new Image();
+    let settled = false;
+    const finish = (loaded: boolean) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeout);
+      image.onload = null;
+      image.onerror = null;
+      if (loaded) resolve();
+      else reject(new Error(`Kunde inte förladda ${source}`));
+    };
+    const decodeAndFinish = () => {
+      if (typeof image.decode !== 'function') {
+        finish(true);
+        return;
+      }
+      void image.decode().catch(() => undefined).then(() => finish(true));
+    };
+    const timeout = window.setTimeout(() => finish(false), GAME_LOAD_MAX_MS);
+    image.decoding = 'async';
+    image.onload = decodeAndFinish;
+    image.onerror = () => finish(false);
+    image.src = source;
+    if (image.complete) {
+      if (image.naturalWidth > 0) decodeAndFinish();
+      else finish(false);
+    }
+  });
+}
+
+function waitForAudioTrack(track: HTMLAudioElement) {
+  return new Promise<void>((resolve, reject) => {
+    if (track.readyState >= 3) {
+      resolve();
+      return;
+    }
+    let settled = false;
+    const finish = (ready: boolean) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeout);
+      ['loadeddata', 'canplay', 'playing'].forEach((eventName) => {
+        track.removeEventListener(eventName, handleReady);
+      });
+      track.removeEventListener('error', handleError);
+      if (ready) resolve();
+      else reject(new Error(`Kunde inte förladda ${track.src}`));
+    };
+    const handleReady = () => finish(true);
+    const handleError = () => finish(false);
+    const timeout = window.setTimeout(handleError, GAME_LOAD_MAX_MS);
+    ['loadeddata', 'canplay', 'playing'].forEach((eventName) => {
+      track.addEventListener(eventName, handleReady, { once: true });
+    });
+    track.addEventListener('error', handleError, { once: true });
+  });
+}
+
+async function cacheAudioTrack(track: HTMLAudioElement) {
+  const response = await fetch(track.src, { cache: 'force-cache' });
+  if (!response.ok) throw new Error(`Kunde inte hämta ${track.src}`);
+  await response.arrayBuffer();
+}
+
+async function preloadAudioTrack(track: HTMLAudioElement) {
+  const results = await Promise.allSettled([
+    waitForAudioTrack(track),
+    cacheAudioTrack(track),
+  ]);
+  if (results.every((result) => result.status === 'rejected')) {
+    throw new Error(`Kunde inte förladda ${track.src}`);
+  }
+}
+
+async function preloadGameRound(
+  round: Quote[],
+  audioTracks: HTMLAudioElement[],
+  onProgress: (completed: number, total: number) => void,
+) {
+  const tasks = [
+    ...criticalGameImageSources(round).map(preloadImageSource),
+    ...audioTracks.map(preloadAudioTrack),
+  ];
+  let completed = 0;
+  onProgress(0, tasks.length);
+  const trackedTasks = tasks.map((task) => task.finally(() => {
+    completed += 1;
+    onProgress(completed, tasks.length);
+  }));
+  return Promise.race([
+    Promise.allSettled(trackedTasks).then((results) => (
+      results.every((result) => result.status === 'fulfilled')
+    )),
+    waitForMilliseconds(GAME_LOAD_MAX_MS).then(() => false),
+  ]);
+}
+
+async function preloadRemainingRound(round: Quote[]) {
+  await Promise.allSettled(deferredGameImageSources(round).map(preloadImageSource));
+}
+
 function formatDate(isoDate: string) {
   return new Date(`${isoDate}T12:00:00`).toLocaleDateString('sv-SE', {
     day: 'numeric',
@@ -574,6 +730,7 @@ export default function Home() {
   const [soundOn, setSoundOn] = useState(true);
   const [musicReady, setMusicReady] = useState(false);
   const [musicAttempted, setMusicAttempted] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
   const [timeLeft, setTimeLeft] = useState(QUESTION_SECONDS);
   const [timedOut, setTimedOut] = useState(false);
   const [autoLocked, setAutoLocked] = useState(false);
@@ -636,6 +793,7 @@ export default function Home() {
   const sharePendingRef = useRef(false);
   const resultRevealFinishedRef = useRef(false);
   const recordCommittedRef = useRef(false);
+  const gameLoadRequestRef = useRef(0);
 
   const current = roundQuotes[currentIndex] ?? quotes[0];
   const currentTheme = questionThemes[current.theme];
@@ -671,6 +829,15 @@ export default function Home() {
   const timerPressure = 1 - timerRatio;
   const timerScale = 1 + Math.pow(timerPressure, 2.2) * .95;
   const timerShellScale = 1 + Math.pow(timerPressure, 3) * .18;
+  const loadingStatus = loadingProgress >= 100
+    ? 'Showen är redo!'
+    : loadingProgress >= 76
+      ? 'Radar upp partiledarna…'
+      : loadingProgress >= 50
+        ? 'Väcker publiken…'
+        : loadingProgress >= 24
+          ? 'Kopplar in karikatyrerna…'
+          : 'Tänder podierna…';
   const needsMusicUnlock = soundOn && !musicReady && !musicAttempted;
   const hasBeatenRecord = Boolean(recordToBeat && totalPoints > recordToBeat.points);
   const completedActAnswers = screen === 'wheel'
@@ -969,11 +1136,10 @@ export default function Home() {
     musicAudioRef.current = { intro: introMusic, game: gameMusic };
     musicReadyRef.current = false;
     musicAttemptedRef.current = false;
-    switchMusicActionRef.current(
-      screenRef.current === 'question' || screenRef.current === 'wheel' ? 'game' : 'intro',
-    );
+    switchMusicActionRef.current(musicCueForScreen(screenRef.current));
 
     return () => {
+      gameLoadRequestRef.current += 1;
       introMusic.removeEventListener('pause', recoverIntro);
       introMusic.removeEventListener('ended', recoverIntro);
       gameMusic.removeEventListener('pause', recoverGame);
@@ -1018,7 +1184,7 @@ export default function Home() {
     const unlockMusic = () => {
       document.removeEventListener('pointerdown', unlockMusic, true);
       document.removeEventListener('keydown', unlockMusic, true);
-      unlockMusicActionRef.current(screen === 'question' || screen === 'wheel' ? 'game' : 'intro');
+      unlockMusicActionRef.current(musicCueForScreen(screen));
     };
 
     document.addEventListener('pointerdown', unlockMusic, true);
@@ -1431,15 +1597,24 @@ export default function Home() {
     Object.values(crowdAudioRef.current).forEach((track) => {
       if (!track) return;
       const wasMuted = track.muted;
-      track.muted = true;
+      const previousVolume = track.volume;
+      track.muted = false;
+      track.volume = 0;
       track.currentTime = 0;
       void track.play().then(() => {
-        if (activeCrowdRef.current === track) return;
+        if (activeCrowdRef.current === track) {
+          track.volume = previousVolume;
+          return;
+        }
         track.pause();
         track.currentTime = 0;
         track.muted = wasMuted;
+        track.volume = previousVolume;
       }).catch(() => {
-        if (activeCrowdRef.current !== track) track.muted = wasMuted;
+        if (activeCrowdRef.current !== track) {
+          track.muted = wasMuted;
+          track.volume = previousVolume;
+        }
       });
     });
   }
@@ -1610,7 +1785,7 @@ export default function Home() {
     if (soundOn && !musicReadyRef.current) {
       primeCrowdAudio();
       setSynthSound(true);
-      switchMusic(screen === 'question' || screen === 'wheel' ? 'game' : 'intro', true, true);
+      switchMusic(musicCueForScreen(screen), true, true);
       playCue('connect', true);
       return;
     }
@@ -1629,7 +1804,7 @@ export default function Home() {
     primeCrowdAudio();
     setSynthSound(true);
     playCue('connect', true);
-    switchMusic(screen === 'question' || screen === 'wheel' ? 'game' : 'intro', true, true);
+    switchMusic(musicCueForScreen(screen), true, true);
   }
 
   function clearActionTimers() {
@@ -1747,12 +1922,22 @@ export default function Home() {
   }
 
   function startGame() {
+    if (screenRef.current === 'loading') return;
+    const loadRequest = ++gameLoadRequestRef.current;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nextRound = buildRound(quotes);
+    const audioTracks = [
+      musicAudioRef.current.game,
+      crowdAudioRef.current.cheer,
+      crowdAudioRef.current.boo,
+      crowdAudioRef.current.laugh,
+    ].filter((track): track is HTMLAudioElement => Boolean(track));
+
     clearActionTimers();
     clearResultRevealTimers();
     stopFeedbackCue();
     stopCrowd();
     stopCableHum();
-    primeCrowdAudio();
     resolvedRef.current = false;
     selectedRef.current = null;
     resetPartyPreview();
@@ -1761,7 +1946,7 @@ export default function Home() {
     setRecordToBeat(standingRecord);
     setRecordOutcome('none');
     recordCommittedRef.current = false;
-    setRoundQuotes(buildRound(quotes));
+    setRoundQuotes(nextRound);
     setAnswers([]);
     setCurrentIndex(0);
     setWheelStage('spinning');
@@ -1780,9 +1965,56 @@ export default function Home() {
     setSharePending(false);
     resultRevealFinishedRef.current = false;
     setTimeLeft(QUESTION_SECONDS);
-    setScreen('question');
+    setLoadingProgress(3);
+    screenRef.current = 'loading';
+    setScreen('loading');
+
+    audioTracks.forEach((track) => {
+      track.preload = 'auto';
+      if (track.readyState < 3) track.load();
+    });
+    primeCrowdAudio();
     playCue('start');
     switchMusic('game', false, true);
+
+    void (async () => {
+      let loaderFinished = false;
+      let reportedProgress = 3;
+      const minimumDelay = waitForMilliseconds(reduceMotion ? 0 : GAME_LOAD_MIN_MS);
+      const criticalAssetsReady = await preloadGameRound(
+        nextRound,
+        audioTracks,
+        (completed, total) => {
+          if (loaderFinished || gameLoadRequestRef.current !== loadRequest) return;
+          const progress = total > 0 ? Math.round((completed / total) * 96) : 96;
+          const nextProgress = Math.max(3, Math.min(96, progress));
+          if (nextProgress < reportedProgress + 4 && completed < total) return;
+          reportedProgress = nextProgress;
+          setLoadingProgress(nextProgress);
+        },
+      );
+      const remainingRound = criticalAssetsReady ? preloadRemainingRound(nextRound) : null;
+      await minimumDelay;
+      loaderFinished = true;
+      if (gameLoadRequestRef.current !== loadRequest) return;
+      if (remainingRound) {
+        setLoadingProgress(97);
+        await Promise.race([
+          remainingRound,
+          waitForMilliseconds(GAME_LOAD_ROUND_MS),
+        ]);
+      } else {
+        window.setTimeout(() => {
+          if (gameLoadRequestRef.current === loadRequest) void preloadRemainingRound(nextRound);
+        }, 1400);
+      }
+      if (gameLoadRequestRef.current !== loadRequest) return;
+      setLoadingProgress(100);
+      await waitForMilliseconds(reduceMotion ? 0 : GAME_LOAD_READY_MS);
+      if (gameLoadRequestRef.current !== loadRequest) return;
+      screenRef.current = 'question';
+      setScreen('question');
+    })();
   }
 
   function connectParty(party: PartyId) {
@@ -2015,6 +2247,8 @@ export default function Home() {
   }
 
   function returnHome() {
+    gameLoadRequestRef.current += 1;
+    screenRef.current = 'intro';
     clearActionTimers();
     clearResultRevealTimers();
     stopFeedbackCue();
@@ -2048,6 +2282,7 @@ export default function Home() {
     <button
       className={[
         'sound-button',
+        screen === 'loading' ? 'loading-sound' : '',
         screen === 'question' ? 'in-game' : '',
         screen === 'wheel' ? 'wheel-sound' : '',
         screen === 'results' ? 'results-sound' : '',
@@ -2060,6 +2295,57 @@ export default function Home() {
       <span aria-hidden="true">{needsMusicUnlock ? '♫' : soundOn ? '🔊' : '🔇'}</span>
     </button>
   );
+
+  if (screen === 'loading') {
+    return (
+      <main
+        className={`loading-screen ${loadingProgress >= 100 ? 'is-ready' : ''}`}
+        aria-busy={loadingProgress < 100}
+      >
+        <div className="loading-rays" aria-hidden="true" />
+        <div className="loading-sweeps" aria-hidden="true">
+          <i />
+          <i />
+        </div>
+        <section className="loading-show" aria-labelledby="loading-title">
+          <div className="loading-stars" aria-hidden="true">★ ★ ★</div>
+          <p className="loading-kicker">Direkt från Bird Disk-studion</p>
+          <h1 id="loading-title">Showen laddas!</h1>
+          <div className="loading-power" aria-hidden="true">
+            <span className="loading-power-core">⚡</span>
+            <i />
+          </div>
+          <div
+            className="loading-meter"
+            role="progressbar"
+            aria-label="Förbereder spelet"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={loadingProgress}
+          >
+            <span className="loading-meter-track">
+              <i style={{ width: `${loadingProgress}%` }} />
+            </span>
+            <span className="loading-party-lights" aria-hidden="true">
+              {parties.map((party, index) => (
+                <i
+                  className={loadingProgress >= (index + 1) * 11 ? 'is-lit' : ''}
+                  key={party.id}
+                  style={{ '--loading-party': party.color } as CSSProperties}
+                >
+                  {party.shortName}
+                </i>
+              ))}
+            </span>
+          </div>
+          <p className="loading-status" role="status" aria-live="polite">{loadingStatus}</p>
+          <strong className="loading-percent" aria-hidden="true">{loadingProgress}%</strong>
+          <small>Musik · publik · karikatyrer · tolv citat</small>
+        </section>
+        {soundButton}
+      </main>
+    );
+  }
 
   if (screen === 'intro') {
     return (
@@ -2903,9 +3189,6 @@ export default function Home() {
 }
 
 function LeaderGallery({ state }: { state: LeaderGalleryState }) {
-  const spritePath = (pose: LeaderGalleryState, leaderId: string) =>
-    `/sprites/leader-gallery/${pose}-${leaderId}.webp${pose === 'cheer' ? '?v=2' : ''}`;
-
   return (
     <div
       className={`leader-gallery is-${state}`}
@@ -2935,7 +3218,7 @@ function LeaderGallery({ state }: { state: LeaderGalleryState }) {
                 >
                   <img
                     key={`${state}-${leader.id}`}
-                    src={spritePath(state, leader.id)}
+                    src={leaderSpritePath(state, leader.id)}
                     alt=""
                     title={leader.name}
                     width={slot.length > 1 ? 64 : 128}
@@ -2954,7 +3237,7 @@ function LeaderGallery({ state }: { state: LeaderGalleryState }) {
           {leaderGallerySlots.flatMap((slot) => slot.map((leader) => (
             <img
               key={`suspense-${leader.id}`}
-              src={spritePath('suspense', leader.id)}
+              src={leaderSpritePath('suspense', leader.id)}
               alt=""
               width={1}
               height={1}
