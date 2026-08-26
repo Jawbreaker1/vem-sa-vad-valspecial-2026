@@ -3195,7 +3195,6 @@ function ThemeWheel({
               key={`${themeId}-${index}`}
               style={{
                 '--sector-angle': `${index * 45}deg`,
-                '--sector-inverse': `${index * -45}deg`,
               } as CSSProperties}
             >
               <b>{theme.mark}</b>

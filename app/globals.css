@@ -284,7 +284,7 @@ summary:focus-visible {
   gap: .06rem;
   color: white;
   text-shadow: 0 2px 0 rgb(0 10 42 / .88), 0 0 7px rgb(255 255 255 / .72);
-  transform: translate(-50%, -50%) rotate(var(--sector-angle)) translateY(-168%) rotate(var(--sector-inverse));
+  transform: translate(-50%, -50%) rotate(var(--sector-angle)) translateY(-168%);
   transition: opacity .2s ease;
 }
 
@@ -6210,7 +6210,7 @@ summary:focus-visible {
   }
 
   .wheel-sector-label {
-    transform: translate(-50%, -50%) rotate(var(--sector-angle)) translateY(-155%) rotate(var(--sector-inverse));
+    transform: translate(-50%, -50%) rotate(var(--sector-angle)) translateY(-155%);
   }
 
   .wheel-sector-label b {
