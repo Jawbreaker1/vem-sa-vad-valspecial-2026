@@ -17,16 +17,26 @@
 
 html {
   min-height: 100%;
+  overflow-x: hidden;
   background: var(--navy);
 }
 
 body {
+  width: 100%;
+  max-width: 100%;
   min-height: 100%;
   margin: 0;
   overflow-x: hidden;
   background: var(--navy);
   color: white;
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', system-ui, sans-serif;
+}
+
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
 }
 
 button,
@@ -6909,8 +6919,27 @@ summary:focus-visible {
 }
 
 @media (max-width: 600px) and (orientation: portrait) {
+  html,
+  body {
+    overscroll-behavior-x: none;
+  }
+
   .game-screen {
+    width: 100%;
+    max-width: 100vw;
     padding-top: 0;
+    overscroll-behavior-x: none;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .game-screen::before {
+    inset: 40% 0 -22%;
+    transform: scaleY(.44);
+    transform-origin: 50% 0;
+  }
+
+  .game-screen .cable-layer {
+    overflow: hidden;
   }
 
   .game-screen.phase-choosing,

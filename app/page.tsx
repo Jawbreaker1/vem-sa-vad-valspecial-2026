@@ -1886,6 +1886,7 @@ export default function Home() {
 
   function startCable(event: PointerEvent<HTMLSpanElement>) {
     if (phase !== 'choosing' || resolvedRef.current) return;
+    event.preventDefault();
     resetPartyPreview();
     event.currentTarget.setPointerCapture(event.pointerId);
     playCue('grab');
@@ -1906,6 +1907,7 @@ export default function Home() {
 
   function moveCable(event: PointerEvent<HTMLSpanElement>) {
     if (!dragging || phase !== 'choosing') return;
+    event.preventDefault();
     setPointer({ x: event.clientX, y: event.clientY });
 
     const dragTarget = partyAtPoint(event.clientX, event.clientY);
@@ -1917,6 +1919,7 @@ export default function Home() {
 
   function dropCable(event: PointerEvent<HTMLSpanElement>) {
     if (!dragging || phase !== 'choosing') return;
+    event.preventDefault();
     const party = partyAtPoint(event.clientX, event.clientY);
     setDragging(false);
     setPointer(null);
