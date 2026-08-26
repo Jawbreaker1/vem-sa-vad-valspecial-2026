@@ -29,82 +29,54 @@
       <stop offset=".72" stop-color="#fff" stop-opacity="0"/>
       <stop offset="1" stop-color="#00112e" stop-opacity=".22"/>
     </radialGradient>
-    <filter id="medallion-depth" x="-35%" y="-35%" width="170%" height="180%">
-      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#00051d" flood-opacity=".72"/>
-      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#fff" flood-opacity=".24"/>
-    </filter>
     <filter id="logo-depth" x="-35%" y="-35%" width="170%" height="180%">
-      <feDropShadow dx="0" dy="4" stdDeviation="2.2" flood-color="#00051d" flood-opacity=".7"/>
-      <feDropShadow dx="0" dy="0" stdDeviation="1.3" flood-color="#fff" flood-opacity=".26"/>
+      <feDropShadow dx="0" dy="2.5" stdDeviation="1.8" flood-color="#00051d" flood-opacity=".62"/>
+      <feDropShadow dx="0" dy="0" stdDeviation=".9" flood-color="#fff" flood-opacity=".2"/>
     </filter>
     <filter id="logo-white-depth" x="-35%" y="-35%" width="170%" height="180%" color-interpolation-filters="sRGB">
       <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/>
-      <feDropShadow dx="0" dy="4" stdDeviation="2.2" flood-color="#00051d" flood-opacity=".72"/>
-      <feDropShadow dx="0" dy="0" stdDeviation="1.2" flood-color="#fff" flood-opacity=".3"/>
+      <feDropShadow dx="0" dy="2.5" stdDeviation="1.8" flood-color="#00051d" flood-opacity=".66"/>
+      <feDropShadow dx="0" dy="0" stdDeviation=".9" flood-color="#fff" flood-opacity=".25"/>
     </filter>
   </defs>
 
   <!-- Socialdemokraterna -->
-  <g filter="url(#medallion-depth)">
-    <circle cx="141" cy="739" r="61" fill="url(#red-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
-    <circle cx="141" cy="739" r="57" fill="none" stroke="#fff" stroke-opacity=".26" stroke-width="2"/>
-    <circle cx="141" cy="739" r="58" fill="url(#glass)"/>
-  </g>
-  <image x="101" y="699" width="80" height="80" xlink:href="../public/party-logos/s-rose.svg" filter="url(#logo-white-depth)"/>
+  <circle cx="141" cy="739" r="51" fill="url(#red-medallion)"/>
+  <circle cx="141" cy="739" r="50" fill="url(#glass)"/>
+  <image x="105" y="703" width="72" height="72" xlink:href="../public/party-logos/s-rose.svg" filter="url(#logo-white-depth)"/>
 
   <!-- Moderaterna -->
-  <g filter="url(#medallion-depth)">
-    <circle cx="349" cy="741" r="61" fill="url(#blue-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
-    <circle cx="349" cy="741" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
-  </g>
-  <image x="296" y="688" width="106" height="106" xlink:href="../public/party-logos/m.webp" filter="url(#logo-depth)"/>
-  <circle cx="349" cy="741" r="58" fill="url(#glass)" pointer-events="none"/>
+  <circle cx="349" cy="741" r="51" fill="url(#blue-medallion)"/>
+  <image x="309" y="701" width="80" height="80" xlink:href="../public/party-logos/m.webp" filter="url(#logo-depth)"/>
+  <circle cx="349" cy="741" r="50" fill="url(#glass)" pointer-events="none"/>
 
   <!-- Sverigedemokraterna -->
-  <g filter="url(#medallion-depth)">
-    <circle cx="529" cy="741" r="61" fill="url(#blue-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
-    <circle cx="529" cy="741" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
-    <circle cx="529" cy="741" r="58" fill="url(#glass)"/>
-  </g>
-  <image x="481" y="689" width="96" height="103" xlink:href="../public/party-logos/sd.png" filter="url(#logo-depth)"/>
+  <circle cx="529" cy="741" r="51" fill="url(#blue-medallion)"/>
+  <circle cx="529" cy="741" r="50" fill="url(#glass)"/>
+  <image x="490" y="699" width="78" height="83" xlink:href="../public/party-logos/sd.png" filter="url(#logo-depth)"/>
 
   <!-- Vänsterpartiet -->
-  <g filter="url(#medallion-depth)">
-    <circle cx="714" cy="748" r="61" fill="url(#red-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
-    <circle cx="714" cy="748" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
-    <circle cx="714" cy="748" r="58" fill="url(#glass)"/>
-  </g>
-  <image x="665" y="699" width="98" height="98" xlink:href="../public/party-logos/v.svg" filter="url(#logo-depth)"/>
+  <circle cx="714" cy="748" r="51" fill="url(#red-medallion)"/>
+  <circle cx="714" cy="748" r="50" fill="url(#glass)"/>
+  <image x="675" y="709" width="78" height="78" xlink:href="../public/party-logos/v.svg" filter="url(#logo-depth)"/>
 
   <!-- Centerpartiet -->
-  <g filter="url(#medallion-depth)">
-    <circle cx="909" cy="744" r="61" fill="url(#green-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
-    <circle cx="909" cy="744" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
-    <circle cx="909" cy="744" r="58" fill="url(#glass)"/>
-  </g>
-  <image x="863" y="698" width="92" height="92" xlink:href="../public/party-logos/c.png" filter="url(#logo-white-depth)"/>
+  <circle cx="909" cy="744" r="51" fill="url(#green-medallion)"/>
+  <circle cx="909" cy="744" r="50" fill="url(#glass)"/>
+  <image x="870" y="705" width="78" height="78" xlink:href="../public/party-logos/c.png" filter="url(#logo-white-depth)"/>
 
   <!-- Kristdemokraterna -->
-  <g filter="url(#medallion-depth)">
-    <circle cx="1115" cy="744" r="61" fill="url(#blue-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
-    <circle cx="1115" cy="744" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
-  </g>
-  <image x="1067" y="696" width="96" height="96" xlink:href="../public/party-logos/kd.svg" filter="url(#logo-depth)"/>
-  <circle cx="1115" cy="744" r="58" fill="url(#glass)" pointer-events="none"/>
+  <circle cx="1115" cy="744" r="51" fill="url(#blue-medallion)"/>
+  <image x="1076" y="705" width="78" height="78" xlink:href="../public/party-logos/kd.svg" filter="url(#logo-depth)"/>
+  <circle cx="1115" cy="744" r="50" fill="url(#glass)" pointer-events="none"/>
 
   <!-- Liberalerna -->
-  <g filter="url(#medallion-depth)">
-    <circle cx="1305" cy="744" r="61" fill="url(#blue-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
-    <circle cx="1305" cy="744" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
-  </g>
-  <image x="1256" y="695" width="98" height="98" xlink:href="../public/party-logos/l.svg" filter="url(#logo-depth)"/>
-  <circle cx="1305" cy="744" r="58" fill="url(#glass)" pointer-events="none"/>
+  <circle cx="1305" cy="744" r="51" fill="url(#blue-medallion)"/>
+  <image x="1266" y="705" width="78" height="78" xlink:href="../public/party-logos/l.svg" filter="url(#logo-depth)"/>
+  <circle cx="1305" cy="744" r="50" fill="url(#glass)" pointer-events="none"/>
 
   <!-- Miljöpartiet de gröna -->
-  <g filter="url(#medallion-depth)">
-    <circle cx="1507" cy="744" r="61" fill="url(#green-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
-    <circle cx="1507" cy="744" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
-  </g>
-  <image x="1455" y="699" width="104" height="90" xlink:href="../public/party-logos/mp.svg" filter="url(#logo-depth)"/>
-  <circle cx="1507" cy="744" r="58" fill="url(#glass)" pointer-events="none"/>
+  <circle cx="1507" cy="744" r="51" fill="url(#green-medallion)"/>
+  <image x="1464" y="707" width="86" height="74" xlink:href="../public/party-logos/mp.svg" filter="url(#logo-depth)"/>
+  <circle cx="1507" cy="744" r="50" fill="url(#glass)" pointer-events="none"/>
 </svg>
