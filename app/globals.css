@@ -860,6 +860,16 @@ summary:focus-visible {
   );
 }
 
+.intro-stage-lineup::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url('/start-stage-official-logos.png');
+  background-position: inherit;
+  background-size: inherit;
+  background-repeat: no-repeat;
+}
+
 .intro-floor-shine {
   z-index: 4;
   opacity: .42;

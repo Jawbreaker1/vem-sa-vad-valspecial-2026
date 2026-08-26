@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Deterministic replacement layer for the eight podium emblems in
+  public/start-stage-clean.webp. Symbol geometry comes directly from the
+  official-source files in public/party-logos; only lighting, scale and the
+  white negative treatment of the S rose are adapted to the illustrated
+  podium medallions.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1672 941">
+  <defs>
+    <radialGradient id="red-medallion" cx="36%" cy="24%" r="82%">
+      <stop offset="0" stop-color="#ff5660"/>
+      <stop offset="0.48" stop-color="#dd1528"/>
+      <stop offset="1" stop-color="#810014"/>
+    </radialGradient>
+    <radialGradient id="blue-medallion" cx="36%" cy="24%" r="82%">
+      <stop offset="0" stop-color="#31a7ec"/>
+      <stop offset="0.48" stop-color="#086fbe"/>
+      <stop offset="1" stop-color="#032b74"/>
+    </radialGradient>
+    <radialGradient id="green-medallion" cx="36%" cy="24%" r="82%">
+      <stop offset="0" stop-color="#38b760"/>
+      <stop offset="0.48" stop-color="#087d3d"/>
+      <stop offset="1" stop-color="#034b2a"/>
+    </radialGradient>
+    <radialGradient id="glass" cx="32%" cy="18%" r="76%">
+      <stop offset="0" stop-color="#fff" stop-opacity=".42"/>
+      <stop offset=".34" stop-color="#fff" stop-opacity=".08"/>
+      <stop offset=".72" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="1" stop-color="#00112e" stop-opacity=".22"/>
+    </radialGradient>
+    <filter id="medallion-depth" x="-35%" y="-35%" width="170%" height="180%">
+      <feDropShadow dx="0" dy="5" stdDeviation="4" flood-color="#00051d" flood-opacity=".72"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#fff" flood-opacity=".24"/>
+    </filter>
+    <filter id="logo-depth" x="-35%" y="-35%" width="170%" height="180%">
+      <feDropShadow dx="0" dy="4" stdDeviation="2.2" flood-color="#00051d" flood-opacity=".7"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1.3" flood-color="#fff" flood-opacity=".26"/>
+    </filter>
+    <filter id="logo-white-depth" x="-35%" y="-35%" width="170%" height="180%" color-interpolation-filters="sRGB">
+      <feColorMatrix type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1 0"/>
+      <feDropShadow dx="0" dy="4" stdDeviation="2.2" flood-color="#00051d" flood-opacity=".72"/>
+      <feDropShadow dx="0" dy="0" stdDeviation="1.2" flood-color="#fff" flood-opacity=".3"/>
+    </filter>
+  </defs>
+
+  <!-- Socialdemokraterna -->
+  <g filter="url(#medallion-depth)">
+    <circle cx="141" cy="739" r="61" fill="url(#red-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
+    <circle cx="141" cy="739" r="57" fill="none" stroke="#fff" stroke-opacity=".26" stroke-width="2"/>
+    <circle cx="141" cy="739" r="58" fill="url(#glass)"/>
+  </g>
+  <image x="101" y="699" width="80" height="80" xlink:href="../public/party-logos/s-rose.svg" filter="url(#logo-white-depth)"/>
+
+  <!-- Moderaterna -->
+  <g filter="url(#medallion-depth)">
+    <circle cx="349" cy="741" r="61" fill="url(#blue-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
+    <circle cx="349" cy="741" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+  </g>
+  <image x="296" y="688" width="106" height="106" xlink:href="../public/party-logos/m.webp" filter="url(#logo-depth)"/>
+  <circle cx="349" cy="741" r="58" fill="url(#glass)" pointer-events="none"/>
+
+  <!-- Sverigedemokraterna -->
+  <g filter="url(#medallion-depth)">
+    <circle cx="529" cy="741" r="61" fill="url(#blue-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
+    <circle cx="529" cy="741" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+    <circle cx="529" cy="741" r="58" fill="url(#glass)"/>
+  </g>
+  <image x="481" y="689" width="96" height="103" xlink:href="../public/party-logos/sd.png" filter="url(#logo-depth)"/>
+
+  <!-- Vänsterpartiet -->
+  <g filter="url(#medallion-depth)">
+    <circle cx="714" cy="748" r="61" fill="url(#red-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
+    <circle cx="714" cy="748" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+    <circle cx="714" cy="748" r="58" fill="url(#glass)"/>
+  </g>
+  <image x="665" y="699" width="98" height="98" xlink:href="../public/party-logos/v.svg" filter="url(#logo-depth)"/>
+
+  <!-- Centerpartiet -->
+  <g filter="url(#medallion-depth)">
+    <circle cx="909" cy="744" r="61" fill="url(#green-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
+    <circle cx="909" cy="744" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+    <circle cx="909" cy="744" r="58" fill="url(#glass)"/>
+  </g>
+  <image x="863" y="698" width="92" height="92" xlink:href="../public/party-logos/c.png" filter="url(#logo-white-depth)"/>
+
+  <!-- Kristdemokraterna -->
+  <g filter="url(#medallion-depth)">
+    <circle cx="1115" cy="744" r="61" fill="url(#blue-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
+    <circle cx="1115" cy="744" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+  </g>
+  <image x="1067" y="696" width="96" height="96" xlink:href="../public/party-logos/kd.svg" filter="url(#logo-depth)"/>
+  <circle cx="1115" cy="744" r="58" fill="url(#glass)" pointer-events="none"/>
+
+  <!-- Liberalerna -->
+  <g filter="url(#medallion-depth)">
+    <circle cx="1305" cy="744" r="61" fill="url(#blue-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
+    <circle cx="1305" cy="744" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+  </g>
+  <image x="1256" y="695" width="98" height="98" xlink:href="../public/party-logos/l.svg" filter="url(#logo-depth)"/>
+  <circle cx="1305" cy="744" r="58" fill="url(#glass)" pointer-events="none"/>
+
+  <!-- Miljöpartiet de gröna -->
+  <g filter="url(#medallion-depth)">
+    <circle cx="1507" cy="744" r="61" fill="url(#green-medallion)" stroke="#ffc84a" stroke-opacity=".72" stroke-width="2"/>
+    <circle cx="1507" cy="744" r="57" fill="none" stroke="#fff" stroke-opacity=".25" stroke-width="2"/>
+  </g>
+  <image x="1455" y="699" width="104" height="90" xlink:href="../public/party-logos/mp.svg" filter="url(#logo-depth)"/>
+  <circle cx="1507" cy="744" r="58" fill="url(#glass)" pointer-events="none"/>
+</svg>

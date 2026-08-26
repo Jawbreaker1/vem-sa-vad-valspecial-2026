@@ -14,6 +14,7 @@
     "check:quote-links": "node scripts/check-quote-links.mjs",
     "check:quote-wording": "node scripts/check-riksdag-wording.mjs",
     "rank:quotes": "node scripts/rank-quotes.mjs",
+    "render:start-logos": "node scripts/render-start-stage-logos.mjs",
     "check": "npm run check:quotes && npm run lint && npm run build"
   },
   "dependencies": {
