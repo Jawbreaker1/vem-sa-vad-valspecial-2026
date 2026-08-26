@@ -2434,9 +2434,6 @@ export default function Home() {
   }
 
   if (screen === 'wheel') {
-    const usedWheelThemes = roundQuotes
-      .filter((_, index) => index >= QUESTIONS_PER_ACT && index < currentIndex && index % QUESTIONS_PER_ACT === 0)
-      .map((quote) => quote.theme);
     const wheelHeadline = currentIndex === 3
       ? 'Akt 1 klar!'
       : currentIndex === 6
@@ -2467,7 +2464,6 @@ export default function Home() {
             target={current.theme}
             stage={wheelStage}
             act={currentAct}
-            usedThemes={usedWheelThemes}
           />
           <div className="wheel-landing" role="status" aria-live="assertive" aria-atomic="true">
             {wheelStage === 'landed' ? (
@@ -3451,14 +3447,11 @@ function ThemeWheel({
   target,
   stage,
   act,
-  usedThemes,
 }: {
   target: QuoteThemeId;
   stage: WheelStage;
   act: number;
-  usedThemes: QuoteThemeId[];
 }) {
-  const sectors = [...WHEEL_THEME_IDS, ...WHEEL_THEME_IDS];
   const baseTargetIndex = Math.max(0, WHEEL_THEME_IDS.indexOf(target as (typeof WHEEL_THEME_IDS)[number]));
   const targetIndex = baseTargetIndex + (act % 2 === 0 ? WHEEL_THEME_IDS.length : 0);
   const endRotation = 360 * (4 + act) - targetIndex * 45;
@@ -3472,22 +3465,6 @@ function ThemeWheel({
       >
         <span className="wheel-chase-lights" />
         <span className="wheel-sector-lines" />
-        {sectors.map((themeId, index) => {
-          const theme = questionThemes[themeId];
-          const isPlayed = usedThemes.includes(themeId);
-          return (
-            <span
-              className={`wheel-sector-label ${isPlayed ? 'is-played' : ''}`}
-              key={`${themeId}-${index}`}
-              style={{
-                '--sector-angle': `${index * 45}deg`,
-              } as CSSProperties}
-            >
-              <b>{theme.mark}</b>
-              <small>{theme.label}</small>
-            </span>
-          );
-        })}
         <span className="wheel-hub">
           <i>?</i>
         </span>

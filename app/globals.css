@@ -662,38 +662,6 @@ summary:focus-visible {
   animation: wheel-bulbs .42s steps(2, end) infinite alternate;
 }
 
-.wheel-sector-label {
-  position: absolute;
-  z-index: 3;
-  top: 50%;
-  left: 50%;
-  display: grid;
-  width: 24%;
-  place-items: center;
-  gap: .06rem;
-  color: white;
-  text-shadow: 0 2px 0 rgb(0 10 42 / .88), 0 0 7px rgb(255 255 255 / .72);
-  transform: translate(-50%, -50%) rotate(var(--sector-angle)) translateY(-168%);
-  transition: opacity .2s ease;
-}
-
-.wheel-sector-label b {
-  font-size: clamp(1rem, 3.4vw, 2rem);
-  line-height: .8;
-}
-
-.wheel-sector-label small {
-  max-width: 100%;
-  font: 950 clamp(.4rem, 1.15vw, .66rem)/.9 system-ui, sans-serif;
-  letter-spacing: .02em;
-  text-wrap: balance;
-}
-
-.wheel-sector-label.is-played {
-  opacity: .34;
-  filter: grayscale(.6);
-}
-
 .wheel-hub {
   position: absolute;
   z-index: 7;
@@ -6698,18 +6666,6 @@ summary:focus-visible {
     top: -12px;
     width: 48px;
     height: 61px;
-  }
-
-  .wheel-sector-label {
-    transform: translate(-50%, -50%) rotate(var(--sector-angle)) translateY(-155%);
-  }
-
-  .wheel-sector-label b {
-    font-size: clamp(.92rem, 6vw, 1.5rem);
-  }
-
-  .wheel-sector-label small {
-    font-size: clamp(.34rem, 1.9vw, .52rem);
   }
 
   .wheel-hub {
