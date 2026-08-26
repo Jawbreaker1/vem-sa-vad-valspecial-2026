@@ -9,10 +9,14 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://vemsavad.com'),
   title: 'Vem sa vad? – Valspecial 2026',
   description: 'Tolv autentiska politiska citat, fyra snabba akter och ett skoningslöst kategorihjul. Vem sa vad?',
   applicationName: 'Vem sa vad?',
   category: 'spel',
+  alternates: {
+    canonical: '/',
+  },
   robots: {
     index: true,
     follow: true,
@@ -23,6 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Vem sa vad? – Valspecial 2026',
     description: '12 citat i fyra snabba akter, slumpade ur en källgranskad citatbank. Kan du koppla dem till rätt parti?',
+    url: '/',
     siteName: 'Vem sa vad?',
     locale: 'sv_SE',
     type: 'website',
