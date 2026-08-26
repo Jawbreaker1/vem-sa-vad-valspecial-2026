@@ -4,7 +4,7 @@
 
 **Sweden's most overproduced political quiz.** Connect authentic quotes from Swedish politicians to the party behind the words—before the timer, the audience, and the live electrical cable beat you to it.
 
-[**Play Vem sa vad? →**](https://vem-sa-vad-valspecial-2026.jawbreakerz.chatgpt.site/)
+[**Play Vem sa vad? →**](https://vemsavad.com/)
 
 > 12 questions · 4 acts · category wheel · local high score · 20 seconds per quote
 
