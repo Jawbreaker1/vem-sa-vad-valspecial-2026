@@ -29,8 +29,8 @@
       "workers_dev": true,
       "routes": [
         {
-          "pattern": "vemsavad.com/*",
-          "zone_name": "vemsavad.com"
+          "pattern": "vemsavad.com",
+          "custom_domain": true
         }
       ],
       "d1_databases": [

@@ -5,7 +5,7 @@ Status: **isolated production candidate verified; domain cutover not started**.
 The live site at [vemsavad.com](https://vemsavad.com) is still served by OpenAI
 Sites. Its DNS record, Sites custom-domain attachment, and production deployment
 remain unchanged. The Cloudflare candidate is available only on its separate
-`workers.dev` address until the final route is attached.
+`workers.dev` address until the final Custom Domain is attached.
 
 ## Safety checkpoints
 
@@ -18,9 +18,8 @@ remain unchanged. The Cloudflare candidate is available only on its separate
 
 The Sites deployment and its canonical
 `vem-sa-vad-valspecial-2026.jawbreakerz.chatgpt.site` URL stay intact after
-cutover. The first cutover uses a Worker Route in front of the already proxied
-apex hostname, not a DNS replacement or Worker Custom Domain. Removing that
-single route therefore returns traffic to Sites without waiting for DNS.
+cutover. The production Worker uses a Cloudflare Custom Domain because it is
+the new origin. The former Sites A records are recorded below for rollback.
 
 The immutable Sites baseline can be inspected on a new branch without moving
 or rewriting existing history:
@@ -102,26 +101,41 @@ npx wrangler d1 migrations apply vemsavad-production --remote --config wrangler.
 - `vemsavad.com` continued to return the Sites artifact throughout deployment
   and verification.
 
+An initial `vemsavad.com/*` Worker Route was attached after verification, but
+it deliberately caused no traffic change. The existing OpenAI Sites setup uses
+Cloudflare for SaaS custom-hostname routing. Cloudflare's documented orange-
+cloud O2O behavior does not invoke a route matching the customer hostname in
+that configuration. The route was therefore replaced in configuration by the
+recommended Worker Custom Domain before the actual cutover.
+
 ## Cutover and rollback
 
 Immediately before cutover:
 
 1. Read the latest aggregate `daily_visits` rows from Sites.
 2. Upsert those absolute values into `vemsavad-production` and verify totals.
-3. Record the current public DNS answers and confirm `vemsavad.com` still serves
-   the Sites artifact.
-4. Attach only the Worker Route `vemsavad.com/*` to
-   `vemsavad-cloudflare-production`.
+3. Confirm `vemsavad.com` still serves the Sites artifact and record the exact
+   Cloudflare DNS rows:
+   - apex A `172.66.3.26`, proxied, automatic TTL
+   - apex A `162.159.143.30`, proxied, automatic TTL
+   - keep both existing Sites verification TXT records unchanged
+4. Attach `vemsavad.com` as the Custom Domain of
+   `vemsavad-cloudflare-production`. Cloudflare then owns the apex Worker DNS
+   record and certificate while the Sites deployment remains available on its
+   canonical URL.
 
 After cutover, verify `/`, `/om`, `robots.txt`, `sitemap.xml`, analytics, assets,
 desktop/mobile gameplay, and the Worker error tail on the public hostname.
 
 Fast rollback:
 
-1. Delete only the Worker Route `vemsavad.com/*`.
-2. Purge cache for hostname `vemsavad.com` if a stale Worker response remains.
-3. Verify the domain again matches the intact Sites deployment.
+1. Remove the Worker Custom Domain `vemsavad.com`.
+2. Restore both recorded proxied apex A records with automatic TTL; leave the
+   Sites verification TXT records in place.
+3. Purge cache for hostname `vemsavad.com` if a stale Worker response remains.
+4. Verify the domain again matches the intact Sites deployment.
 
 Do not delete either Worker, either D1 database, the Sites deployment, or the
-Sites domain configuration during rollback. Do not force-push or rewrite Git
-history.
+Sites domain configuration during rollback. A Custom Domain deletion leaves
+its generated certificate behind; that is harmless and can be cleaned up only
+after traffic is restored. Do not force-push or rewrite Git history.
