@@ -213,6 +213,10 @@ const TOTAL_QUESTIONS = 12;
 const WHEEL_SPIN_MS = 1450;
 const WHEEL_LAND_MS = 1220;
 const GAME_LOAD_MIN_MS = 700;
+const CONFETTI_LIFETIME_MS = {
+  spark: 1700,
+  full: 3600,
+} as const;
 const GAME_LOAD_MAX_MS = 5200;
 const GAME_LOAD_ROUND_MS = 1800;
 const GAME_LOAD_READY_MS = 240;
@@ -3522,7 +3526,19 @@ function FeedbackBurst({
 }
 
 function Confetti({ intensity = 'full' }: { intensity?: 'spark' | 'full' }) {
+  const [isActive, setIsActive] = useState(true);
   const pieces = intensity === 'full' ? confetti : confetti.slice(0, 20);
+
+  useEffect(() => {
+    const timeout = window.setTimeout(() => {
+      setIsActive(false);
+    }, CONFETTI_LIFETIME_MS[intensity]);
+
+    return () => window.clearTimeout(timeout);
+  }, [intensity]);
+
+  if (!isActive) return null;
+
   return (
     <div className={`confetti-field is-${intensity}`} aria-hidden="true">
       {pieces.map((piece, index) => (

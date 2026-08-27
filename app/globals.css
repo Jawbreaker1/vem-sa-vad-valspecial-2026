@@ -4717,7 +4717,8 @@ summary:focus-visible {
   border-radius: 2px;
   background: var(--confetti);
   box-shadow: 0 0 5px rgb(255 255 255 / .4);
-  animation: confetti-fall var(--duration) var(--delay) cubic-bezier(.2, .65, .5, 1) both;
+  opacity: 0;
+  animation: confetti-fall var(--duration) var(--delay) cubic-bezier(.2, .65, .5, 1) forwards;
 }
 
 .confetti-field.is-spark i {
@@ -5739,7 +5740,8 @@ summary:focus-visible {
 @keyframes confetti-fall {
   0% { transform: translate3d(0, -8vh, 0) rotate(0); opacity: 0; }
   8% { opacity: 1; }
-  100% { transform: translate3d(var(--drift), 112vh, 0) rotate(var(--rotation)); opacity: .95; }
+  92% { opacity: .95; }
+  100% { transform: translate3d(var(--drift), 112vh, 0) rotate(var(--rotation)); opacity: 0; visibility: hidden; }
 }
 
 @keyframes slow-spin {
@@ -8241,7 +8243,7 @@ summary:focus-visible {
 
   .wheel-rays,
   .wheel-flash,
-  .wheel-screen .confetti-field {
+  .confetti-field {
     display: none !important;
   }
 
