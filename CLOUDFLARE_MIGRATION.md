@@ -1,25 +1,28 @@
 # Cloudflare migration
 
-Status: **isolated production candidate verified; domain cutover not started**.
+Status: **Cloudflare production is live and verified on
+[vemsavad.com](https://vemsavad.com)**.
 
-The live site at [vemsavad.com](https://vemsavad.com) is still served by OpenAI
-Sites. Its DNS record, Sites custom-domain attachment, and production deployment
-remain unchanged. The Cloudflare candidate is available only on its separate
-`workers.dev` address until the final Custom Domain is attached.
+The public hostname is now a Custom Domain of the production Worker. The last
+OpenAI Sites deployment is intentionally still available on its canonical URL
+as an independent rollback copy; it was not deleted or modified during the
+cutover.
 
 ## Safety checkpoints
 
-- Live Sites version: `30`
-- Live Sites source commit: `98fe38387a64380142ef597a21c72a2eb3054082`
+- Last live Sites version: `30`
+- Sites source commit: `98fe38387a64380142ef597a21c72a2eb3054082`
 - Immutable Sites rollback tag: `sites-prod-2026-08-27`
+- Immutable pre-cutover tag: `cloudflare-prod-ready-2026-08-27`
+- Verified live tag: `cloudflare-prod-live-2026-08-27`
 - Production-preparation branch: `codex/cloudflare-production-prep`
 - Staging migration commit: `a08ff78`
-- Production Worker version: `345eb712-aa7e-4f4f-85a9-942e81e86f31`
+- Live Worker version: `4a5e4984-0f39-4839-ad00-bf12bac47c38`
 
-The Sites deployment and its canonical
-`vem-sa-vad-valspecial-2026.jawbreakerz.chatgpt.site` URL stay intact after
-cutover. The production Worker uses a Cloudflare Custom Domain because it is
-the new origin. The former Sites A records are recorded below for rollback.
+The intact Sites fallback is available at
+<https://vem-sa-vad-valspecial-2026.jawbreakerz.chatgpt.site/>. Its artifact is
+distinct from the live Worker artifact, which proves that it remains an
+independent rollback origin.
 
 The immutable Sites baseline can be inspected on a new branch without moving
 or rewriting existing history:
@@ -37,19 +40,25 @@ git switch -c codex/sites-baseline sites-prod-2026-08-27
 - D1 database: `vemsavad-cloudflare-staging`
 - D1 ID: `074f7b6a-2ed3-4723-8ebd-ce0da541d7ae`
 - Region observed during verification: `WEUR`
+- Final isolated test data: 1 aggregate row and 9 visits
 
 Staging contains test analytics only and is never reused by production.
 
-### Production candidate
+### Production
 
 - Worker: `vemsavad-cloudflare-production`
-- URL: <https://vemsavad-cloudflare-production.johan-c99.workers.dev>
+- Direct URL: <https://vemsavad-cloudflare-production.johan-c99.workers.dev>
+- Custom Domain: <https://vemsavad.com>
 - D1 database: `vemsavad-production`
 - D1 ID: `2c6d8946-58d6-433f-90cc-4d7bacdeb7a6`
 - D1 jurisdiction: `eu`
 - Region observed during verification: `EEUR`
 - Bindings: `ASSETS` and production `DB` only
-- Routes/custom domains before cutover: none
+- Live Worker version: `4a5e4984-0f39-4839-ad00-bf12bac47c38`
+
+The temporary `vemsavad.com/*` Worker Route used while investigating the old
+Sites routing was removed after cutover. The Custom Domain is the only custom
+production trigger.
 
 ## Commands
 
@@ -66,26 +75,18 @@ Apply schema migrations only to an explicitly named database:
 npx wrangler d1 migrations apply vemsavad-production --remote --config wrangler.jsonc
 ```
 
-## Production-candidate verification on 2026-08-27
+## Verification before cutover on 2026-08-27
 
 - Quote validation, lint, the standard Sites build, and the production Worker
   dry-run passed.
 - `vinext check` reported 100% compatibility (6/6 checks).
-- Wrangler deployed version `345eb712-aa7e-4f4f-85a9-942e81e86f31` with the
-  expected production D1 and no route or custom domain.
-- The homepage, `/om`, `robots.txt`, `sitemap.xml`, and a representative 404
-  returned the expected statuses and content types.
 - All 127 files under `public/` and all 32 generated client assets returned
   byte-identical content with correct MIME types: 159/159 passed.
 - All five MP3 files matched their local SHA-256 sums. Cloudflare Static Assets
-  currently returns the complete small MP3 rather than a `206` byte range; this
-  is a performance note, not a playback or release blocker.
+  returns the complete small MP3 rather than a `206` byte range; this is a
+  performance note, not a playback or release blocker.
 - The analytics endpoint rejected GET (`405`) and foreign-origin POST (`403`).
   Browser visits wrote only to the production D1; staging stayed isolated.
-- The imported Sites analytics snapshot contained 16 aggregate day/country
-  rows and 149 visits. A browser QA visit raised the candidate to 150. The
-  absolute Sites totals will be synchronized again immediately before cutover
-  so QA traffic cannot skew the production history.
 - Desktop QA covered start/loading, sound toggle, timeout, correct and wrong
   answers, time and streak scoring, source reveals, all three category wheels,
   a complete 12-question round, local high score, result screen, and share UI.
@@ -93,47 +94,74 @@ npx wrangler d1 migrations apply vemsavad-production --remote --config wrangler.
   About/sound controls, all eight parties, cable selection, a fixed visible
   `Svara` control, the reveal card, source, and next control without horizontal
   displacement.
-- The full game used no extra backend calls between questions; gameplay remains
-  client-side. Dynamic Worker usage is one page response plus one analytics
-  write per new browser session, while static assets are served by Cloudflare's
-  asset cache.
-- The Worker dashboard and live tail reported zero runtime errors during QA.
-- `vemsavad.com` continued to return the Sites artifact throughout deployment
-  and verification.
+- The full game used no extra backend calls between questions. Gameplay remains
+  client-side: dynamic Worker usage is one page response plus one analytics
+  write per new browser session, while static assets use Cloudflare's asset
+  delivery.
 
-An initial `vemsavad.com/*` Worker Route was attached after verification, but
-it deliberately caused no traffic change. The existing OpenAI Sites setup uses
-Cloudflare for SaaS custom-hostname routing. Cloudflare's documented orange-
-cloud O2O behavior does not invoke a route matching the customer hostname in
-that configuration. The route was therefore replaced in configuration by the
-recommended Worker Custom Domain before the actual cutover.
+An initial `vemsavad.com/*` Worker Route deliberately caused no traffic change.
+The previous OpenAI Sites setup used Cloudflare for SaaS custom-hostname
+routing, whose orange-cloud O2O behavior does not invoke a route matching the
+customer hostname. The new Worker is the origin, so the production configuration
+uses Cloudflare's recommended Custom Domain instead.
 
-## Cutover and rollback
+## Completed cutover record
 
-Immediately before cutover:
+Immediately before DNS cutover, the latest Sites analytics snapshot was copied
+to production D1 with exact absolute values:
 
-1. Read the latest aggregate `daily_visits` rows from Sites.
-2. Upsert those absolute values into `vemsavad-production` and verify totals.
-3. Confirm `vemsavad.com` still serves the Sites artifact and record the exact
-   Cloudflare DNS rows:
-   - apex A `172.66.3.26`, proxied, automatic TTL
-   - apex A `162.159.143.30`, proxied, automatic TTL
-   - keep both existing Sites verification TXT records unchanged
-4. Attach `vemsavad.com` as the Custom Domain of
-   `vemsavad-cloudflare-production`. Cloudflare then owns the apex Worker DNS
-   record and certificate while the Sites deployment remains available on its
-   canonical URL.
+- 16 aggregate day/country rows
+- 155 visits
+- date range `2026-08-25` through `2026-08-27`
 
-After cutover, verify `/`, `/om`, `robots.txt`, `sitemap.xml`, analytics, assets,
-desktop/mobile gameplay, and the Worker error tail on the public hostname.
+The exact former Sites apex records were saved for rollback:
 
-Fast rollback:
+- apex A `172.66.3.26`, proxied, automatic TTL
+- apex A `162.159.143.30`, proxied, automatic TTL
+
+Only those two apex A records were removed. Both existing verification TXT
+records were preserved. Wrangler then attached `vemsavad.com` as the Custom
+Domain of `vemsavad-cloudflare-production` and deployed version
+`4a5e4984-0f39-4839-ad00-bf12bac47c38`.
+
+Post-cutover verification established:
+
+- `vemsavad.com` and the direct `workers.dev` URL returned byte-identical HTML,
+  deployment ID `d7fa8d39-7773-4e3d-a319-1a49c3453651`, and client bundle
+  `index-CRY6NKvf.js`.
+- The intact Sites fallback still returned its separate artifact, deployment ID
+  `1eef0a66-1037-40aa-9108-7b4109dacb10` and bundle `index-T5_7HQvb.js`.
+- `/`, `/om`, `robots.txt`, and `sitemap.xml` returned `200`; an unknown route
+  returned `404`.
+- The real analytics endpoint `/api/analytics/page-view` returned `405` for GET,
+  `204` for OPTIONS, and `403` for a foreign-origin POST.
+- A representative leader image and the crowd-cheer MP3 returned `200` with the
+  expected MIME types.
+- Fresh public-hostname smoke tests passed in iPhone portrait (390 x 844) and
+  desktop (1280 x 720), including loading, all eight party controls, cable
+  selection, timeout, explicit answer, correct/wrong reveal, sources, scoring,
+  and zero horizontal overflow.
+- The two deliberate Swedish browser sessions raised production D1 from 155 to
+  157 visits (`SE` 40 to 42). Staging remained exactly 9 visits.
+- A fresh error-filtered Worker tail saw no runtime errors during public route
+  probes.
+- Cloudflare DNS ended with exactly three records: the apex Worker record for
+  `vemsavad-cloudflare-production` and the two preserved verification TXT
+  records.
+- The redundant exploratory Worker Route was removed, leaving only the
+  production Custom Domain.
+
+## Fast rollback
 
 1. Remove the Worker Custom Domain `vemsavad.com`.
-2. Restore both recorded proxied apex A records with automatic TTL; leave the
-   Sites verification TXT records in place.
-3. Purge cache for hostname `vemsavad.com` if a stale Worker response remains.
-4. Verify the domain again matches the intact Sites deployment.
+2. Restore both recorded proxied apex A records with automatic TTL:
+   - `172.66.3.26`
+   - `162.159.143.30`
+3. Leave both verification TXT records in place.
+4. Purge cache for hostname `vemsavad.com` only if a stale Worker response
+   remains.
+5. Verify that the public domain again matches the intact Sites deployment at
+   its canonical URL.
 
 Do not delete either Worker, either D1 database, the Sites deployment, or the
 Sites domain configuration during rollback. A Custom Domain deletion leaves
