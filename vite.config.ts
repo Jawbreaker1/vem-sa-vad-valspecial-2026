@@ -12,8 +12,9 @@ const { d1, r2 } = hostingConfig;
 
 // macOS Seatbelt blocks FSEvents, so Codex previews need polling for HMR.
 const isCodexSeatbeltSandbox = process.env.CODEX_SANDBOX === 'seatbelt';
-const isDirectCloudflareStaging =
-  process.env.VEMSAVAD_CLOUDFLARE_STAGING === '1';
+const isDirectCloudflare =
+  process.env.VEMSAVAD_DIRECT_CLOUDFLARE === '1'
+  || process.env.VEMSAVAD_CLOUDFLARE_STAGING === '1';
 
 const localBindingConfig = {
   main: 'vinext/server/app-router-entry',
@@ -54,10 +55,9 @@ export default defineConfig(async () => {
       sites(),
       cloudflare({
         viteEnvironment: { name: 'rsc', childEnvironments: ['ssr'] },
-        // Sites/local development keeps its simulated bindings. The isolated
-        // Cloudflare staging build instead reads the staging-only
-        // wrangler.jsonc, which has no custom domain or production route.
-        ...(isDirectCloudflareStaging ? {} : { config: localBindingConfig }),
+        // Direct Cloudflare builds read the selected Wrangler environment.
+        // Sites/local development keeps its simulated bindings instead.
+        ...(isDirectCloudflare ? {} : { config: localBindingConfig }),
       }),
     ],
   };

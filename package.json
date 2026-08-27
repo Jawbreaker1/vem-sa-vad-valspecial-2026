@@ -16,6 +16,9 @@
     "check:cloudflare:staging": "VEMSAVAD_CLOUDFLARE_STAGING=1 vinext-cloudflare deploy --config wrangler.jsonc --dry-run",
     "build:cloudflare:staging": "VEMSAVAD_CLOUDFLARE_STAGING=1 vinext build",
     "deploy:cloudflare:staging": "VEMSAVAD_CLOUDFLARE_STAGING=1 vinext-cloudflare deploy --config dist/server/wrangler.json",
+    "build:cloudflare:production": "VEMSAVAD_DIRECT_CLOUDFLARE=1 CLOUDFLARE_ENV=production vinext build",
+    "check:cloudflare:production": "npm run build:cloudflare:production && WRANGLER_WRITE_LOGS=false WRANGLER_LOG_PATH=.wrangler/logs wrangler deploy --config dist/server/wrangler.json --dry-run",
+    "deploy:cloudflare:production": "VEMSAVAD_DIRECT_CLOUDFLARE=1 vinext-cloudflare deploy --env production",
     "rank:quotes": "node scripts/rank-quotes.mjs",
     "render:start-logos": "node scripts/render-start-stage-logos.mjs",
     "check": "npm run check:quotes && npm run lint && npm run build"

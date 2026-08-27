@@ -5,6 +5,7 @@
   "main": "vinext/server/fetch-handler",
   "compatibility_date": "2026-08-27",
   "compatibility_flags": ["nodejs_compat"],
+  "legacy_env": true,
   "workers_dev": true,
   "assets": {
     "directory": "dist/client",
@@ -21,5 +22,19 @@
   ],
   "observability": {
     "enabled": true
+  },
+  "env": {
+    "production": {
+      "name": "vemsavad-cloudflare-production",
+      "workers_dev": true,
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "vemsavad-production",
+          "database_id": "2c6d8946-58d6-433f-90cc-4d7bacdeb7a6",
+          "migrations_dir": "drizzle"
+        }
+      ]
+    }
   }
 }
