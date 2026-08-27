@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { quotes } from '@/app/quotes';
 import styles from './page.module.css';
 
@@ -86,9 +85,11 @@ export default function AboutPage() {
             förvåning och den där lilla tankeställaren när magkänslan visar sig ha fel.
           </p>
           <div className={styles.actions}>
-            <Link className={styles.playButton} href="/">
+            {/* Full navigation avoids the current Vinext cross-route client-navigation failure. */}
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a className={styles.playButton} href="/">
               Spela nu <span aria-hidden="true">→</span>
-            </Link>
+            </a>
             <a
               className={styles.linkButton}
               href="https://www.linkedin.com/in/johan-engwall-89604a5/"
@@ -213,7 +214,8 @@ export default function AboutPage() {
             <small>Designed by</small>
             <strong>Bird Disk Studios</strong>
           </div>
-          <Link href="/">Tillbaka till spelet <span aria-hidden="true">→</span></Link>
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+          <a href="/">Tillbaka till spelet <span aria-hidden="true">→</span></a>
         </footer>
       </article>
     </main>

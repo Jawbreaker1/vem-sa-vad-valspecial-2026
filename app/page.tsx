@@ -11,7 +11,6 @@ import {
   useRef,
   useState,
 } from 'react';
-import Link from 'next/link';
 import {
   PartyId,
   Quote,
@@ -2441,6 +2440,7 @@ export default function Home() {
           <div className="intro-about-card">
             <small>Om spelet</small>
             <p>Designed by <strong>Bird Disk Studios</strong></p>
+            <b>Elliot Engwall</b>
             <b>Johan Engwall</b>
             <a
               href="https://www.linkedin.com/in/johan-engwall-89604a5/"
@@ -2449,9 +2449,9 @@ export default function Home() {
             >
               LinkedIn <span aria-hidden="true">↗</span>
             </a>
-            <Link className="intro-about-details" href="/om">
+            <a className="intro-about-details" href="/om">
               Om spelet och källorna <span aria-hidden="true">→</span>
-            </Link>
+            </a>
           </div>
         </details>
         {soundButton}
