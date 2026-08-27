@@ -27,6 +27,12 @@
     "production": {
       "name": "vemsavad-cloudflare-production",
       "workers_dev": true,
+      "routes": [
+        {
+          "pattern": "vemsavad.com/*",
+          "zone_name": "vemsavad.com"
+        }
+      ],
       "d1_databases": [
         {
           "binding": "DB",
