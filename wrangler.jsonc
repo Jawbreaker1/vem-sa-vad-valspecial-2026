@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vemsavad-cloudflare-staging",
+  "account_id": "c99cf77a188024274830cc2b72bd64e9",
+  "main": "vinext/server/fetch-handler",
+  "compatibility_date": "2026-08-27",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "assets": {
+    "directory": "dist/client",
+    "not_found_handling": "none",
+    "binding": "ASSETS"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vemsavad-cloudflare-staging",
+      "database_id": "074f7b6a-2ed3-4723-8ebd-ce0da541d7ae",
+      "migrations_dir": "drizzle"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

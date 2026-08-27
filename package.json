@@ -13,6 +13,9 @@
     "check:quotes": "node scripts/validate-quotes.mjs",
     "check:quote-links": "node scripts/check-quote-links.mjs",
     "check:quote-wording": "node scripts/check-riksdag-wording.mjs",
+    "check:cloudflare:staging": "VEMSAVAD_CLOUDFLARE_STAGING=1 vinext-cloudflare deploy --config wrangler.jsonc --dry-run",
+    "build:cloudflare:staging": "VEMSAVAD_CLOUDFLARE_STAGING=1 vinext build",
+    "deploy:cloudflare:staging": "VEMSAVAD_CLOUDFLARE_STAGING=1 vinext-cloudflare deploy --config dist/server/wrangler.json",
     "rank:quotes": "node scripts/rank-quotes.mjs",
     "render:start-logos": "node scripts/render-start-stage-logos.mjs",
     "check": "npm run check:quotes && npm run lint && npm run build"
@@ -30,6 +33,7 @@
     "@types/node": "22.19.19",
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
+    "@vinext/cloudflare": "1.0.0-beta.3",
     "@vitejs/plugin-react": "6.0.2",
     "@vitejs/plugin-rsc": "0.5.26",
     "eslint": "9.39.4",
