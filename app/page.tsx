@@ -72,7 +72,7 @@ type Phase = 'category' | 'choosing' | 'locking' | 'reveal' | 'transition';
 type ResultStage = 'countdown' | 'opening' | 'counting' | 'final';
 type WheelStage = 'spinning' | 'landed';
 type RecordOutcome = 'none' | 'new' | 'tied';
-type ShareStatus = 'idle' | 'shared' | 'downloaded' | 'copied' | 'manual';
+type ShareStatus = 'idle' | 'shared' | 'shared-text' | 'downloaded' | 'copied' | 'manual';
 type ShareCardStatus = 'idle' | 'preparing' | 'ready' | 'failed';
 type LeaderGalleryState = 'roam' | 'suspense' | 'cheer' | 'boo' | 'laugh';
 type Cue =
@@ -1942,7 +1942,11 @@ export default function Home() {
     try {
       const shareCard = shareCardFileRef.current;
       let canShareCard = false;
-      if (shareCard && navigator.share && navigator.canShare) {
+      if (
+        shareCard
+        && typeof navigator.share === 'function'
+        && typeof navigator.canShare === 'function'
+      ) {
         try {
           canShareCard = navigator.canShare({ files: [shareCard] });
         } catch {
@@ -1954,6 +1958,21 @@ export default function Home() {
         try {
           await navigator.share({ ...shareData, files: [shareCard] });
           setShareStatus('shared');
+          playCue('share');
+          return;
+        } catch (error) {
+          if (isAbortError(error)) return;
+        }
+      }
+
+      if (
+        shareCard
+        && !canShareCard
+        && typeof navigator.share === 'function'
+      ) {
+        try {
+          await navigator.share(shareData);
+          setShareStatus('shared-text');
           playCue('share');
           return;
         } catch (error) {
@@ -1977,7 +1996,7 @@ export default function Home() {
         }
       }
 
-      if (navigator.share) {
+      if (typeof navigator.share === 'function') {
         try {
           await navigator.share(shareData);
           setShareStatus('shared');
@@ -2785,6 +2804,8 @@ export default function Home() {
             <p className={`share-status is-${shareStatus}`} role="status" aria-live="polite" aria-atomic="true">
               {shareStatus === 'shared'
                 ? 'Poängtavlan delades!'
+                : shareStatus === 'shared-text'
+                  ? 'Resultatet och länken delades. Den här webbläsaren kunde inte bifoga bilden.'
                 : shareStatus === 'downloaded'
                   ? 'Poängtavlan sparades som bild. Länken finns också på kortet!'
                 : shareStatus === 'copied'

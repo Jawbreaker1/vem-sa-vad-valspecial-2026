@@ -315,9 +315,17 @@ function drawMetric(
 async function loadLogo(source: string) {
   return new Promise<HTMLImageElement | null>((resolve) => {
     const image = new Image();
+    let settled = false;
+    const finish = (result: HTMLImageElement | null) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeout);
+      resolve(result);
+    };
+    const timeout = window.setTimeout(() => finish(null), 5000);
     image.decoding = 'async';
-    image.onload = () => resolve(image);
-    image.onerror = () => resolve(null);
+    image.onload = () => finish(image);
+    image.onerror = () => finish(null);
     image.src = new URL(source, window.location.href).href;
   });
 }
@@ -536,11 +544,11 @@ export function downloadResultShareCard(file: File) {
   link.href = objectUrl;
   link.download = file.name;
   link.hidden = true;
-  document.body.append(link);
+  document.body.appendChild(link);
   try {
     link.click();
   } finally {
     link.remove();
-    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 0);
+    window.setTimeout(() => URL.revokeObjectURL(objectUrl), 10000);
   }
 }
