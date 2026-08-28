@@ -29,6 +29,11 @@ import {
   writeLocalHighScore,
   type LocalHighScore,
 } from './local-high-score';
+import {
+  createResultShareCardFile,
+  downloadResultShareCard,
+  type ResultShareCardData,
+} from './result-share-card';
 
 type Party = {
   id: PartyId;
@@ -67,7 +72,8 @@ type Phase = 'category' | 'choosing' | 'locking' | 'reveal' | 'transition';
 type ResultStage = 'countdown' | 'opening' | 'counting' | 'final';
 type WheelStage = 'spinning' | 'landed';
 type RecordOutcome = 'none' | 'new' | 'tied';
-type ShareStatus = 'idle' | 'shared' | 'copied' | 'manual';
+type ShareStatus = 'idle' | 'shared' | 'downloaded' | 'copied' | 'manual';
+type ShareCardStatus = 'idle' | 'preparing' | 'ready' | 'failed';
 type LeaderGalleryState = 'roam' | 'suspense' | 'cheer' | 'boo' | 'laugh';
 type Cue =
   | 'start'
@@ -672,6 +678,16 @@ function isAbortError(error: unknown) {
     && error.name === 'AbortError';
 }
 
+function resultTitleFor(score: number, totalQuestions: number) {
+  return score === totalQuestions
+    ? 'Partiledardebattens orakel!'
+    : score >= Math.ceil(totalQuestions * .75)
+      ? 'Du läser mellan partilinjerna!'
+      : score >= Math.ceil(totalQuestions * .375)
+        ? 'Partierna lyckades lura dig.'
+        : 'Fullständig politisk maskerad!';
+}
+
 function scoreBreakdown(answer: Answer) {
   if (!answer.correct) return '0 poäng';
   const parts = [
@@ -743,6 +759,7 @@ export default function Home() {
   const [resultCountdown, setResultCountdown] = useState(3);
   const [displayedPoints, setDisplayedPoints] = useState(0);
   const [shareStatus, setShareStatus] = useState<ShareStatus>('idle');
+  const [shareCardStatus, setShareCardStatus] = useState<ShareCardStatus>('idle');
   const [manualShareText, setManualShareText] = useState('');
   const [sharePending, setSharePending] = useState(false);
   const [localHighScore, setLocalHighScore] = useState<LocalHighScore | null>(null);
@@ -798,6 +815,7 @@ export default function Home() {
   const resultTitleRef = useRef<HTMLHeadingElement>(null);
   const manualShareRef = useRef<HTMLTextAreaElement>(null);
   const sharePendingRef = useRef(false);
+  const shareCardFileRef = useRef<File | null>(null);
   const resultRevealFinishedRef = useRef(false);
   const recordCommittedRef = useRef(false);
   const gameLoadRequestRef = useRef(0);
@@ -1337,6 +1355,54 @@ export default function Home() {
     return () => window.cancelAnimationFrame(frame);
   }, [shareStatus]);
 
+  useEffect(() => {
+    let cancelled = false;
+    shareCardFileRef.current = null;
+
+    if (screen !== 'results' || resultStage !== 'final') return;
+
+    const resultParties = parties.map((party) => {
+      const partyAnswers = answers.filter((answer) => answer.party === party.id);
+      return {
+        id: party.id,
+        shortName: party.shortName,
+        logo: party.logo,
+        color: party.color,
+        total: partyAnswers.length,
+        correct: partyAnswers.filter((answer) => answer.correct).length,
+      };
+    });
+    const cardData: ResultShareCardData = {
+      points: totalPoints,
+      correct: score,
+      totalQuestions: answers.length,
+      bestStreak,
+      fastAnswers: answers.filter((answer) => answer.correct && answer.secondsLeft >= 15).length,
+      title: resultTitleFor(score, answers.length),
+      recordLabel: recordOutcome === 'new'
+        ? 'Nytt lokalt rekord!'
+        : recordOutcome === 'tied'
+          ? 'Rekordet tangerat!'
+          : undefined,
+      parties: resultParties,
+    };
+
+    void createResultShareCardFile(cardData)
+      .then((file) => {
+        if (cancelled) return;
+        shareCardFileRef.current = file;
+        setShareCardStatus('ready');
+      })
+      .catch(() => {
+        if (cancelled) return;
+        setShareCardStatus('failed');
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [answers, bestStreak, recordOutcome, resultStage, score, screen, totalPoints]);
+
   const cable = useMemo(() => {
     if (screen !== 'question' || !geometry) return null;
     const start = geometry.start;
@@ -1850,6 +1916,7 @@ export default function Home() {
     resultRevealFinishedRef.current = true;
     clearResultRevealTimers();
     setDisplayedPoints(totalPoints);
+    setShareCardStatus('preparing');
     setResultStage('final');
     playCue('combo');
     playCrowd(score > 0 ? 'cheer' : 'laugh');
@@ -1873,6 +1940,43 @@ export default function Home() {
     setManualShareText('');
 
     try {
+      const shareCard = shareCardFileRef.current;
+      let canShareCard = false;
+      if (shareCard && navigator.share && navigator.canShare) {
+        try {
+          canShareCard = navigator.canShare({ files: [shareCard] });
+        } catch {
+          canShareCard = false;
+        }
+      }
+
+      if (shareCard && canShareCard) {
+        try {
+          await navigator.share({ ...shareData, files: [shareCard] });
+          setShareStatus('shared');
+          playCue('share');
+          return;
+        } catch (error) {
+          if (isAbortError(error)) return;
+        }
+      }
+
+      if (shareCard) {
+        try {
+          downloadResultShareCard(shareCard);
+          try {
+            await navigator.clipboard?.writeText(`${text}\n${url}`);
+          } catch {
+            // The URL is also printed on the downloaded scorecard.
+          }
+          setShareStatus('downloaded');
+          playCue('share');
+          return;
+        } catch {
+          // Continue with text sharing if this browser blocks programmatic downloads.
+        }
+      }
+
       if (navigator.share) {
         try {
           await navigator.share(shareData);
@@ -1982,6 +2086,8 @@ export default function Home() {
     setResultCountdown(3);
     setDisplayedPoints(0);
     setShareStatus('idle');
+    setShareCardStatus('idle');
+    shareCardFileRef.current = null;
     setManualShareText('');
     sharePendingRef.current = false;
     setSharePending(false);
@@ -2236,6 +2342,8 @@ export default function Home() {
       setResultCountdown(3);
       setDisplayedPoints(reduceMotion ? totalPoints : 0);
       setShareStatus('idle');
+      setShareCardStatus(reduceMotion ? 'preparing' : 'idle');
+      shareCardFileRef.current = null;
       setManualShareText('');
       sharePendingRef.current = false;
       setSharePending(false);
@@ -2292,6 +2400,8 @@ export default function Home() {
     setResultCountdown(3);
     setDisplayedPoints(0);
     setShareStatus('idle');
+    setShareCardStatus('idle');
+    shareCardFileRef.current = null;
     setManualShareText('');
     sharePendingRef.current = false;
     setSharePending(false);
@@ -2534,14 +2644,7 @@ export default function Home() {
     const bestParties = partyResults.filter(
       (result) => result.total && result.correct / result.total === bestAccuracy,
     );
-    const resultTitle =
-      score === answers.length
-        ? 'Partiledardebattens orakel!'
-        : score >= Math.ceil(answers.length * .75)
-          ? 'Du läser mellan partilinjerna!'
-          : score >= Math.ceil(answers.length * .375)
-            ? 'Partierna lyckades lura dig.'
-            : 'Fullständig politisk maskerad!';
+    const resultTitle = resultTitleFor(score, answers.length);
     const bestPartyCopy = bestAccuracy > 0
       ? `Bäst koll hade jag på ${bestParties.map(({ party }) => party.name).join(', ')}.`
       : '';
@@ -2664,18 +2767,26 @@ export default function Home() {
                 className="share-action"
                 type="button"
                 onClick={() => void shareResults(shareText)}
-                disabled={sharePending}
-                aria-busy={sharePending}
+                disabled={sharePending || shareCardStatus === 'preparing'}
+                aria-busy={sharePending || shareCardStatus === 'preparing'}
               >
                 <span aria-hidden="true">↗</span>
-                {sharePending ? 'Öppnar delning…' : 'Dela mina poäng'}
+                {shareCardStatus === 'preparing'
+                  ? 'Bygger poängtavla…'
+                  : sharePending
+                    ? 'Öppnar delning…'
+                    : shareCardStatus === 'failed'
+                      ? 'Dela mina poäng'
+                      : 'Dela min poängtavla'}
               </button>
               <button className="primary-action" type="button" onClick={startGame}>Spela igen</button>
               <button className="secondary-action" type="button" onClick={returnHome}>Till startscenen</button>
             </div>
             <p className={`share-status is-${shareStatus}`} role="status" aria-live="polite" aria-atomic="true">
               {shareStatus === 'shared'
-                ? 'Resultatet delades!'
+                ? 'Poängtavlan delades!'
+                : shareStatus === 'downloaded'
+                  ? 'Poängtavlan sparades som bild. Länken finns också på kortet!'
                 : shareStatus === 'copied'
                   ? 'Resultatet och länken kopierades!'
                   : shareStatus === 'manual'
