@@ -385,10 +385,12 @@ function drawPartyToken(
     : party.total === 1
       ? (party.correct ? '✓' : '×')
       : `${party.correct}/${party.total}`;
+  const perfect = party.total > 0 && party.correct === party.total;
+  const partial = party.correct > 0 && !perfect;
   context.save();
   context.shadowColor = 'rgb(0 0 0 / .55)';
   context.shadowOffsetY = 4;
-  context.fillStyle = party.correct > 0 ? '#0ba45c' : '#d0183b';
+  context.fillStyle = perfect ? '#0ba45c' : partial ? '#d8830a' : '#d0183b';
   context.beginPath();
   context.arc(centerX + 42, centerY + 40, 25, 0, Math.PI * 2);
   context.fill();

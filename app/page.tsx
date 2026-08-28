@@ -1999,7 +1999,7 @@ export default function Home() {
       if (typeof navigator.share === 'function') {
         try {
           await navigator.share(shareData);
-          setShareStatus('shared');
+          setShareStatus('shared-text');
           playCue('share');
           return;
         } catch (error) {
